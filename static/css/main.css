@@ -1,33 +1,78 @@
-#mydiv {
-  position: absolute;
-  z-index: 9;
-  background-color: #f1f1f1;
-  border: 1px solid #d3d3d3;
-  text-align: center;
+.spinner-wrapper {
+  position: fixed;
+  top: 0;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  background-color: #ff6347;
+  z-index: 999999;
+  }
+.spinner {
+  width: 40px;
+  height: 40px;
+background-color: white;
+z-index: 999999;
+
+  margin: 100px auto;
+  -webkit-animation: sk-rotateplane 1.2s infinite ease-in-out;
+  animation: sk-rotateplane 1.2s infinite ease-in-out;
 }
 
-#mydivheader {
-  padding: 10px;
-  cursor: move;
-  height: 150px;
-  z-index: 10;
-  background-color: #2196F3;
-  color: #fff;
+@-webkit-keyframes sk-rotateplane {
+  0% { -webkit-transform: perspective(120px) }
+  50% { -webkit-transform: perspective(120px) rotateY(180deg) }
+  100% { -webkit-transform: perspective(120px) rotateY(180deg)  rotateX(180deg) }
+}
+
+@keyframes sk-rotateplane {
+  0% { 
+    transform: perspective(120px) rotateX(0deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(0deg) rotateY(0deg) 
+  } 50% { 
+    transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg);
+    -webkit-transform: perspective(120px) rotateX(-180.1deg) rotateY(0deg) 
+  } 100% { 
+    transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+    -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
+  }
+}
+
+#tester {
+  background-color: #212121;
 }
 
 
-Grid Div
-:root {
-  --grid-cols: 1;
-  --grid-rows: 1;
-}
 
-#container {
+.row {
+  
+ 
+  display: -ms-grid;
   display: grid;
-  grid-template-rows: repeat(var(--grid-rows), 1fr);
-  grid-template-columns: repeat(var(--grid-cols), 1fr);
-  height: 20px;
-  width: 20px;
+  -ms-grid-columns: auto 30%;
+      grid-template-columns: auto 35%;
+      grid-template-rows: auto auto;
+  column-gap: 10px;
+  row-gap: 10px;
+}
+
+.row > div {
+
+  display: -ms-grid;
+  display: grid;
+  /*
+  border-radius: 5px;
+  padding: 10px;
+  */
+  background-color: #212121;
+  -webkit-box-pack: center;
+      -ms-flex-pack: center;
+          justify-content: center;
+  -webkit-box-align: center;
+      -ms-flex-align: center;
+          align-items: center;
+          /*
+  -webkit-box-shadow: 0 4px 10px 4px rgba(40, 41, 41, 0.2);
+          box-shadow: 0 4px 10px 4px rgba(40, 41, 41, 0.2);*/
 }
 
 .grid-item {
@@ -37,50 +82,136 @@ Grid Div
 }
 
 body {
-  background-color: #121212;
+  background-color: #141414;
+  overflow: hidden;
 }
 
 #c {
-  background-color: #2a2a2a;
+  background-color: #212121;
 }
 
 .rotate0{
   width: 45px;
+  /*
   position: absolute;
   margin-left: 650px;
+  */
 }
 .rotate90{
   width: 45px;
+  /*
   position: absolute;
   margin-left: 696px;
+  */
 }
 .rotate180{
   width: 45px;
+  /*
   position: absolute;
-  margin-left: 742px;
+  margin-left: 742px;*/
 }
 .rotate270{
   width: 45px;
+  /*
   position: relative;
-  margin-left: 788px;
+  margin-left: 788px;*/
 }
 
 h1{
-  text-align: center;
+  text-align: left;
   color: white;
   font-family: 'Ubuntu', sans-serif;
+  font-size: x-large;
+  
  
 }
 h2{
   color: whitesmoke;
   text-align: center;
   font-family: 'Roboto', sans-serif;
-  font-size: large;
+  font-size: x-large;
  
 }
 label {
   color: whitesmoke;
   font-family: 'Roboto', sans-serif;
 }
+
+.header {
+  display: inline-block;
+  margin-left: 30px;
+  margin-top: 5px;
+  margin-bottom: 5px;
+
+}
+
+#logo {
+  display: block;
+  float: left;
+  /*
+  width: 100px;
+  height: 100px;
+  background: #555;*/
+}
+
+#submit_grid {
+
+  background-image: url(/static/img/update.png); /* 16px x 16px */
+  background-color: transparent; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position-y: center;
+  background-position: 10px;
+  border: #2980b9;
+  color: whitesmoke;
+  text-align: right;
+  display: inline-block;
+  height: 100%;
+  line-height: 3;
+  font-size: 140%;
+  width: 130px;
+  margin-left: 10px;
+  
+   
+}
+#submit_grid:hover {
+  background-color: #2980b9;
+}
+
+#BoxForm {
+  position: absolute;
+  left: 50px;
+  
+}
+
+
+#BagForm {
+  position: relative;
+  left: 250px;
+  
+}
+
+#save {
+ background-image: url(/static/img/save.png);
+ background-color: transparent; /* make the button transparent */
+  background-repeat: no-repeat; 
+  border: transparent;
+ height: 36px;
+ width: 36px;
+ display: inline-block;
+ position: absolute;
+  right: 120px;
+}
+#send {
+  background-image: url(/static/img/send.png);
+ background-color: transparent; /* make the button transparent */
+  background-repeat: no-repeat; 
+  border: transparent;
+ height: 36px;
+ width: 36px;
+ display: inline-block;
+ position: absolute;
+  right: 50px;
+ }
+
 
 

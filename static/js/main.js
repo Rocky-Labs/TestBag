@@ -10,8 +10,8 @@ canvas.setHeight(canvasHeight);
 // create grid
 
 for (var i = 0; i <= (600 / grid); i++) {
-  canvas.add(new fabric.Line([ i * grid, 0, i * grid, 600], { type:'line', stroke: '#ccc', selectable: false }));
-  canvas.add(new fabric.Line([ 0, i * grid, 600, i * grid], { type: 'line', stroke: '#ccc', selectable: false }))
+  canvas.add(new fabric.Line([ i * grid, 0, i * grid, 600], { type:'line', stroke: '#858585', selectable: false }));
+  canvas.add(new fabric.Line([ 0, i * grid, 600, i * grid], { type: 'line', stroke: '#858585', selectable: false }))
 }
 var rect1, rect2, rect3, rect4 = 0;
 var rect1G = new fabric.Rect({ 
@@ -19,8 +19,8 @@ var rect1G = new fabric.Rect({
   top: 0, 
   width: 125, 
   height: 225, 
-  fill: '#faa',
-  stroke:  'black',
+  fill: '#1273EB',
+  stroke:  '#292929',
   originX: 'left', 
   originY: 'top',
   centeredRotation: true
@@ -31,8 +31,8 @@ var rect1G1 = new fabric.Rect({
   top: 0, 
   width: 25, 
   height: 225, 
-  fill: '#faa',
-  stroke:  'black',
+  fill: '#1273EB',
+  stroke:  '#292929',
   originX: 'left', 
   originY: 'top',
   centeredRotation: true
@@ -43,8 +43,8 @@ var rect1G2 = new fabric.Rect({
   top: 0, 
   width: 25, 
   height: 225, 
-  fill: '#faa',
-  stroke:  'black',
+  fill: '#1273EB',
+  stroke:  '#292929',
   originX: 'left', 
   originY: 'top',
   centeredRotation: true
@@ -55,8 +55,8 @@ var rect1G3 = new fabric.Rect({
   top: 200, 
   width: 125, 
   height: 25, 
-  fill: '#faa',
-  stroke:  'black',
+  fill: '#1273EB',
+  stroke:  '#292929',
   originX: 'left', 
   originY: 'top',
   centeredRotation: true
@@ -78,8 +78,8 @@ function rotate0() {
     top: 0, 
     width: 125, 
     height: 225, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -90,8 +90,8 @@ function rotate0() {
     top: 0, 
     width: 25, 
     height: 225, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -102,8 +102,8 @@ function rotate0() {
     top: 0, 
     width: 25, 
     height: 225, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -114,8 +114,8 @@ function rotate0() {
     top: 200, 
     width: 125, 
     height: 25, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -138,8 +138,8 @@ function rotate90() {
     top: 50, 
     width: 225, 
     height: 125, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -150,8 +150,8 @@ function rotate90() {
     top: 50, 
     width: 225, 
     height: 25, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -162,8 +162,8 @@ function rotate90() {
     top: 150, 
     width: 225, 
     height: 25, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -174,8 +174,8 @@ function rotate90() {
     top: 50, 
     width: 25, 
     height: 125, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -198,8 +198,8 @@ function rotate180() {
     top: 0, 
     width: 125, 
     height: 225, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -210,8 +210,8 @@ function rotate180() {
     top: 0, 
     width: 25, 
     height: 225, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -222,8 +222,8 @@ function rotate180() {
     top: 0, 
     width: 25, 
     height: 225, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -234,8 +234,8 @@ function rotate180() {
     top: 0, 
     width: 125, 
     height: 25, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -258,8 +258,8 @@ function rotate270() {
     top: 50, 
     width: 225, 
     height: 125, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -270,8 +270,8 @@ function rotate270() {
     top: 50, 
     width: 225, 
     height: 25, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -282,8 +282,8 @@ function rotate270() {
     top: 150, 
     width: 225, 
     height: 25, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -294,8 +294,8 @@ function rotate270() {
     top: 50, 
     width: 25, 
     height: 125, 
-    fill: '#faa',
-    stroke:  'black',
+    fill: '#1273EB',
+    stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
     centeredRotation: true
@@ -438,6 +438,57 @@ for(var x = 0; x < RectPos[0].length; x++){
 }
 console.log("BOX Array", BoxArray);
 }
+document.getElementById("submit_grid").onclick = function() {
+  submitGrid()
+
+
+
+};
+
+function submitGrid()
+{
+  console.log("submitGrid");
+  Plotly.d3.json('https://raw.githubusercontent.com/plotly/datasets/master/custom_heatmap_colorscale.json', function(figure) {
+  var data = [
+    {
+      z: BoxArray,
+      colorscale: 'Portland',
+      type: 'heatmap'
+    }
+  ];
+  var layout = {
+    
+  plot_bgcolor:"#292929",
+  paper_bgcolor:"#212121"};
+  Plotly.newPlot('tester', data, layout);  
+});
+}
+
+// TESTING PASSING ARRAY TO PYTHON LISTS
+$('#test').click(function(){
+
+  $.ajax({
+      data: {
+          BoxLen: JSON.stringify(BoxArray)
+
+      },
+      type: 'POST',
+      url: '/formProcess'
+
+  })
+  .done(function(data){
+      if(data.error){
+          $('#errorAlert').text(data.error).show();
+          $('#successAlert').hide();
+      }
+      else {
+          $('#successAlert').text("SUCCESS").show();
+          $('#errorAlert').hide();
+
+      }
+  })
+})
+
 
 
 

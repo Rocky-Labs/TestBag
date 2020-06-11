@@ -11,7 +11,7 @@ var tools = initTools();
 // initialize toolbox area
 
 var maxHeight = $(window).height();
-var maxWidth = $(window).width();
+var maxWidth = $(window).width();s
 var toolboxHeight = maxHeight;
 var toolboxWidth = maxWidth * 0.3;
 var objTextPadding = 10;

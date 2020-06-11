@@ -6,13 +6,25 @@
     <title>Document</title>
     <link href="https://fonts.googleapis.com/css2?family=Roboto&family=Ubuntu:wght@300&display=swap" rel="stylesheet">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.5.0/css/bootstrap.min.css" integrity="sha384-9aIt2nRpC12Uk9gS9baDl411NQApFmC26EwAOH8WgZl5MYYxFfc+NcPb1dKGj7Sk" crossorigin="anonymous">
+    
     <link rel="stylesheet" href="../static/css/main.css">
+   <!--    <link rel="stylesheet" href="../static/css/lib/bootstrap.min.css"> -->
     <script src ="../static/js/lib/jquery.js"></script>
+    <script src ="../static/js/lib/plotly-latest.min.js"></script>
+    <script src ="../static/js/loader.js"></script>
+    <script src ="../static/js/lib/fabric.min.js"></script>
     <script src="../static/js/form.js"></script> 
+    
 </head>
 
 
 <body>
+
+    <div class="spinner-wrapper" >
+        
+        <div class="spinner"></div>
+        <h2>Develop by TDC</h2>
+    </div>
     <!--<div class="Top">
         
        <div>
@@ -22,80 +34,132 @@
     </div>-->
     
 <!-- Grid DIV -->
-<h1>Polytex Bag Pattern Design</h1>
-<div id = "container">
-    <div class= "row">
-        <div class ="col">
+<div class="header">
+    <img id = "logo" src="../static/img/pattern.png" alt="logo" />
+    <h1>Bag Pattern Design</h1>
+  </div>
+
+
+<div class ="row">
+    <div class="col">
+        <div id ="BoxForm">
             <form id="fm">
                 <h2>Box Dimensions</h2>
                 <label for="BoxLen">Box Length:</label>
-                <input type="text" id="BoxLen">
+                <select id ="BLength" name="BLength">
+                    <option value="10">10</option>
+                    <option value="10">11</option>
+                    <option value="10">12</option>
+                    <option value="10">13</option>
+                    <option value="10">14</option>
+                    </select>
                 <label for="BoxWid">Box Width:</label>
-                <input type="text"  id="BoxWid">
-
-                <input class ="btn btn-primary" type="submit" value="Submit">
-
-                <form action="">
-                    <h2>Bag Dimensions</h2>
-                    <label for="BagLen">Bag Length</label>
-                    <input type="text" name="BagLen" id="BagLen">
-                    <label for="BagWid">Bag Width</label>
-                    <input type="text" name="BagWid" id="BagWid">
-                    <label for="Gusset">Gusset</label>
-                    <input type="text" name="Gusset" id="Gusset">
-    
-                </form>
-
-            </form>
-            <div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
-            <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
-        </div> <!-- col end-->
-
-<!--
-        <section class="Bag_Dim">
-            <form action="">
-                <p>Bag Dimensions</p>
-                <label for="BagLen">Bag Length</label>
-                <input type="text" name="BagLen" id="BagLen">
-                <label for="BagWid">Bag Width</label>
-                <input type="text" name="BagWid" id="BagWid">
-                <label for="Gusset">Gusset</label>
-                <input type="text" name="Gusset" id="Gusset">
-
-            </form>
-        </section>
-
+                <select id ="BWidth" name="BWidth">
+                    <option value="10">10</option>
+                    <option value="10">11</option>
+                    <option value="10">12</option>
+                    <option value="10">13</option>
+                    <option value="10">14</option>
+                    </select>
         
+                <input class ="btn btn-primary" type="submit" value="Submit">
+            </form>
+        </div>
+        
+        <div id="BagForm">
+            <form action="">
+                <h2>Bag Dimensions</h2>
+                <label for="BagLen">Bag Length</label>
+            
+                <select id ="BagLength" name="BagLength">
+            
+                    <option value="20">20</option>
+                    <option value="21">21</option>
+                    <option value="22">22</option>
+                    <option value="23">23</option>
+                    <option value="24">24</option>
+                    <option value="25">25</option>
+                    <option value="26">26</option>
+                    <option value="27">27</option>
+                    <option value="28">28</option>
+                    <option value="29">29</option>
+                    <option value="30">30</option>
+                    <option value="31">31</option>
+                    <option value="32">32</option>
+                    <option value="33">33</option>
+                    <option value="34">34</option>
+                    <option value="35">35</option>
+                    <option value="36">36</option>
+                    <option value="37">37</option>
+                    </select>
+        
+                <label for="BagLen">Bag Width</label>
+                <select id ="BagWidth" name="BagWidth">
+                    <option value="10">10</option>
+                    <option value="10">11</option>
+                    <option value="10">12</option>
+                    <option value="10">13</option>
+                    <option value="10">14</option>
+                    </select>
+                    <label for="Guss">Gusset</label>
+                    <select id ="Gusset" name="Gusset">
+                        <option value="10">10</option>
+                        <option value="10">11</option>
+                        <option value="10">12</option>
+                        <option value="10">13</option>
+                        <option value="10">14</option>
+                        </select>
+                        <input class ="btn btn-primary" type="submit" value="Submit">
+            </form>
+        </div>    
+
     </div>
- -->
+    
+<div class="col">
+<button  id = "test">test</button>
+<button id="save" src="../static/img/save.png">
+<button id="send" src="../static/img/send.png">
+
+</div>
+        
+    <div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
+    <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
+</div> <!-- col end-->
+
+    <div class= "row">
+
+
  <div class ="col">
 
-   <!--           Draggable DIV
-<div id="mydiv">
-    <div id="mydivheader">Click here to move</div>
-</div>  --> 
 
 
   <!--ROTATE-->
   <div class = "rotate">
-  <input id="0" class="rotate0" type="submit" name="button1" value="0°"/>
-  <input id="90" class="rotate90" type="submit" name="button2" value="90°"/>
-  <input id="180" class="rotate180" type="submit" name="button3" value="180°"/>
-  <input id="270" class="rotate270" type="submit" name="button4" value="270°"/>
+        
+        <input id="0" class="rotate0" type="submit" name="button1" value="0°"/>
+        <input id="90" class="rotate90" type="submit" name="button2" value="90°"/>
+        <input id="180" class="rotate180" type="submit" name="button3" value="180°"/>
+        <input id="270" class="rotate270" type="submit" name="button4" value="270°"/>
 </div>
   <!-- TEST-->
   <canvas id="c" width="600" height="600"></canvas>
   <script src ="https://rawgit.com/kangax/fabric.js/master/dist/fabric.js"></script>
-  <script src ="../static/js/main.js"></script>
+  
 </div> <!-- cloumn  end-->
 
 <div class ="col">
     <!--<canvas id="heatmap" ></canvas>-->
+    <h2>Heatmap</h2>
+    <input id="submit_grid" type="submit" value="Update"/>
+    
+    
+    <div id="tester" style="width:530px; height: 600px"></div>
+    <script src ="../static/js/main.js"></script>
 </div>
 
 </div> <!-- row end-->
 
-</div> <!-- container end-->
+
 
 
 </body>
