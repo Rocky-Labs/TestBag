@@ -725,5 +725,5 @@ function Layer(){
 document.getElementById("PreviousLayers").onclick = function() {PreviousLayers()};
 function PreviousLayers(){
   var PrevLayer = document.getElementById("PreviousBags").value;
-  //testing
+  //test
 }
