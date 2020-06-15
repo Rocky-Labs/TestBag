@@ -7,17 +7,24 @@ var BagWid = 0;
 var Gusset = 0;
 // Canvas Variable Initialization
 var canvas = new fabric.Canvas('c', { selection: true });
-var grid = 25;
+
+//Grid Creation
+var gridsize = 25;
+var gridXLines = 25;
+var gridYLines = 25;
+
+//Canvas Size
 var unitScale = 10;
 var canvasWidth =  87.5 * unitScale;
 var canvasHeight = 61 * unitScale;
 canvas.setWidth(canvasWidth);
 canvas.setHeight(canvasHeight);
-
 // create grid
-for (var i = 0; i <= (600 / grid); i++) {
-  canvas.add(new fabric.Line([ i * grid, 0, i * grid, 600], { type:'line', stroke: '#ccc', selectable: false }));
-  canvas.add(new fabric.Line([ 0, i * grid, 600, i * grid], { type: 'line', stroke: '#ccc', selectable: false }))
+for (var i = 0; i <= gridXLines; i++) {
+  canvas.add(new fabric.Line([ i * gridsize, 0, i * gridsize, (gridsize*gridYLines)], { type:'line', stroke: '#ccc', selectable: false }));
+}
+for(var j = 0; j <= gridYLines; j++){
+  canvas.add(new fabric.Line([ 0, j * gridsize, (gridsize*gridXLines), j * gridsize], { type: 'line', stroke: '#ccc', selectable: false }));
 }
 
 // Snap to Grid
@@ -33,20 +40,23 @@ canvas.on('object:moving', function(options) {
 
 /***************************   BOX AND BAG ARRAYS   ***********************************/
 var rect1, rect2, rect3, rect4 = 0;
+var arrLength = gridYLines;
+var arrWidth = gridXLines;
 var RectPos = [[],[]];
 const RectPos1 = [[4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [8,4,4,4,8]];
 const RectPos2 = [[8,4,4,4,4,4,4,4,4],[4,2,2,2,2,2,2,2,2],[4,2,2,2,2,2,2,2,2],[4,2,2,2,2,2,2,2,2],[8,4,4,4,4,4,4,4,4]];
 const RectPos3 = [[8,4,4,4,8], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4]];
 const RectPos4 = [[4,4,4,4,4,4,4,4,8],[2,2,2,2,2,2,2,2,4],[2,2,2,2,2,2,2,2,4],[2,2,2,2,2,2,2,2,4],[4,4,4,4,4,4,4,4,8]];
 var BoxArray = [[],[]];
-for(var a3 = 0; a3<22; a3++){
+for(var a3 = 0; a3<arrLength-2; a3++){
   BoxArray.push([0]);
 }
-for(var a1 = 0; a1<24; a1++){
-  for(var a2 = BoxArray[a1].length; a2<24; a2++){
+for(var a1 = 0; a1<arrLength; a1++){
+  for(var a2 = BoxArray[a1].length; a2<arrWidth; a2++){
     BoxArray[a1].push(0);
   }
 }
+console.log(BoxArray);
 /**************************************************************************************/
 
 
@@ -66,6 +76,8 @@ var selectObject = 50;
 
 
 /******************************  DEFAULT BOX    ***************************************/
+var rect1G_width = 25;
+var rect1G_height = 25;
 
 var rect1G = new fabric.Rect({ 
   left: 675, 
@@ -679,6 +691,7 @@ function PreviousBags() {
 
 
 /******************************  CREATE A LAYER  *************************************/
+/*
 var LayerCount = 0;
 var CanvasItems = [];
 var LayerArray =[];
@@ -686,35 +699,54 @@ var LayerArray =[];
 document.getElementById("Layer").onclick = function() {Layer()};
 function Layer(){
   CanvasItems[LayerCount] = selectObject;
-  var tempArray = [[],[]];
+  if(LayerCount == 0){
+    var tempArray = [[],[]];
     for(var ab3 = 0; ab3<22; ab3++){
       tempArray.push([0]);
     }
     for(var ab1 = 0; ab1<24; ab1++){
       for(var ab2 = tempArray[ab1].length; ab2<24; ab2++){
-          tempArray[ab1].push(0);
+        tempArray[ab1].push(0);
       }
     }
-  if(LayerCount == 0){
     for(var ax = 0; ax <24; ax++){
       for(var ay = 0; ay < 24; ay++){
         tempArray[ax][ay] = tempArray[ax][ay]+BoxArray[ax][ay];
       }
     }
-    LayerArray[LayerCount] = tempArray;
+    LayerArray.push(tempArray);
+    //console.log("Layer Array in IF is: " + LayerArray);
+    LayerCount++;
   }
   else{
+    var tempArray = [[],[]];
+    for(var ab3 = 0; ab3<22; ab3++){
+      tempArray.push([0]);
+    }
+    for(var ab1 = 0; ab1<24; ab1++){
+      for(var ab2 = tempArray[ab1].length; ab2<24; ab2++){
+        tempArray[ab1].push(0);
+      }
+    }
+    console.log("LayerArray is: " + LayerArray[LayerCount-1]);
+    tempArray.push(LayerArray[LayerCount-1]);
+    //tempArray = tempArray.filter(e => String(e).trim());
+    console.log("Temp Array is: " + tempArray);
     for(var ax1 = 0; ax1 <24; ax1++){
       for(var ay1 = 0; ay1 < 24; ay1++){
+        console.log("ax1 is: "+ax1);
+        console.log("ay1 is: "+ay1);
+        console.log("tempArray is: "+tempArray[ax1][ay1]);
+        console.log("BoxArray is: "+ BoxArray[ax1][ay1]);
         tempArray[ax1][ay1] = BoxArray[ax1][ay1]-tempArray[ax1][ay1];
       }
     }
-    LayerArray[LayerCount] = tempArray;
+    LayerArray.push(tempArray);
+    LayerCount++;
   }
-  LayerCount++;
   console.log(LayerArray);
 }
-
+*/
 /**************************************************************************************/
 
 
@@ -727,3 +759,6 @@ function PreviousLayers(){
   var PrevLayer = document.getElementById("PreviousBags").value;
   //test
 }
+
+
+
