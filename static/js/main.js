@@ -10,8 +10,8 @@ var canvas = new fabric.Canvas('c', { selection: true });
 
 //Grid Creation
 var gridsize = 25;
-var gridXLines = 10;
-var gridYLines = 10;
+var gridXLines = 20;
+var gridYLines = 20;
 //Bag Creation
 var rectWidth = 125;
 var rectHeight = 200;
@@ -695,6 +695,8 @@ function delArray(delCoordl, delCoordt){
 document.getElementById("submit_grid").onclick = function() {submitGrid()};
 function submitGrid()
 {
+  document.getElementById('PreviousBags').value = "Select Bag";
+  
   var showData = BoxArray;
   var Lvalue = document.getElementById("PreviousLayers").value;
   if(Lvalue > 0){
@@ -730,13 +732,22 @@ function submitGrid()
 
 
 /*******************************  SELCT A PREVIOUS BAG  *******************************/
-
+var LayerCount = 0;
+var CanvasItemsFirst = [];
+var CanvasItems = [];
+var LayerSum = [];
 var selectObject = gridXLines+gridYLines+2;
-document.getElementById("PreviousBags").onclick = function() {PreviousBags()};
-function PreviousBags() {
+document.getElementById("PreviousBags").onchange = function() {PreviousBags1()};
+function PreviousBags1() {
   var BagNum = document.getElementById("PreviousBags").value;
   console.log("BagNum is: "+BagNum);
-  currentObject = selectObject-BagNum;
+  if(document.getElementById("PreviousLayers").value == 0){
+    currentObject = selectObject-BagNum;
+  }
+  else{
+    currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
+    console.log("INSIDE ELSE YOOO: "+CanvasItems[document.getElementById("PreviousLayers").value-1]);
+  }
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
   console.log("SelectObject is: "+ selectObject);
@@ -749,13 +760,16 @@ function PreviousBags() {
 
 /******************************  CREATE A LAYER  *************************************/
 
-var LayerCount = 0;
-var CanvasItems = [];
-var LayerSum = [];
 document.getElementById("Layer").onclick = function() {Layer()};
 function Layer(){
-  var storeCanvItems = selectObject;
+  var storeCanvItems = selectObject-1;
   CanvasItems[LayerCount] = storeCanvItems;
+  if(LayerCount == 0){
+    CanvasItemsFirst[0] = gridXLines+gridYLines+2;
+  }
+  else{
+    CanvasItemsFirst[LayerCount] = CanvasItems[LayerCount-1] + 1;
+  }
   var tempArray = [[],[]];    
   for(var ab3 = 0; ab3<BoxArrayRow-2; ab3++){
     tempArray.push([0]);
@@ -773,6 +787,7 @@ function Layer(){
   }
   LayerSum[LayerCount] = tempArray;
   LayerCount++;
+  console.log(CanvasItemsFirst);
   console.log(CanvasItems);
 }
 
@@ -783,29 +798,81 @@ function Layer(){
 
 
 /*****************************  SELECT A LAYER  ***************************************/
-var countClicks = 0;
+var movedObjects = [];
+var moveCount = 0;
 document.getElementById("PreviousLayers").onchange = function() {PreviousLayers()};
 function PreviousLayers(){
-  countClicks++;
   var ActiveLayer = document.getElementById("PreviousLayers").value;
+  var testArray = [[],[]];
+  testArray = LayerSum[ActiveLayer-1];
+  LayerArray = testArray;
+  console.log("LayerArray is: ");
+  console.log(LayerArray);
+  if(moveCount > 0){
+    console.log("WE INSIDE RETURN");
+    for(var x = 0; x <movedObjects.length; x++)
+    {
+      canvas.setActiveObject(canvas.item(movedObjects[x]));
+      canvas.item(movedObjects[x]).set({top:(canvas.getActiveObject().top+525)});
+      canvas.discardActiveObject();
+    }
+    movedObjects = [];
+    moveCount = 0;
+    canvas.renderAll();
+  }
   if(ActiveLayer>0){
-    console.log("WE IN HERE "+ActiveLayer);
-  var LastLayerItem = CanvasItems[ActiveLayer-1];
-  var FirstGridItem = gridXLines+gridYLines+2;
-  var LastGridItem = selectObject-1;
-  console.log("FirstGridItem is: "+FirstGridItem);
-  console.log("LastLayerItem is: "+LastLayerItem);
-  for(var x = FirstGridItem; x < LastLayerItem; x++){
-    canvas.setActiveObject(canvas.item(x));
-    canvas.renderAll();
-    canvas.item(x).set({top:(canvas.getActiveObject().top+75)});
-    canvas.renderAll();
-    console.log("x: "+x);
+    var FirstGridItem = gridXLines+gridYLines+2;
+    var LastGridItem = selectObject-1;
+    var nextLayerItem = CanvasItems[ActiveLayer];
+    var FirstLayerItem = CanvasItemsFirst[ActiveLayer-1];
+    var LastLayerItem = CanvasItems[ActiveLayer-1];
+  /*  console.log("First Grid Item is: " + FirstGridItem);
+    console.log("Last Grid item is: " + LastGridItem);
+    console.log("FirstLayerItem is: " + FirstLayerItem);
+    console.log("LastLayerItem is: "+LastLayerItem);
+    console.log("nextLayerItem is: "+nextLayerItem);*/
+    if(ActiveLayer == 1){
+      for(var x = LastLayerItem+1; x <= LastGridItem; x++){
+        canvas.setActiveObject(canvas.item(x));
+        canvas.item(x).set({top:(canvas.getActiveObject().top-525)});
+        canvas.discardActiveObject();
+        movedObjects[moveCount] = x;
+        moveCount++;
+      }
+      //console.log(movedObjects);
+      canvas.renderAll();
+    }
+    else if(nextLayerItem === undefined){
+      for(var x = FirstGridItem; x < FirstLayerItem; x++){
+        canvas.setActiveObject(canvas.item(x));
+        canvas.item(x).set({top:(canvas.getActiveObject().top-525)});
+        canvas.discardActiveObject();
+        movedObjects[moveCount] = x;
+        moveCount++;
+      }
+      //console.log(movedObjects);
+      canvas.renderAll();
+    }
+    else{
+      for(var x = FirstGridItem; x < FirstLayerItem; x++){
+        canvas.setActiveObject(canvas.item(x));
+        canvas.item(x).set({top:(canvas.getActiveObject().top-525)});
+        canvas.discardActiveObject();
+        movedObjects[moveCount] = x;
+        moveCount++;
+        }
+        for(var x = LastLayerItem+1; x <= LastGridItem; x++){
+          canvas.setActiveObject(canvas.item(x));
+          canvas.item(x).set({top:(canvas.getActiveObject().top-525)});
+          canvas.discardActiveObject();
+          movedObjects[moveCount] = x;
+          moveCount++;
+          }
+        //console.log(movedObjects);
+        canvas.renderAll(); 
+    }
   }
-  }
-
   submitGrid();
-
 }
 
 
