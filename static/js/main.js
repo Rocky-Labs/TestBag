@@ -9,13 +9,13 @@ var Gusset = 0;
 var canvas = new fabric.Canvas('c', { selection: true });
 
 //Grid Creation
-var gridsize = 25;
-var gridXLines = 10;
-var gridYLines = 10;
+var gridsize = 5;
+var gridXLines = 100;
+var gridYLines = 100;
 //Bag Creation
-var rectWidth = 125;
-var rectHeight = 200;
-var rectGussWid = 25;
+var rectWidth = 200;
+var rectHeight = 300;
+var rectGussWid = 30;
 //Canvas Size
 var unitScale = 10;
 var canvasWidth =  87.5 * unitScale;
@@ -773,6 +773,7 @@ function Layer(){
   }
   LayerSum[LayerCount] = tempArray;
   LayerCount++;
+  console.log("LayerArray");
   console.log(CanvasItems);
 }
 
