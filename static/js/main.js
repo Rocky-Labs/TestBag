@@ -741,6 +741,7 @@ document.getElementById("PreviousBags").onchange = function() {PreviousBags1()};
 function PreviousBags1() {
   var BagNum = document.getElementById("PreviousBags").value;
   console.log("BagNum is: "+BagNum);
+  
   if(document.getElementById("PreviousLayers").value == 0){
     currentObject = selectObject-BagNum;
   }
@@ -748,6 +749,7 @@ function PreviousBags1() {
     currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
     console.log("INSIDE ELSE YOOO: "+CanvasItems[document.getElementById("PreviousLayers").value-1]);
   }
+  console.log("Canvas Items: "+CanvasItemsFirst.length);
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
   console.log("SelectObject is: "+ selectObject);

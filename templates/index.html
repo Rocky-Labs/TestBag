@@ -45,6 +45,46 @@
     <div class="col">
         <div id ="BoxForm">
             <form id="fm">
+                <h2 class="subTitle">Dimensions (in)</h2>
+                <div class="group">
+
+                    <input class="test" type="number" min="35" max="50" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Box Length </label>
+                </div>
+                <div class="group">
+
+                    <input class="test" type="number" min="35" max="50" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Box Width </label>
+
+                
+                </div>
+                <div class="group">
+
+                    <input class="test" type="number" min="20" max="50" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Bag Length </label>
+                </div>
+                <div class="group">
+
+                    <input class="test" type="number" min="10" max="20" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Bag Width </label>
+                </div>
+                <div class="group">
+
+                    <input class="test" type="number" min="1" max="8" required>
+                    <span class="highlight"></span>
+                    <span class="bar"></span>
+                    <label>Gusset </label>
+                </div>
+                    <input class ="btn btn-primary" type="submit" value="Submit">
+                <!-- 
                 <h2>Box Dimensions</h2>
                 <label for="BoxLen">Box Length:</label>
                 <input type="text" id ="BLength" name="BLength">
@@ -53,55 +93,10 @@
                 <input type="text" id ="BWidth" name="BWidth">
         
                 <input class ="btn btn-primary" type="submit" value="Submit">
+                -->
             </form>
         </div>
-        
-        <div id="BagForm">
-            <form action="">
-                <h2>Bag Dimensions</h2>
-                <label for="BagLen">Bag Length</label>
-            
-                <select id ="BagLength" name="BagLength">
-            
-                    <option value="20">20</option>
-                    <option value="21">21</option>
-                    <option value="22">22</option>
-                    <option value="23">23</option>
-                    <option value="24">24</option>
-                    <option value="25">25</option>
-                    <option value="26">26</option>
-                    <option value="27">27</option>
-                    <option value="28">28</option>
-                    <option value="29">29</option>
-                    <option value="30">30</option>
-                    <option value="31">31</option>
-                    <option value="32">32</option>
-                    <option value="33">33</option>
-                    <option value="34">34</option>
-                    <option value="35">35</option>
-                    <option value="36">36</option>
-                    <option value="37">37</option>
-                    </select>
-        
-                <label for="BagLen">Bag Width</label>
-                <select id ="BagWidth" name="BagWidth">
-                    <option value="10">10</option>
-                    <option value="10">11</option>
-                    <option value="10">12</option>
-                    <option value="10">13</option>
-                    <option value="10">14</option>
-                    </select>
-                    <label for="Guss">Gusset</label>
-                    <select id ="Gusset" name="Gusset">
-                        <option value="10">10</option>
-                        <option value="10">11</option>
-                        <option value="10">12</option>
-                        <option value="10">13</option>
-                        <option value="10">14</option>
-                        </select>
-                        <input class ="btn btn-primary" type="submit" value="Submit">
-            </form>
-        </div>    
+           
 
     </div>
     
@@ -166,7 +161,7 @@
             </select>
 
 
-        <input id="moveLeft" class="moveLeft" type="button" name="moveLeft" value="moveLeft"/>
+        <input id="moveLeft" class="moveLeft" type="range" name="moveLeft" value="moveLeft"/>
         <input id="moveRight" class="moveRight" type="button" name="moveRight" value="moveRight"/>
         <input id="moveUp" class="moveUp" type="button" name="moveUp" value="moveUp"/>
         <input id="moveDown" class="moveDown" type="button" name="moveDown" value="moveDown"/>
