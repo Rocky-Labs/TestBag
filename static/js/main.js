@@ -876,6 +876,3 @@ function PreviousLayers(){
   }
   submitGrid();
 }
-
-
-

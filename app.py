@@ -22,7 +22,7 @@ def index():
 app.run(debug=True)
 @app.route('/formProcess', methods=['POST'])
 def process():
-    BoxLen = json.loads(request.form['BoxLen'] )
+    BoxLen = json.loads(request.form['box_Array'] )
     print(type(BoxLen))
     for row in BoxLen:
         for elem in row:
