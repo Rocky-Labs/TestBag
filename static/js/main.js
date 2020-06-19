@@ -963,4 +963,41 @@ function PreviousLayers(){
 }
 }
 
+
+
+var rangeSlider = function(){
+  var testbutton = $('#test');
+  var arr2 = [["a","b",,,"e"],["k","j"]];
+  console.log("INSIDE HERE YOOOO");
+  
+
+  testbutton.click(function() {
+    console.log("INSIDE CLICK");
+    var arr = BoxArray;
+    console.log(arr);
+    console.log(typeof LayerSum);
+   $.ajax({
+    data: {
+        box_Array: JSON.stringify(arr)
+    },
+    type: 'POST',
+    url: '/formProcess'
+})
+.done(function(data){
+    if(data.error){
+        $('#errorAlert').text(data.error).show();
+
+    }
+    else
+    {
+      console.log("it work");     // Add item to end of the list 
+    }
+   
+})
+
+
+  });
+
+};
+rangeSlider();
 }

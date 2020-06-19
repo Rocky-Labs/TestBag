@@ -13,24 +13,30 @@ app = Flask(__name__)
 #    id = db.Column(db.Integer, primary_key=True)
 #    BagPattern_name = db.Column(db.String(50))
 #    date_created = db.Column(db.DateTime, default = datetime.now )
-BoxLen = [0,1]
+BoxLen = [1,2],[1,2]
+
+@app.errorhandler(404)
+def page_not_found(e):
+    # note that we set the 404 status explicitly
+    return render_template('404.html'), 404
 
 @app.route('/')
 def index():
     return render_template('index.html')
     
 app.run(debug=True)
+
 @app.route('/formProcess', methods=['POST'])
-def process():
-    BoxLen = json.loads(request.form['box_Array'] )
+def formProcess():
+    BoxLen = json.loads(request.form['box_Array'])
     print(type(BoxLen))
     for row in BoxLen:
+        print()
         for elem in row:
             print(elem, end=' ')
     print()
-
     if BoxLen:
         newBox = 9000
-        return jsonify({'BoxLen':newBox})
+        return jsonify({'box_Array':newBox})
 
     return jsonify({'error': 'Missing Data'})
