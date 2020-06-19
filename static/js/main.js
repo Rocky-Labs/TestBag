@@ -759,7 +759,7 @@ function PreviousBags1() {
 
 
 /******************************  CREATE A LAYER  *************************************/
-
+var BoxCount = [];
 document.getElementById("Layer").onclick = function() {Layer()};
 function Layer(){
   var storeCanvItems = selectObject-1;
@@ -785,10 +785,21 @@ function Layer(){
       LayerArray[i][j] = 0;
     }
   }
+  BoxCount[LayerCount] = CanvasItems[LayerCount]-CanvasItemsFirst[LayerCount]+1;
   LayerSum[LayerCount] = tempArray;
   LayerCount++;
-  console.log(CanvasItemsFirst);
-  console.log(CanvasItems);
+  var selectList = document.getElementById("PreviousLayers");
+  var opt = document.createElement("option");
+  opt.setAttribute("value", LayerCount);
+  opt.text = LayerCount;
+  selectList.appendChild(opt);
+
+  console.log("LayerArray is: ");
+  console.log(LayerArray);
+  console.log("LayerSum is: ");
+  console.log(LayerSum);
+  console.log("Bos Count is: ");
+  console.log(BoxCount);
 }
 
 
@@ -800,16 +811,60 @@ function Layer(){
 /*****************************  SELECT A LAYER  ***************************************/
 var movedObjects = [];
 var moveCount = 0;
+var nonLayerCount = 0;
 document.getElementById("PreviousLayers").onchange = function() {PreviousLayers()};
 function PreviousLayers(){
-  var ActiveLayer = document.getElementById("PreviousLayers").value;
-  var testArray = [[],[]];
-  testArray = LayerSum[ActiveLayer-1];
-  LayerArray = testArray;
-  console.log("LayerArray is: ");
+ /* console.log("Init Layer Array is: ");
   console.log(LayerArray);
+  if(nonLayerCount==0){
+    var nonLayer = [[],[]];
+    for(var a3 = 0; a3<BoxArrayCol-2; a3++){
+      nonLayer.push([0]);
+    }
+    for(var a1 = 0; a1<BoxArrayCol; a1++){
+      for(var a2 = nonLayer[a1].length; a2<BoxArrayRow; a2++){
+        nonLayer[a1].push(0);
+      }
+    }
+    for(var x2 = 0; x2 < nonLayer[0].length; x2++){
+      for(var y2 = 0; y2 < nonLayer.length; y2++){
+        nonLayer[x2][y2] = nonLayer[x2][y2]+LayerArray[x2][y2];
+      }
+    }
+    nonLayerCount++;
+    console.log("nonLayer temp Array is: ");
+    console.log(nonLayer);
+  }*/
+
+  if(document.getElementById("PreviousLayers").value > 0){
+    var selectList2 = document.getElementById("PreviousBags");
+    for(var x = 1; x <= 16; x++){
+      selectList2.remove(1);
+    }
+    for(var x = 1; x <=BoxCount[document.getElementById("PreviousLayers").value-1]; x++){
+      console.log("x additon is: "+x);
+      var opt2 = document.createElement("option");
+      opt2.setAttribute("value", x);
+      opt2.text = x;
+      selectList2.appendChild(opt2);
+    }
+  }
+  else{
+    var selectList2 = document.getElementById("PreviousBags");
+    for(var x = 1; x <= 16; x++){
+      selectList2.remove(1);
+    }
+    for(var x = 1; x <=16; x++){
+      console.log("x additon is: "+x);
+      var opt2 = document.createElement("option");
+      opt2.setAttribute("value", x);
+      opt2.text = x;
+      selectList2.appendChild(opt2);
+    }
+  }
+
+  if(document.getElementById("PreviousLayers").value <= LayerCount && LayerCount > 0){
   if(moveCount > 0){
-    console.log("WE INSIDE RETURN");
     for(var x = 0; x <movedObjects.length; x++)
     {
       canvas.setActiveObject(canvas.item(movedObjects[x]));
@@ -820,6 +875,11 @@ function PreviousLayers(){
     moveCount = 0;
     canvas.renderAll();
   }
+  if(document.getElementById("PreviousLayers").value > 0){
+  var ActiveLayer = document.getElementById("PreviousLayers").value;
+  var testArray = [[],[]];
+  testArray = LayerSum[ActiveLayer-1];
+  LayerArray = testArray;
   if(ActiveLayer>0){
     var FirstGridItem = gridXLines+gridYLines+2;
     var LastGridItem = selectObject-1;
@@ -850,6 +910,13 @@ function PreviousLayers(){
         movedObjects[moveCount] = x;
         moveCount++;
       }
+      for(var x = LastLayerItem+1; x <= LastGridItem; x++){
+        canvas.setActiveObject(canvas.item(x));
+        canvas.item(x).set({top:(canvas.getActiveObject().top-525)});
+        canvas.discardActiveObject();
+        movedObjects[moveCount] = x;
+        moveCount++;
+      }
       //console.log(movedObjects);
       canvas.renderAll();
     }
@@ -872,7 +939,27 @@ function PreviousLayers(){
         canvas.renderAll(); 
     }
   }
+}
   submitGrid();
+  if(document.getElementById("PreviousLayers").value == 0)
+  {
+    //console.log(nonLayer);
+    //nonLayerCount--;
+    LayerArray = [[],[]];
+    for(var a3 = 0; a3<BoxArrayCol-2; a3++){
+      LayerArray.push([0]);
+    }
+    for(var a1 = 0; a1<BoxArrayCol; a1++){
+      for(var a2 = LayerArray[a1].length; a2<BoxArrayRow; a2++){
+        LayerArray[a1].push(0);
+      }
+    }
+  }
+  console.log("Layer Array after PrevLayer is: ");
+  console.log(LayerArray);
+  console.log("Layer Sum Array is: ");
+  console.log(LayerSum);
+}
 }
 
 
