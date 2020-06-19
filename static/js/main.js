@@ -7,15 +7,16 @@ var BagWid = 0;
 var Gusset = 0;
 // Canvas Variable Initialization
 var canvas = new fabric.Canvas('c', { selection: true });
-
+document.getElementById("confirm").onclick = function(){
+event.preventDefault();
 //Grid Creation
-var gridsize = 25;
-var gridXLines = 20;
-var gridYLines = 20;
+var gridsize = 10;
+var gridXLines = document.getElementById("BoxLength").value;
+var gridYLines = document.getElementById("BoxWidth").value;
 //Bag Creation
-var rectWidth = 200;
-var rectHeight = 300;
-var rectGussWid = 30;
+var rectWidth = document.getElementById("BagWidth").value *gridsize;
+var rectHeight = document.getElementById("BagLength").value * gridsize;
+var rectGussWid = document.getElementById("Gusset").value * gridsize;
 //Canvas Size
 var unitScale = 10;
 var canvasWidth =  87.5 * unitScale;
@@ -741,7 +742,6 @@ document.getElementById("PreviousBags").onchange = function() {PreviousBags1()};
 function PreviousBags1() {
   var BagNum = document.getElementById("PreviousBags").value;
   console.log("BagNum is: "+BagNum);
-  
   if(document.getElementById("PreviousLayers").value == 0){
     currentObject = selectObject-BagNum;
   }
@@ -749,7 +749,6 @@ function PreviousBags1() {
     currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
     console.log("INSIDE ELSE YOOO: "+CanvasItems[document.getElementById("PreviousLayers").value-1]);
   }
-  console.log("Canvas Items: "+CanvasItemsFirst.length);
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
   console.log("SelectObject is: "+ selectObject);
@@ -964,5 +963,4 @@ function PreviousLayers(){
 }
 }
 
-
-
+}
