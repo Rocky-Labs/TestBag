@@ -7,16 +7,15 @@ var BagWid = 0;
 var Gusset = 0;
 // Canvas Variable Initialization
 var canvas = new fabric.Canvas('c', { selection: true });
-document.getElementById("confirm").onclick = function(){
-event.preventDefault();
+
 //Grid Creation
 var gridsize = 10;
-var gridXLines = document.getElementById("BoxLength").value;
-var gridYLines = document.getElementById("BoxWidth").value;
+var gridXLines = 50;
+var gridYLines = 50;
 //Bag Creation
-var rectWidth = document.getElementById("BagWidth").value *gridsize;
-var rectHeight = document.getElementById("BagLength").value * gridsize;
-var rectGussWid = document.getElementById("Gusset").value * gridsize;
+var rectWidth = 200;
+var rectHeight = 300;
+var rectGussWid = 20;
 //Canvas Size
 var unitScale = 10;
 var canvasWidth =  87.5 * unitScale;
@@ -44,6 +43,7 @@ canvas.on('object:moving', function(options) {
 
 /***************************   BOX AND BAG ARRAYS   ***********************************/
 var rect1, rect2, rect3, rect4 = 0;
+var LayerComplete = 0;
 var arrRow = rectHeight/gridsize;
 var arrCol = rectWidth/gridsize;
 var arrGuss = rectGussWid/gridsize;
@@ -455,19 +455,30 @@ function rotate270() {
 //Move Select Shape LEFT 1 Cell
 document.getElementById("moveLeft").onclick = function() {moveLeft()};
 function moveLeft() {
+  if(document.getElementById("PreviousBags").value < 1){
+    alert("Choose the Bag you want to move");
+  }
+  else{
+  var valueMoved = document.getElementById("moveLeft").value;
+  //console.log("ValueMoved is: "+valueMoved);
   delCoordl = canvas.getActiveObject().left;
   delCoordt = canvas.getActiveObject().top;
   delArray(delCoordl,delCoordt);
-  canvas.item(currentObject).set({left:(canvas.getActiveObject().left-gridsize)});
+  canvas.item(currentObject).set({left:(canvas.getActiveObject().left-valueMoved)});
   leftCoord = canvas.getActiveObject().left;
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
+  }
 }
 
 //Move Select Shape RIGHT 1 Cell
 document.getElementById("moveRight").onclick = function() {moveRight()};
 function moveRight() {
+  if(document.getElementById("PreviousBags").value < 1){
+    alert("Choose the Bag you want to move");
+  }
+  else{
   delCoordl = canvas.getActiveObject().left;
   delCoordt = canvas.getActiveObject().top;
   delArray(delCoordl,delCoordt);
@@ -476,11 +487,16 @@ function moveRight() {
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
+  }
 }
 
 //Move Select Shape UP 1 Cell
 document.getElementById("moveUp").onclick = function() {moveUp()};
 function moveUp() {
+  if(document.getElementById("PreviousBags").value < 1){
+    alert("Choose the Bag you want to move");
+  }
+  else{
   delCoordl = canvas.getActiveObject().left;
   delCoordt = canvas.getActiveObject().top;
   delArray(delCoordl,delCoordt);
@@ -489,11 +505,16 @@ function moveUp() {
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
+  }
 }
 
 //Move Select Shape DOWN 1 Cell
 document.getElementById("moveDown").onclick = function() {moveDown()};
 function moveDown() {
+  if(document.getElementById("PreviousBags").value < 1){
+    alert("Choose the Bag you want to move");
+  }
+  else{
   delCoordl = canvas.getActiveObject().left;
   delCoordt = canvas.getActiveObject().top;
   delArray(delCoordl,delCoordt);
@@ -502,6 +523,7 @@ function moveDown() {
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
+  }
 }
 
 /**************************************************************************************/
@@ -515,18 +537,35 @@ document.onmousedown = mouseDown;
 function mouseDown(ev) {
   if(prevBags.includes(canvas.getActiveObject()) == false)
   {
-    copy();
+    if(document.getElementById("PreviousLayers").value > 0)
+    {
+      alert("Cannot Add a Bag to a completed Layer");
+    }
+    else{
+      copy();
+      console.log("IN COPY");
+    }
   }
 }
 
 //CALL PASTE FUNCTION WHEN MOUSE RELEASED
+var countBag = 1;
 document.onmouseup = mouseUp;
 function mouseUp(ev) {
   if(prevBags.includes(canvas.getActiveObject()) == false && activeObject ==1)
   {
+    console.log("IN PASTE");
     activeObject--;
     paste();
     selectObject++;
+    LayerComplete = 0;
+    var selectListx = document.getElementById("PreviousBags");
+    var optx = document.createElement("option");
+    optx.setAttribute("value", countBag);
+    optx.text = countBag;
+    selectListx.appendChild(optx);
+    console.log("WE PASTING: "+optx.value);
+    countBag++;
   }
 
 }
@@ -555,6 +594,7 @@ function paste(){
     leftCoord = copiedObject.left;
     topCoord = copiedObject.top;
     calcArray(leftCoord, topCoord);
+    copiedObject.set("selectable",false);
     canvas.discardActiveObject();
     canvas.renderAll();
     submitGrid();
@@ -618,7 +658,7 @@ function calcArray2(leftCoord, topCoord){
   var initi2 = i2;
   var initj2 = j2;
   var RectPosX = [[],[]];
-  console.log(prevRect[currentObject-(gridXLines+gridYLines+2)]);
+  //console.log(prevRect[currentObject-(gridXLines+gridYLines+2)]);
   if(prevRect[currentObject-(gridXLines+gridYLines+2)]==1){
     RectPosX = RectPos1;
   }
@@ -696,8 +736,11 @@ function delArray(delCoordl, delCoordt){
 document.getElementById("submit_grid").onclick = function() {submitGrid()};
 function submitGrid()
 {
-  document.getElementById('PreviousBags').value = "Select Bag";
-  
+  if(document.getElementById("PreviousBags").value >= 1){
+    canvas.discardActiveObject();
+    canvas.renderAll();
+    document.getElementById("PreviousBags").value = 0;    
+  }
   var showData = BoxArray;
   var Lvalue = document.getElementById("PreviousLayers").value;
   if(Lvalue > 0){
@@ -741,18 +784,19 @@ var selectObject = gridXLines+gridYLines+2;
 document.getElementById("PreviousBags").onchange = function() {PreviousBags1()};
 function PreviousBags1() {
   var BagNum = document.getElementById("PreviousBags").value;
-  console.log("BagNum is: "+BagNum);
+ // console.log("BagNum is: "+BagNum);
   if(document.getElementById("PreviousLayers").value == 0){
     currentObject = selectObject-BagNum;
   }
   else{
     currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
-    console.log("INSIDE ELSE YOOO: "+CanvasItems[document.getElementById("PreviousLayers").value-1]);
   }
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
-  console.log("SelectObject is: "+ selectObject);
-  console.log("CurrentObject is: "+currentObject);
+  console.log("Left: "+canvas.getActiveObject().left);
+  console.log("Top: "+canvas.getActiveObject().top);
+ // console.log("SelectObject is: "+ selectObject);
+ // console.log("CurrentObject is: "+currentObject);
 }
 
 /**************************************************************************************/
@@ -763,6 +807,18 @@ function PreviousBags1() {
 var BoxCount = [];
 document.getElementById("Layer").onclick = function() {Layer()};
 function Layer(){
+  if(countBag > 1){
+  countBag = 1;
+  var selectListy = document.getElementById("PreviousBags");
+  for(var x = 1; x <= 32; x++){
+    selectListy.remove(1);
+  }
+  if(document.getElementById("PreviousLayers").value > 0)
+  {
+    alert("Set to default Layer before creating a new Layer");
+  }
+  else{
+  LayerComplete = 1;
   var storeCanvItems = selectObject-1;
   CanvasItems[LayerCount] = storeCanvItems;
   if(LayerCount == 0){
@@ -795,12 +851,17 @@ function Layer(){
   opt.text = LayerCount;
   selectList.appendChild(opt);
 
-  console.log("LayerArray is: ");
+ /* console.log("LayerArray is: ");
   console.log(LayerArray);
   console.log("LayerSum is: ");
   console.log(LayerSum);
   console.log("Bos Count is: ");
-  console.log(BoxCount);
+  console.log(BoxCount);*/
+  }
+}
+else{
+  alert("Add Bags before creating a new Layer");
+}
 }
 
 
@@ -815,6 +876,11 @@ var moveCount = 0;
 var nonLayerCount = 0;
 document.getElementById("PreviousLayers").onchange = function() {PreviousLayers()};
 function PreviousLayers(){
+  if(LayerComplete == 0){
+    document.getElementById("PreviousLayers").value = 0;
+    alert("Complete Current Layer before Selecting a Previous Layer");
+  }
+  else{
  /* console.log("Init Layer Array is: ");
   console.log(LayerArray);
   if(nonLayerCount==0){
@@ -839,11 +905,10 @@ function PreviousLayers(){
 
   if(document.getElementById("PreviousLayers").value > 0){
     var selectList2 = document.getElementById("PreviousBags");
-    for(var x = 1; x <= 16; x++){
+    for(var x = 1; x <= 32; x++){
       selectList2.remove(1);
     }
     for(var x = 1; x <=BoxCount[document.getElementById("PreviousLayers").value-1]; x++){
-      console.log("x additon is: "+x);
       var opt2 = document.createElement("option");
       opt2.setAttribute("value", x);
       opt2.text = x;
@@ -852,15 +917,8 @@ function PreviousLayers(){
   }
   else{
     var selectList2 = document.getElementById("PreviousBags");
-    for(var x = 1; x <= 16; x++){
+    for(var x = 1; x <= 32; x++){
       selectList2.remove(1);
-    }
-    for(var x = 1; x <=16; x++){
-      console.log("x additon is: "+x);
-      var opt2 = document.createElement("option");
-      opt2.setAttribute("value", x);
-      opt2.text = x;
-      selectList2.appendChild(opt2);
     }
   }
 
@@ -956,11 +1014,8 @@ function PreviousLayers(){
       }
     }
   }
-  console.log("Layer Array after PrevLayer is: ");
-  console.log(LayerArray);
-  console.log("Layer Sum Array is: ");
-  console.log(LayerSum);
+  }
 }
 }
 
-}
+
