@@ -13,9 +13,9 @@ var gridsize = 25;
 var gridXLines = 20;
 var gridYLines = 20;
 //Bag Creation
-var rectWidth = 125;
-var rectHeight = 200;
-var rectGussWid = 25;
+var rectWidth = 200;
+var rectHeight = 300;
+var rectGussWid = 30;
 //Canvas Size
 var unitScale = 10;
 var canvasWidth =  87.5 * unitScale;
@@ -741,6 +741,7 @@ document.getElementById("PreviousBags").onchange = function() {PreviousBags1()};
 function PreviousBags1() {
   var BagNum = document.getElementById("PreviousBags").value;
   console.log("BagNum is: "+BagNum);
+  
   if(document.getElementById("PreviousLayers").value == 0){
     currentObject = selectObject-BagNum;
   }
@@ -748,6 +749,7 @@ function PreviousBags1() {
     currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
     console.log("INSIDE ELSE YOOO: "+CanvasItems[document.getElementById("PreviousLayers").value-1]);
   }
+  console.log("Canvas Items: "+CanvasItemsFirst.length);
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
   console.log("SelectObject is: "+ selectObject);

@@ -132,8 +132,9 @@ h1{
 h2{
   color: whitesmoke;
   text-align: center;
-  font-family: 'Roboto', sans-serif;
+  font-family: 'Roboto';
   font-size: x-large;
+  margin: 15px 5px 5px 5px;
  
 }
 label {
@@ -181,19 +182,7 @@ label {
   background-color: #2980b9;
 }
 
-#BoxForm {
-  position: absolute;
-  left: 50px;
   
-}
-
-
-#BagForm {
-  position: relative;
-  left: 250px;
-  
-}
-
 #save {
  background-image: url(/static/img/save.png);
  background-color: transparent; /* make the button transparent */
@@ -216,6 +205,121 @@ label {
  position: absolute;
   right: 50px;
  }
+
+ /* form starting stylings*/
+
+/* Chrome, Safari, Edge, Opera */
+input::-webkit-outer-spin-button,
+input::-webkit-inner-spin-button {
+  -webkit-appearance: none;
+  margin: 0;
+}
+
+/* Firefox */
+input[type=number] {
+  -moz-appearance: textfield;
+}
+ .group {
+   position: relative;
+   display: inline-block;
+   margin-top: 23px;
+   margin-bottom: 5px;
+   
+   
+ }
+ .test {
+   font-size: 18px;
+  padding: 5px 5px 5px 5px;
+  margin-right: 5px;
+  margin-bottom: 10px;
+  
+  display: inline;
+   
+   background-color:  #212121;
+   border: none;
+   border-bottom: 1px solid #757575;
+   color: white;
+   width:160px; 
+
+ }
+ .test:focus { outline:none;}
+ /* LABEL ======================================= */
+label 				 {
+  color:#999; 
+  font-size:18px;
+  font-weight:normal;
+  position: absolute;;
+  pointer-events:none;
+  left:5px;
+  top:10px;
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+
+/* active state */
+.test:focus ~ label, .test:valid ~ label 		{
+  top:-20px;
+  font-size:14px;
+  color:#5264AE;
+}
+
+/* BOTTOM BARS ================================= */
+.bar 	{ position:relative; display:block; width:160px; }
+.bar:before, .bar:after 	{
+  content:'';
+  height:2px; 
+  width:0;
+  bottom:11px; 
+  position:absolute;
+  background:#5264AE; 
+  transition:0.2s ease all; 
+  -moz-transition:0.2s ease all; 
+  -webkit-transition:0.2s ease all;
+}
+.bar:before {
+  left:50%;
+}
+.bar:after {
+  right:50%; 
+}
+
+/* active state */
+.test:focus ~ .bar:before, .test:focus ~ .bar:after {
+  width:50%;
+}
+
+/* HIGHLIGHTER ================================== */
+.highlight {
+  position:absolute;
+  height:60%; 
+  width:100px; 
+  top:25%; 
+  left:0;
+  pointer-events:none;
+  opacity:0.5;
+}
+
+/* active state */
+.test:focus ~ .highlight {
+  -webkit-animation:inputHighlighter 0.3s ease;
+  -moz-animation:inputHighlighter 0.3s ease;
+  animation:inputHighlighter 0.3s ease;
+}
+
+/* ANIMATIONS ================ */
+@-webkit-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@-moz-keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
+@keyframes inputHighlighter {
+	from { background:#5264AE; }
+  to 	{ width:0; background:transparent; }
+}
 
 
 
