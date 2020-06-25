@@ -9,13 +9,13 @@ var Gusset = 0;
 var canvas = new fabric.Canvas('c', { selection: true });
 
 //Grid Creation
-var gridsize = 10;
-var gridXLines = 50;
-var gridYLines = 50;
+var gridsize = 25;
+var gridXLines = 20;
+var gridYLines = 20;
 //Bag Creation
 var rectWidth = 200;
 var rectHeight = 300;
-var rectGussWid = 20;
+var rectGussWid = 25;
 //Canvas Size
 var unitScale = 10;
 var canvasWidth =  87.5 * unitScale;
@@ -43,7 +43,6 @@ canvas.on('object:moving', function(options) {
 
 /***************************   BOX AND BAG ARRAYS   ***********************************/
 var rect1, rect2, rect3, rect4 = 0;
-var LayerComplete = 0;
 var arrRow = rectHeight/gridsize;
 var arrCol = rectWidth/gridsize;
 var arrGuss = rectGussWid/gridsize;
@@ -199,6 +198,9 @@ else {
 /**************************************************************************************/
 
 /***************************  CALCULATION VARIABLES **********************************/
+var LayerComplete = 0;
+var trackEachBag = [];
+var trackEachBagCount = 0;
 var prevBags = [];
 var prevBagsCount = 0;
 var prevRect =[];
@@ -537,14 +539,8 @@ document.onmousedown = mouseDown;
 function mouseDown(ev) {
   if(prevBags.includes(canvas.getActiveObject()) == false)
   {
-    if(document.getElementById("PreviousLayers").value > 0)
-    {
-      alert("Cannot Add a Bag to a completed Layer");
-    }
-    else{
       copy();
-      console.log("IN COPY");
-    }
+  
   }
 }
 
@@ -554,17 +550,14 @@ document.onmouseup = mouseUp;
 function mouseUp(ev) {
   if(prevBags.includes(canvas.getActiveObject()) == false && activeObject ==1)
   {
-    console.log("IN PASTE");
     activeObject--;
     paste();
     selectObject++;
-    LayerComplete = 0;
     var selectListx = document.getElementById("PreviousBags");
     var optx = document.createElement("option");
     optx.setAttribute("value", countBag);
     optx.text = countBag;
     selectListx.appendChild(optx);
-    console.log("WE PASTING: "+optx.value);
     countBag++;
   }
 
@@ -624,23 +617,36 @@ else{
 }
 var initi = i;
 var initj = j;
-
+var temptrackBag = [[],[]];
+for(var a3 = 0; a3<BoxArrayCol-2; a3++){
+  temptrackBag.push([0]);
+}
+for(var a1 = 0; a1<BoxArrayCol; a1++){
+  for(var a2 = temptrackBag[a1].length; a2<BoxArrayRow; a2++){
+    temptrackBag[a1].push(0);
+  }
+}
 for(var x = 0; x < RectPos[0].length; x++){
   j = initj;
   for(var y = 0; y < RectPos.length; y++){
     BoxArray[j][i] = BoxArray[j][i] + RectPos[y][x];
     LayerArray[j][i] = LayerArray[j][i] + RectPos[y][x];
+    temptrackBag[j][i] = temptrackBag[j][i]+RectPos[y][x];
     j++;
   }
   i++;
 }
+
+trackEachBag[trackEachBagCount] = temptrackBag;
+trackEachBagCount++;
+console.log(trackEachBag);
+console.log(trackEachBagCount);
 }
 
 
 /**************************  ADDS MOVED BAG ARRAY TO BOX ARRAY  ************************/
 
 function calcArray2(leftCoord, topCoord){
-
   var i2 = leftCoord;
   var j2 = topCoord;
   if(i2 > 0){
@@ -818,7 +824,7 @@ function Layer(){
     alert("Set to default Layer before creating a new Layer");
   }
   else{
-  LayerComplete = 1;
+  LayerComplete++;
   var storeCanvItems = selectObject-1;
   CanvasItems[LayerCount] = storeCanvItems;
   if(LayerCount == 0){
@@ -877,6 +883,7 @@ var nonLayerCount = 0;
 document.getElementById("PreviousLayers").onchange = function() {PreviousLayers()};
 function PreviousLayers(){
   if(LayerComplete == 0){
+    console.log("Layer Complete is: "+LayerComplete);
     document.getElementById("PreviousLayers").value = 0;
     alert("Complete Current Layer before Selecting a Previous Layer");
   }
@@ -1018,4 +1025,36 @@ function PreviousLayers(){
 }
 }
 
+/*************************************************************************************/
+
+
+
+
+/******************************  Delete Bag  *****************************************/
+
+document.getElementById("DeleteBag").onclick = function () {DeleteBag()};
+function DeleteBag(){
+  console.log("Inside Delete Bag");
+  canvas.remove(canvas.getActiveObject());
+  var RemoveArray = [[],[]];
+  for(var a3 = 0; a3<BoxArrayCol-2; a3++){
+    RemoveArray.push([0]);
+  }
+  for(var a1 = 0; a1<BoxArrayCol; a1++){
+    for(var a2 = LayerArray[a1].length; a2<BoxArrayRow; a2++){
+      RemoveArray[a1].push(0);
+    }
+  }
+  //RemoveArray = trackEachBag[trackEachBagCount-1];
+  console.log("Remove Array is: ");
+  console.log(RemoveArray);
+  for(var i = 0; i<BoxArrayRow; i++){
+    for(var j = 0; j < BoxArrayCol; j++){
+      BoxArray[i][j] = BoxArray[i][j]-RemoveArray[i][j];
+    }
+  }
+  console.log("Box Array is: ");
+  console.log(BoxArray);
+  submitGrid();
+}
 
