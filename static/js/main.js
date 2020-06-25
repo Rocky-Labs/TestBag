@@ -3,7 +3,7 @@
 var canvas = new fabric.Canvas('c', { selection: true });
 
 //Grid Creation
-var gridsize = 10;
+var gridsize = 15;
 var gridXLines, gridYLines = 0;
 //Bag Creation
 var rectWidth, rectHeight, rectGussWid = 0;
@@ -14,37 +14,51 @@ var RectPos1 = [[],[]];
 var RectPos2 = [[],[]];
 var RectPos3 = [[],[]];
 var RectPos4 = [[],[]];
-var rect1, rect2, rect3, rect4 = 0;
 var arrRow, arrCol, arrGuss = 0;
 var BoxArrayRow, BoxArrayCol = 0;
+var selectObject = 0;
+/***************************  CALCULATION VARIABLES **********************************/
+var LayerComplete = 0;
+var trackEachBag = [];
+var trackEachBagCount = 0;
+var prevBags = [];
+var prevBagsCount = 0;
+var prevRect =[];
+var activeObject = 0;
+var delCoordl = 0;
+var delCoordt = 0;
+var leftCoord = 0;
+var topCoord = 0;
+var rotPos = 1;
+var currentObject = 0;
+/**************************************************************************************/
 document.getElementById("confirm").onclick = function(){setSize()};
 function setSize(){
   event.preventDefault();
-  gridXLines = document.getElementById("BoxLength").value;
-  gridYLines = document.getElementById("BoxWidth").value;
-  rectWidth = document.getElementById("BagWidth").value*gridsize;
-  rectHeight = document.getElementById("BagLength").value*gridsize;
-  rectGussWid = document.getElementById("Gusset").value*gridsize;
-  console.log("gridXLines is: "+gridXLines);
-
+  gridXLines = parseInt(document.getElementById("BoxLength").value,10);
+  gridYLines = parseInt(document.getElementById("BoxWidth").value,10);
+  rectWidth = parseInt(document.getElementById("BagWidth").value*gridsize,10);
+  rectHeight = parseInt(document.getElementById("BagLength").value*gridsize,10);
+  rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize,10);
+  selectObject = gridXLines + gridYLines + 2;
+  currentObject = selectObject;
 //Canvas Size
-var unitScale = 10;
-var canvasWidth =  87.5 * unitScale;
-var canvasHeight = 61 * unitScale;
-canvas.setWidth(canvasWidth);
-canvas.setHeight(canvasHeight);
+  var unitScale = 10;
+  var canvasWidth =  87.5 * unitScale;
+  var canvasHeight = 61 * unitScale;
+  canvas.setWidth(canvasWidth);
+  canvas.setHeight(canvasHeight);
 
 // create grid
-for (var i = 0; i <= gridXLines; i++) {
-  canvas.add(new fabric.Line([ i * gridsize, 0, i * gridsize, (gridsize*gridYLines)], { type:'line', stroke: '#ccc', selectable: false }));
-}
-for(var j = 0; j <= gridYLines; j++){
-  canvas.add(new fabric.Line([ 0, j * gridsize, (gridsize*gridXLines), j * gridsize], { type: 'line', stroke: '#ccc', selectable: false }));
-}
+  for (var i = 0; i <= gridXLines; i++) {
+    canvas.add(new fabric.Line([ i * gridsize, 0, i * gridsize, (gridsize*gridYLines)], { type:'line', stroke: '#ccc', selectable: false }));
+  }
+  for(var j = 0; j <= gridYLines; j++){
+    canvas.add(new fabric.Line([ 0, j * gridsize, (gridsize*gridXLines), j * gridsize], { type: 'line', stroke: '#ccc', selectable: false }));
+  }
 
 
 /***************************   BOX AND BAG ARRAYS   ***********************************/
-rect1, rect2, rect3, rect4 = 0;
 arrRow = rectHeight/gridsize;
 arrCol = rectWidth/gridsize;
 arrGuss = rectGussWid/gridsize;
@@ -203,27 +217,13 @@ canvas.on('object:moving', function(options) {
 });
 /**************************************************************************************/
 
-/***************************  CALCULATION VARIABLES **********************************/
-var LayerComplete = 0;
-var trackEachBag = [];
-var trackEachBagCount = 0;
-var prevBags = [];
-var prevBagsCount = 0;
-var prevRect =[];
-var activeObject = 0;
-var delCoordl = 0;
-var delCoordt = 0;
-var leftCoord = 0;
-var topCoord = 0;
-var rotPos = 1;
-var currentObject = 50;
-/**************************************************************************************/
 
 
 /******************************  ROTATE BOXES  ****************************************/
 //Rotate 0 Degrees
 document.getElementById("0").onclick = function() {rotate0()};
 function rotate0() {
+  console.log("selectObject is: " + selectObject);
   canvas.remove(canvas.item(selectObject));
   var rect1G = new fabric.Rect({ 
     left: 675, 
@@ -273,7 +273,7 @@ function rotate0() {
     centeredRotation: true
     
   });
-  rect1 = new fabric.Group([rect1G, rect1G1, rect1G2, rect1G3]);
+  var rect1 = new fabric.Group([rect1G, rect1G1, rect1G2, rect1G3]);
   canvas.add(rect1);
   canvas.renderAll();
   rotPos = 1;
@@ -331,7 +331,7 @@ function rotate90() {
     centeredRotation: true
     
   });
-  rect2 = new fabric.Group([rect2G, rect2G1, rect2G2, rect2G3]);
+  var rect2 = new fabric.Group([rect2G, rect2G1, rect2G2, rect2G3]);
   canvas.add(rect2);
   canvas.renderAll();
   rotPos = 2;
@@ -389,7 +389,7 @@ function rotate180() {
     centeredRotation: true
     
   });
-  rect3 = new fabric.Group([rect3G, rect3G1, rect3G2, rect3G3]);
+  var rect3 = new fabric.Group([rect3G, rect3G1, rect3G2, rect3G3]);
   canvas.add(rect3);
   canvas.renderAll();
   rotPos = 3;
@@ -447,7 +447,7 @@ function rotate270() {
     centeredRotation: true
     
   });
-  rect4 = new fabric.Group([rect4G, rect4G1, rect4G2, rect4G3]);
+  var rect4 = new fabric.Group([rect4G, rect4G1, rect4G2, rect4G3]);
   canvas.add(rect4);
   canvas.renderAll();
   rotPos = 4;
@@ -715,14 +715,23 @@ function delArray(delCoordl, delCoordt){
   var initi1 = i1;
   var initj1 = j1;
   var PrevRectPos = [[],[]];
+  console.log("INSIDE DEL ARRAY");
+  console.log("prevRect is: " + prevRect[currentObject-(gridXLines+gridYLines+2)]);
+  console.log("PrevRect[0] is:" + prevRect[0]);
+  console.log("Prev Rect is:");
+  console.log(prevRect);
   if(prevRect[currentObject-(gridXLines+gridYLines+2)]==1){
     PrevRectPos = RectPos1;
+ 
   }
   else if(prevRect[currentObject-(gridXLines+gridYLines+2)]==2){
     PrevRectPos = RectPos2;
+
+
   }
   else if(prevRect[currentObject-(gridXLines+gridYLines+2)]==3){
     PrevRectPos = RectPos3;
+
   }
   else
   {
@@ -790,7 +799,6 @@ var LayerCount = 0;
 var CanvasItemsFirst = [];
 var CanvasItems = [];
 var LayerSum = [];
-var selectObject = gridXLines+gridYLines+2;
 document.getElementById("PreviousBags").onchange = function() {PreviousBags1()};
 function PreviousBags1() {
   var BagNum = document.getElementById("PreviousBags").value;
@@ -801,6 +809,7 @@ function PreviousBags1() {
   else{
     currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
   }
+  console.log("currentObject inside select is: "+currentObject);
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
   console.log("Left: "+canvas.getActiveObject().left);
