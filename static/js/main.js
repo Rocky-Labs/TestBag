@@ -1,27 +1,39 @@
 /**************************   CANVAS CREATION   **************************************/
-//Variables Obtained
-var BoxLen = 0;
-var BoxWid = 0;
-var BagLen = 0;
-var BagWid = 0;
-var Gusset = 0;
 // Canvas Variable Initialization
 var canvas = new fabric.Canvas('c', { selection: true });
 
 //Grid Creation
-var gridsize = 25;
-var gridXLines = 20;
-var gridYLines = 20;
+var gridsize = 10;
+var gridXLines, gridYLines = 0;
 //Bag Creation
-var rectWidth = 200;
-var rectHeight = 300;
-var rectGussWid = 25;
+var rectWidth, rectHeight, rectGussWid = 0;
+var LayerArray = [[],[]];
+var BoxArray = [[],[]];
+var RectPos = [[],[]];
+var RectPos1 = [[],[]];
+var RectPos2 = [[],[]];
+var RectPos3 = [[],[]];
+var RectPos4 = [[],[]];
+var rect1, rect2, rect3, rect4 = 0;
+var arrRow, arrCol, arrGuss = 0;
+var BoxArrayRow, BoxArrayCol = 0;
+document.getElementById("confirm").onclick = function(){setSize()};
+function setSize(){
+  event.preventDefault();
+  gridXLines = document.getElementById("BoxLength").value;
+  gridYLines = document.getElementById("BoxWidth").value;
+  rectWidth = document.getElementById("BagWidth").value*gridsize;
+  rectHeight = document.getElementById("BagLength").value*gridsize;
+  rectGussWid = document.getElementById("Gusset").value*gridsize;
+  console.log("gridXLines is: "+gridXLines);
+
 //Canvas Size
 var unitScale = 10;
 var canvasWidth =  87.5 * unitScale;
 var canvasHeight = 61 * unitScale;
 canvas.setWidth(canvasWidth);
 canvas.setHeight(canvasHeight);
+
 // create grid
 for (var i = 0; i <= gridXLines; i++) {
   canvas.add(new fabric.Line([ i * gridsize, 0, i * gridsize, (gridsize*gridYLines)], { type:'line', stroke: '#ccc', selectable: false }));
@@ -30,27 +42,15 @@ for(var j = 0; j <= gridYLines; j++){
   canvas.add(new fabric.Line([ 0, j * gridsize, (gridsize*gridXLines), j * gridsize], { type: 'line', stroke: '#ccc', selectable: false }));
 }
 
-// Snap to Grid
-canvas.on('object:moving', function(options) { 
-  options.target.set({
-    left: Math.round(options.target.left / gridsize) * gridsize,
-    top: Math.round(options.target.top / gridsize) * gridsize
-  });
-});
-/**************************************************************************************/
-
-
 
 /***************************   BOX AND BAG ARRAYS   ***********************************/
-var rect1, rect2, rect3, rect4 = 0;
-var arrRow = rectHeight/gridsize;
-var arrCol = rectWidth/gridsize;
-var arrGuss = rectGussWid/gridsize;
-var BoxArrayRow = gridXLines;
-var BoxArrayCol = gridYLines;
-var RectPos = [[],[]];
+rect1, rect2, rect3, rect4 = 0;
+arrRow = rectHeight/gridsize;
+arrCol = rectWidth/gridsize;
+arrGuss = rectGussWid/gridsize;
+BoxArrayRow = gridXLines;
+BoxArrayCol = gridYLines;
 //Create Bag Position 0 Array
-var RectPos1 = [[],[]];
 for(var x = 0; x<arrRow-2; x++){
   RectPos1.push([0]);
 }
@@ -76,7 +76,6 @@ for(var x = 0; x < arrRow; x++){
   }
 }
 //Create Bag Position 90 Array
-var RectPos2 = [[],[]];
 for(var x = 0; x<arrCol-2; x++){
   RectPos2.push([0]);
 }
@@ -101,7 +100,6 @@ for(var x = 0; x < arrCol; x++){
   }
 }
 //Create Bag Positon 180 Array
-var RectPos3 = [[],[]];
 for(var x = 0; x<arrRow-2; x++){
   RectPos3.push([0]);
 }
@@ -128,7 +126,6 @@ for(var x = 0; x < arrRow; x++){
 }
 
 //Create Bag Position 270 Array
-var RectPos4 = [[],[]];
 for(var x = 0; x<arrCol-2; x++){
   RectPos4.push([0]);
 }
@@ -156,7 +153,6 @@ for(var x = 0; x < arrCol; x++){
 const RectPos2 = [[8,4,4,4,4,4,4,4,4],[4,2,2,2,2,2,2,2,2],[4,2,2,2,2,2,2,2,2],[4,2,2,2,2,2,2,2,2],[8,4,4,4,4,4,4,4,4]];
 const RectPos3 = [[8,4,4,4,8], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4], [4,2,2,2,4]];
 const RectPos4 = [[4,4,4,4,4,4,4,4,8],[2,2,2,2,2,2,2,2,4],[2,2,2,2,2,2,2,2,4],[2,2,2,2,2,2,2,2,4],[4,4,4,4,4,4,4,4,8]];*/
-var BoxArray = [[],[]];
 for(var a3 = 0; a3<BoxArrayCol-2; a3++){
   BoxArray.push([0]);
 }
@@ -165,7 +161,6 @@ for(var a1 = 0; a1<BoxArrayCol; a1++){
     BoxArray[a1].push(0);
   }
 }
-var LayerArray = [[],[]];
 for(var a3 = 0; a3<BoxArrayCol-2; a3++){
   LayerArray.push([0]);
 }
@@ -173,6 +168,8 @@ for(var a1 = 0; a1<BoxArrayCol; a1++){
   for(var a2 = LayerArray[a1].length; a2<BoxArrayRow; a2++){
     LayerArray[a1].push(0);
   }
+}
+rotate0();
 }
 /**************************************************************************************/
 
@@ -197,6 +194,15 @@ else {
 }
 /**************************************************************************************/
 
+// Snap to Grid
+canvas.on('object:moving', function(options) { 
+  options.target.set({
+    left: Math.round(options.target.left / gridsize) * gridsize,
+    top: Math.round(options.target.top / gridsize) * gridsize
+  });
+});
+/**************************************************************************************/
+
 /***************************  CALCULATION VARIABLES **********************************/
 var LayerComplete = 0;
 var trackEachBag = [];
@@ -215,8 +221,6 @@ var currentObject = 50;
 
 
 /******************************  ROTATE BOXES  ****************************************/
-//Default Box
-rotate0();
 //Rotate 0 Degrees
 document.getElementById("0").onclick = function() {rotate0()};
 function rotate0() {
@@ -269,7 +273,7 @@ function rotate0() {
     centeredRotation: true
     
   });
-  var rect1 = new fabric.Group([rect1G, rect1G1, rect1G2, rect1G3]);
+  rect1 = new fabric.Group([rect1G, rect1G1, rect1G2, rect1G3]);
   canvas.add(rect1);
   canvas.renderAll();
   rotPos = 1;
@@ -327,7 +331,7 @@ function rotate90() {
     centeredRotation: true
     
   });
-  var rect2 = new fabric.Group([rect2G, rect2G1, rect2G2, rect2G3]);
+  rect2 = new fabric.Group([rect2G, rect2G1, rect2G2, rect2G3]);
   canvas.add(rect2);
   canvas.renderAll();
   rotPos = 2;
@@ -385,7 +389,7 @@ function rotate180() {
     centeredRotation: true
     
   });
-  var rect3 = new fabric.Group([rect3G, rect3G1, rect3G2, rect3G3]);
+  rect3 = new fabric.Group([rect3G, rect3G1, rect3G2, rect3G3]);
   canvas.add(rect3);
   canvas.renderAll();
   rotPos = 3;
@@ -443,7 +447,7 @@ function rotate270() {
     centeredRotation: true
     
   });
-  var rect4 = new fabric.Group([rect4G, rect4G1, rect4G2, rect4G3]);
+  rect4 = new fabric.Group([rect4G, rect4G1, rect4G2, rect4G3]);
   canvas.add(rect4);
   canvas.renderAll();
   rotPos = 4;
@@ -1023,8 +1027,33 @@ function PreviousLayers(){
   }
   }
 }
+/******************************  Delete Bag  *****************************************/
 
-
+document.getElementById("DeleteBag").onclick = function () {DeleteBag()};
+function DeleteBag(){
+  console.log("Inside Delete Bag");
+  canvas.remove(canvas.getActiveObject());
+  var RemoveArray = [[],[]];
+  for(var a3 = 0; a3<BoxArrayCol-2; a3++){
+    RemoveArray.push([0]);
+  }
+  for(var a1 = 0; a1<BoxArrayCol; a1++){
+    for(var a2 = LayerArray[a1].length; a2<BoxArrayRow; a2++){
+      RemoveArray[a1].push(0);
+    }
+  }
+  //RemoveArray = trackEachBag[trackEachBagCount-1];
+  console.log("Remove Array is: ");
+  console.log(RemoveArray);
+  for(var i = 0; i<BoxArrayRow; i++){
+    for(var j = 0; j < BoxArrayCol; j++){
+      BoxArray[i][j] = BoxArray[i][j]-RemoveArray[i][j];
+    }
+  }
+  console.log("Box Array is: ");
+  console.log(BoxArray);
+  submitGrid();
+}
 
 
 var rangeSlider = function(){
