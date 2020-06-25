@@ -1023,38 +1023,43 @@ function PreviousLayers(){
   }
   }
 }
-}
-
-/*************************************************************************************/
 
 
 
 
-/******************************  Delete Bag  *****************************************/
+var rangeSlider = function(){
+  var testbutton = $('#test');
+  var arr2 = [["a","b",,,"e"],["k","j"]];
+  console.log("INSIDE HERE YOOOO");
+  
 
-document.getElementById("DeleteBag").onclick = function () {DeleteBag()};
-function DeleteBag(){
-  console.log("Inside Delete Bag");
-  canvas.remove(canvas.getActiveObject());
-  var RemoveArray = [[],[]];
-  for(var a3 = 0; a3<BoxArrayCol-2; a3++){
-    RemoveArray.push([0]);
-  }
-  for(var a1 = 0; a1<BoxArrayCol; a1++){
-    for(var a2 = LayerArray[a1].length; a2<BoxArrayRow; a2++){
-      RemoveArray[a1].push(0);
+  testbutton.click(function() {
+    console.log("INSIDE CLICK");
+    var arr = BoxArray;
+    console.log(arr);
+    console.log(typeof LayerSum);
+   $.ajax({
+    data: {
+        box_Array: JSON.stringify(arr)
+    },
+    type: 'POST',
+    url: '/formProcess'
+})
+.done(function(data){
+    if(data.error){
+        $('#errorAlert').text(data.error).show();
+
     }
-  }
-  //RemoveArray = trackEachBag[trackEachBagCount-1];
-  console.log("Remove Array is: ");
-  console.log(RemoveArray);
-  for(var i = 0; i<BoxArrayRow; i++){
-    for(var j = 0; j < BoxArrayCol; j++){
-      BoxArray[i][j] = BoxArray[i][j]-RemoveArray[i][j];
+    else
+    {
+      console.log("it work");     // Add item to end of the list 
     }
-  }
-  console.log("Box Array is: ");
-  console.log(BoxArray);
-  submitGrid();
-}
+   
+})
 
+
+  });
+
+};
+rangeSlider();
+}
