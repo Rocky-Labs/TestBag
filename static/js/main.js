@@ -34,17 +34,17 @@ var currentObject = 0;
 /**************************************************************************************/
 document.getElementById("confirm").onclick = function(){setSize()};
 function setSize(){
-  /*event.preventDefault();
+  event.preventDefault();
   gridXLines = parseInt(document.getElementById("BoxLength").value,10);
   gridYLines = parseInt(document.getElementById("BoxWidth").value,10);
   rectWidth = parseInt(document.getElementById("BagWidth").value*gridsize,10);
   rectHeight = parseInt(document.getElementById("BagLength").value*gridsize,10);
-  rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize,10);*/
-  gridXLines = 25;
+  rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize,10);
+  /*gridXLines = 25;
   gridYLines = 10;
   rectWidth = 125;
   rectHeight = 225;
-  rectGussWid = 25;
+  rectGussWid = 25;*/
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
@@ -558,7 +558,6 @@ document.onmouseup = mouseUp;
 function mouseUp(ev) {
   if(prevBags.includes(canvas.getActiveObject()) == false && activeObject ==1)
   {
-    console.log("countBag is: " + countBag);
     activeObject--;
     paste();
     if(correctPlacement == 1){
@@ -887,8 +886,8 @@ function Layer(){
         tempArray[ab1].push(0);
       }
     }
-    for(var i = 0; i < 10; i++){
-      for(var j = 0; j < 25; j++){
+    for(var i = 0; i < BoxArrayCol; i++){
+      for(var j = 0; j < BoxArrayRow; j++){
         tempArray[i][j] = LayerArray[i][j];
         LayerArray[i][j] = 0;
       }
