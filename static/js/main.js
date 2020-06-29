@@ -3,7 +3,7 @@
 var canvas = new fabric.Canvas('c', { selection: true });
 
 //Grid Creation
-var gridsize = 15;
+var gridsize = 25;
 var gridXLines, gridYLines = 0;
 //Bag Creation
 var rectWidth, rectHeight, rectGussWid = 0;
@@ -44,6 +44,11 @@ function setSize(){
   rectWidth = parseInt(document.getElementById("BagWidth").value*gridsize,10);
   rectHeight = parseInt(document.getElementById("BagLength").value*gridsize,10);
   rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize,10);
+  /*gridXLines = 25;
+  gridYLines = 10;
+  rectWidth = 125;
+  rectHeight = 225;
+  rectGussWid = 25;*/
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
@@ -227,7 +232,6 @@ canvas.on('object:moving', function(options) {
 //Rotate 0 Degrees
 document.getElementById("flip0").onclick = function() {rotate0()};
 function rotate0() {
-  console.log("selectObject is: " + selectObject);
   canvas.remove(canvas.item(selectObject));
   var rect1G = new fabric.Rect({ 
     left: 675, 
@@ -470,7 +474,6 @@ function moveLeft() {
   }
   else{
   var valueMoved = document.getElementById("moveLeft").value;
-  //console.log("ValueMoved is: "+valueMoved);
   delCoordl = canvas.getActiveObject().left;
   delCoordt = canvas.getActiveObject().top;
   delArray(delCoordl,delCoordt);
@@ -554,20 +557,32 @@ function mouseDown(ev) {
 
 //CALL PASTE FUNCTION WHEN MOUSE RELEASED
 var countBag = 1;
+var correctPlacement = 1;
 document.onmouseup = mouseUp;
 function mouseUp(ev) {
   if(prevBags.includes(canvas.getActiveObject()) == false && activeObject ==1)
   {
     activeObject--;
     paste();
+    if(correctPlacement == 1){
     selectObject++;
+    //adds to bag counter
     var selectListx = document.getElementById("PreviousBags");
-    var optx = document.createElement("option");
-    optx.setAttribute("value", countBag);
-    optx.text = countBag;
-    selectListx.appendChild(optx);
+    for(var x = 1; x <= 32; x++){
+      selectListx.remove(1);
+    }
+    var tempBag = countBag;
+    for(var x = 1; x <= countBag; x++)
+    {
+      var optx = document.createElement("option");
+      optx.setAttribute("value", tempBag);
+      optx.text = x;
+      selectListx.appendChild(optx);
+      tempBag--;
+    }
     countBag++;
   }
+}
 
 }
 
@@ -590,15 +605,40 @@ function paste(){
       top: Math.round(copiedObject.top / gridsize) * gridsize
     }));
     copiedObject = canvas.getActiveObject();
-    prevBags[prevBagsCount] = copiedObject;
-    prevBagsCount++;
-    leftCoord = copiedObject.left;
-    topCoord = copiedObject.top;
-    calcArray(leftCoord, topCoord);
-    copiedObject.set("selectable",false);
-    canvas.discardActiveObject();
-    canvas.renderAll();
-    submitGrid();
+    //placed correct
+    if((rotPos == 1 || rotPos == 3) && copiedObject.left >= 0 && copiedObject.top >= 0 && copiedObject.left <= (gridXLines*gridsize-rectWidth) 
+    && copiedObject.top <= (gridYLines*gridsize-rectHeight)){
+      correctPlacement = 1;
+      prevBags[prevBagsCount] = copiedObject;
+      prevBagsCount++;
+      leftCoord = copiedObject.left;
+      topCoord = copiedObject.top;
+      calcArray(leftCoord, topCoord);
+      copiedObject.set("selectable",false);
+      canvas.discardActiveObject();
+      canvas.renderAll();
+      submitGrid();
+    }
+    else if((rotPos == 2 || rotPos == 4) && copiedObject.left >= 0 && copiedObject.top >= 0 && copiedObject.left <= ((gridXLines*gridsize)-rectHeight) 
+    && copiedObject.top <= (gridYLines*gridsize-rectWidth)){
+      correctPlacement = 1;
+      prevBags[prevBagsCount] = copiedObject;
+      prevBagsCount++;
+      leftCoord = copiedObject.left;
+      topCoord = copiedObject.top;
+      calcArray(leftCoord, topCoord);
+      copiedObject.set("selectable",false);
+      canvas.discardActiveObject();
+      canvas.renderAll();
+      submitGrid();
+    }
+    else{
+      correctPlacement = 0;
+      alert("Bag was not placed on the grid");
+      canvas.remove(canvas.getActiveObject());
+      canvas.discardActiveObject();
+      canvas.renderAll();
+    }
 
 }
 
@@ -647,8 +687,6 @@ for(var x = 0; x < RectPos[0].length; x++){
 
 trackEachBag[trackEachBagCount] = temptrackBag;
 trackEachBagCount++;
-console.log(trackEachBag);
-console.log(trackEachBagCount);
 }
 
 
@@ -672,7 +710,6 @@ function calcArray2(leftCoord, topCoord){
   var initi2 = i2;
   var initj2 = j2;
   var RectPosX = [[],[]];
-  //console.log(prevRect[currentObject-(gridXLines+gridYLines+2)]);
   if(prevRect[currentObject-(gridXLines+gridYLines+2)]==1){
     RectPosX = RectPos1;
   }
@@ -719,11 +756,6 @@ function delArray(delCoordl, delCoordt){
   var initi1 = i1;
   var initj1 = j1;
   var PrevRectPos = [[],[]];
-  console.log("INSIDE DEL ARRAY");
-  console.log("prevRect is: " + prevRect[currentObject-(gridXLines+gridYLines+2)]);
-  console.log("PrevRect[0] is:" + prevRect[0]);
-  console.log("Prev Rect is:");
-  console.log(prevRect);
   if(prevRect[currentObject-(gridXLines+gridYLines+2)]==1){
     PrevRectPos = RectPos1;
  
@@ -810,21 +842,20 @@ var CanvasItems = [];
 var LayerSum = [];
 document.getElementById("PreviousBags").onchange = function() {PreviousBags1()};
 function PreviousBags1() {
-  var BagNum = document.getElementById("PreviousBags").value;
- // console.log("BagNum is: "+BagNum);
+  var BagNum = parseInt(document.getElementById("PreviousBags").value);
   if(document.getElementById("PreviousLayers").value == 0){
     currentObject = selectObject-BagNum;
   }
   else{
     currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
   }
-  console.log("currentObject inside select is: "+currentObject);
+  /*console.log("Current object is: " + currentObject);
+  console.log("doucment: " + document.getElementById("PreviousLayers").value);
+  console.log("Bagnum: "+ BagNum);
+  console.log("Canvas items are: ");
+  console.log(CanvasItems);*/
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
-  console.log("Left: "+canvas.getActiveObject().left);
-  console.log("Top: "+canvas.getActiveObject().top);
- // console.log("SelectObject is: "+ selectObject);
- // console.log("CurrentObject is: "+currentObject);
 }
 
 /**************************************************************************************/
@@ -836,60 +867,54 @@ var BoxCount = [];
 document.getElementById("Layer").onclick = function() {Layer()};
 function Layer(){
   if(countBag > 1){
-  countBag = 1;
-  var selectListy = document.getElementById("PreviousBags");
-  for(var x = 1; x <= 32; x++){
-    selectListy.remove(1);
-  }
-  if(document.getElementById("PreviousLayers").value > 0)
-  {
-    alert("Set to default Layer before creating a new Layer");
-  }
-  else{
-  LayerComplete++;
-  var storeCanvItems = selectObject-1;
-  CanvasItems[LayerCount] = storeCanvItems;
-  if(LayerCount == 0){
-    CanvasItemsFirst[0] = gridXLines+gridYLines+2;
-  }
-  else{
-    CanvasItemsFirst[LayerCount] = CanvasItems[LayerCount-1] + 1;
-  }
-  var tempArray = [[],[]];    
-  for(var ab3 = 0; ab3<BoxArrayRow-2; ab3++){
-    tempArray.push([0]);
-  }
-  for(var ab1 = 0; ab1<BoxArrayRow; ab1++){
-    for(var ab2 = tempArray[ab1].length; ab2<BoxArrayCol; ab2++){
-      tempArray[ab1].push(0);
+    countBag = 1;
+    var selectListy = document.getElementById("PreviousBags");
+    for(var x = 1; x <= 32; x++){
+      selectListy.remove(1);
+    }
+    if(document.getElementById("PreviousLayers").value > 0)
+    {
+      alert("Set to default Layer before creating a new Layer");
+    }
+    else{
+      LayerComplete++;
+      var storeCanvItems = selectObject-1;
+      CanvasItems[LayerCount] = storeCanvItems;
+      if(LayerCount == 0){
+        CanvasItemsFirst[0] = gridXLines+gridYLines+2;
+      }
+      else{
+        CanvasItemsFirst[LayerCount] = CanvasItems[LayerCount-1] + 1;
+      }
+    var tempArray = [[],[]];    
+    for(var ab3 = 0; ab3<BoxArrayCol-2; ab3++){
+      tempArray.push([0]);
+    }
+    for(var ab1 = 0; ab1<BoxArrayCol; ab1++){
+      for(var ab2 = tempArray[ab1].length; ab2<BoxArrayRow; ab2++){
+        tempArray[ab1].push(0);
+      }
+    }
+    for(var i = 0; i < BoxArrayCol; i++){
+      for(var j = 0; j < BoxArrayRow; j++){
+        tempArray[i][j] = LayerArray[i][j];
+        LayerArray[i][j] = 0;
+      }
+    }
+    BoxCount[LayerCount] = CanvasItems[LayerCount]-CanvasItemsFirst[LayerCount]+1;
+    LayerSum[LayerCount] = tempArray;
+    LayerCount++;
+    var selectListz = document.getElementById("PreviousLayers");
+    var optz = document.createElement("option");
+    optz.setAttribute("value",LayerCount);
+    optz.text = LayerCount;
+    selectListz.appendChild(optz);
     }
   }
-  for(var i = 0; i < BoxArrayRow; i++){
-    for(var j = 0; j < BoxArrayCol; j++){
-      tempArray[i][j] = LayerArray[i][j];
-      LayerArray[i][j] = 0;
-    }
-  }
-  BoxCount[LayerCount] = CanvasItems[LayerCount]-CanvasItemsFirst[LayerCount]+1;
-  LayerSum[LayerCount] = tempArray;
-  LayerCount++;
-  var selectList = document.getElementById("PreviousLayers");
-  var opt = document.createElement("option");
-  opt.setAttribute("value", LayerCount);
-  opt.text = LayerCount;
-  selectList.appendChild(opt);
 
- /* console.log("LayerArray is: ");
-  console.log(LayerArray);
-  console.log("LayerSum is: ");
-  console.log(LayerSum);
-  console.log("Bos Count is: ");
-  console.log(BoxCount);*/
+  else{
+    alert("Add Bags before creating a new Layer");
   }
-}
-else{
-  alert("Add Bags before creating a new Layer");
-}
 }
 
 
@@ -905,43 +930,23 @@ var nonLayerCount = 0;
 document.getElementById("PreviousLayers").onchange = function() {PreviousLayers()};
 function PreviousLayers(){
   if(LayerComplete == 0){
-    console.log("Layer Complete is: "+LayerComplete);
     document.getElementById("PreviousLayers").value = 0;
     alert("Complete Current Layer before Selecting a Previous Layer");
   }
   else{
- /* console.log("Init Layer Array is: ");
-  console.log(LayerArray);
-  if(nonLayerCount==0){
-    var nonLayer = [[],[]];
-    for(var a3 = 0; a3<BoxArrayCol-2; a3++){
-      nonLayer.push([0]);
-    }
-    for(var a1 = 0; a1<BoxArrayCol; a1++){
-      for(var a2 = nonLayer[a1].length; a2<BoxArrayRow; a2++){
-        nonLayer[a1].push(0);
-      }
-    }
-    for(var x2 = 0; x2 < nonLayer[0].length; x2++){
-      for(var y2 = 0; y2 < nonLayer.length; y2++){
-        nonLayer[x2][y2] = nonLayer[x2][y2]+LayerArray[x2][y2];
-      }
-    }
-    nonLayerCount++;
-    console.log("nonLayer temp Array is: ");
-    console.log(nonLayer);
-  }*/
-
   if(document.getElementById("PreviousLayers").value > 0){
     var selectList2 = document.getElementById("PreviousBags");
     for(var x = 1; x <= 32; x++){
       selectList2.remove(1);
     }
-    for(var x = 1; x <=BoxCount[document.getElementById("PreviousLayers").value-1]; x++){
-      var opt2 = document.createElement("option");
-      opt2.setAttribute("value", x);
-      opt2.text = x;
-      selectList2.appendChild(opt2);
+    var temp = BoxCount[LayerCount-1];
+    var selectList = document.getElementById("PreviousBags");
+    for(var x = 1; x <= BoxCount[LayerCount-1]; x++){
+      var optx = document.createElement("option");
+      optx.setAttribute("value", temp);
+      optx.text = x;
+      selectList.appendChild(optx);
+      temp--;
     }
   }
   else{
@@ -974,11 +979,6 @@ function PreviousLayers(){
     var nextLayerItem = CanvasItems[ActiveLayer];
     var FirstLayerItem = CanvasItemsFirst[ActiveLayer-1];
     var LastLayerItem = CanvasItems[ActiveLayer-1];
-  /*  console.log("First Grid Item is: " + FirstGridItem);
-    console.log("Last Grid item is: " + LastGridItem);
-    console.log("FirstLayerItem is: " + FirstLayerItem);
-    console.log("LastLayerItem is: "+LastLayerItem);
-    console.log("nextLayerItem is: "+nextLayerItem);*/
     if(ActiveLayer == 1){
       for(var x = LastLayerItem+1; x <= LastGridItem; x++){
         canvas.setActiveObject(canvas.item(x));
@@ -987,7 +987,6 @@ function PreviousLayers(){
         movedObjects[moveCount] = x;
         moveCount++;
       }
-      //console.log(movedObjects);
       canvas.renderAll();
     }
     else if(nextLayerItem === undefined){
@@ -1005,7 +1004,6 @@ function PreviousLayers(){
         movedObjects[moveCount] = x;
         moveCount++;
       }
-      //console.log(movedObjects);
       canvas.renderAll();
     }
     else{
@@ -1023,7 +1021,6 @@ function PreviousLayers(){
           movedObjects[moveCount] = x;
           moveCount++;
           }
-        //console.log(movedObjects);
         canvas.renderAll(); 
     }
   }
@@ -1031,8 +1028,6 @@ function PreviousLayers(){
   submitGrid();
   if(document.getElementById("PreviousLayers").value == 0)
   {
-    //console.log(nonLayer);
-    //nonLayerCount--;
     LayerArray = [[],[]];
     for(var a3 = 0; a3<BoxArrayCol-2; a3++){
       LayerArray.push([0]);
@@ -1045,11 +1040,15 @@ function PreviousLayers(){
   }
   }
 }
+}
 /******************************  Delete Bag  *****************************************/
-
+var LayerLevel = 0;
+var BoxTrack = 0;
 document.getElementById("DeleteBag").onclick = function () {DeleteBag()};
 function DeleteBag(){
-  console.log("Inside Delete Bag");
+  selectObject--;
+  if(document.getElementById("PreviousLayers").value == 0){
+  countBag--;}
   canvas.remove(canvas.getActiveObject());
   var RemoveArray = [[],[]];
   for(var a3 = 0; a3<BoxArrayCol-2; a3++){
@@ -1060,16 +1059,48 @@ function DeleteBag(){
       RemoveArray[a1].push(0);
     }
   }
-  //RemoveArray = trackEachBag[trackEachBagCount-1];
-  console.log("Remove Array is: ");
-  console.log(RemoveArray);
-  for(var i = 0; i<BoxArrayRow; i++){
-    for(var j = 0; j < BoxArrayCol; j++){
-      BoxArray[i][j] = BoxArray[i][j]-RemoveArray[i][j];
+  RemoveArray = trackEachBag[trackEachBagCount - document.getElementById("PreviousBags").value];
+  trackEachBag.splice(trackEachBagCount - document.getElementById("PreviousBags").value,1);
+  var selectListrem = document.getElementById("PreviousBags");
+  trackEachBagCount--;
+  canvas.renderAll();
+  for(var x = 1; x <= 32; x++){
+    selectListrem.remove(1);
+  }
+  if(document.getElementById("PreviousLayers").value < 1)
+  {
+    var temp = trackEachBagCount;
+    for(var x = 1; x <= trackEachBagCount; x++){
+      var optx = document.createElement("option");
+      optx.setAttribute("value", temp);
+      optx.text = x;
+      selectListrem.appendChild(optx);
+      temp--;
     }
   }
-  console.log("Box Array is: ");
-  console.log(BoxArray);
+  else{
+    if(LayerLevel != document.getElementById("PreviousLayers").value){
+      BoxTrack = BoxCount[document.getElementById("PreviousLayers").value-1];
+    }
+    CanvasItems[document.getElementById("PreviousLayers").value-1] = CanvasItems[document.getElementById("PreviousLayers").value-1] - 1;
+    BoxTrack--;
+    var temp = BoxTrack;
+    for(var x = 1; x <= BoxTrack; x++){
+      var optx = document.createElement("option");
+      optx.setAttribute("value", temp);
+      optx.text = x;
+      selectListrem.appendChild(optx);
+      temp--;
+    }
+    BoxCount[document.getElementById("PreviousLayers").value-1] =  BoxCount[document.getElementById("PreviousLayers").value-1]-1;
+    LayerLevel = document.getElementById("PreviousLayers").value;
+  }
+  for(var i = 0; i<BoxArrayCol; i++){
+    for(var j = 0; j < BoxArrayRow; j++){
+      BoxArray[i][j] = BoxArray[i][j]-RemoveArray[i][j];
+        LayerArray[i][j] = LayerArray[i][j]-RemoveArray[i][j];
+    }
+  }
   submitGrid();
 }
 
@@ -1077,14 +1108,10 @@ function DeleteBag(){
 var rangeSlider = function(){
   var testbutton = $('#test');
   var arr2 = [["a","b",,,"e"],["k","j"]];
-  console.log("INSIDE HERE YOOOO");
   
 
   testbutton.click(function() {
-    console.log("INSIDE CLICK");
     var arr = BoxArray;
-    console.log(arr);
-    console.log(typeof LayerSum);
    $.ajax({
     data: {
         box_Array: JSON.stringify(arr)
@@ -1099,8 +1126,6 @@ var rangeSlider = function(){
     }
     else
     {
-      console.log("it work");     // Add item to end of the list 
-   
     }
    
 })
@@ -1110,4 +1135,4 @@ var rangeSlider = function(){
 
 };
 rangeSlider();
-}
+
