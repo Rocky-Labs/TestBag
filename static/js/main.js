@@ -32,7 +32,11 @@ var topCoord = 0;
 var rotPos = 1;
 var currentObject = 0;
 /**************************************************************************************/
-document.getElementById("confirm").onclick = function(){setSize()};
+document.getElementById("confirm").onclick = function(){
+
+  setSize()
+  document.getElementById("ButtonArr").style.display ='inline-block';
+};
 function setSize(){
   event.preventDefault();
   gridXLines = parseInt(document.getElementById("BoxLength").value,10);
@@ -221,7 +225,7 @@ canvas.on('object:moving', function(options) {
 
 /******************************  ROTATE BOXES  ****************************************/
 //Rotate 0 Degrees
-document.getElementById("0").onclick = function() {rotate0()};
+document.getElementById("flip0").onclick = function() {rotate0()};
 function rotate0() {
   console.log("selectObject is: " + selectObject);
   canvas.remove(canvas.item(selectObject));
@@ -280,7 +284,7 @@ function rotate0() {
 }
 
 //Rotate 90 Degrees
-document.getElementById("90").onclick = function() {rotate90()};
+document.getElementById("flip90").onclick = function() {rotate90()};
 function rotate90() {
   canvas.remove(canvas.item(selectObject));
   var rect2G = new fabric.Rect({ 
@@ -338,7 +342,7 @@ function rotate90() {
 }
 
 //Rotate 180 Degrees
-document.getElementById("180").onclick = function() {rotate180()};
+document.getElementById("flip180").onclick = function() {rotate180()};
 function rotate180() {
   canvas.remove(canvas.item(selectObject));
   var rect3G = new fabric.Rect({ 
@@ -396,7 +400,7 @@ function rotate180() {
 }
 
 //Rotate 270 Degrees
-document.getElementById("270").onclick = function() {rotate270()};
+document.getElementById("flip270").onclick = function() {rotate270()};
 function rotate270() {
   canvas.remove(canvas.item(selectObject));
   var rect4G = new fabric.Rect({ 
@@ -786,7 +790,12 @@ function submitGrid()
       showticklabels: false,
       zeroline: false,
       ticklen: 0
-    }
+    },
+
+    
+      plot_bgcolor: '#212121',
+      paper_bgcolor: '#212121'
+
   };
   Plotly.newPlot('tester', data, layout);  
 }
@@ -1091,6 +1100,7 @@ var rangeSlider = function(){
     else
     {
       console.log("it work");     // Add item to end of the list 
+   
     }
    
 })

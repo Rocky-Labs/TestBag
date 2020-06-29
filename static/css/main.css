@@ -36,7 +36,65 @@ z-index: 999999;
     -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
   }
 }
+#ButtonArr {
+  display: none;
+  position: absolute;
+  height: 100px;
+  width: 100px;
+  top: 2px;
+  right: 30px;
 
+}
+#flip0 {
+  
+  background-image: url(/static/img/flipUp.png);
+  background-color: transparent; /* make the button transparent */
+   background-repeat: no-repeat; 
+   border: transparent;
+  height: 32px;
+  width: 32px;
+  display:inline-block;
+  position: relative;
+  margin: 5px 5px 5px 5px;
+}
+
+#flip180 {
+  
+  background-image: url(/static/img/flip.png);
+  background-color: transparent; /* make the button transparent */
+   background-repeat: no-repeat; 
+   border: transparent;
+  height: 32px;
+  width: 32px;
+  display:inline-block;
+  position: relative;
+  margin: 5px 5px 5px 5px;
+ 
+}
+#flip90 {
+  
+  background-image: url(/static/img/flipHorizontal.png);
+  background-color: transparent; /* make the button transparent */
+   background-repeat: no-repeat; 
+   border: transparent;
+  height: 32px;
+  width: 32px;
+  display:inline-block;
+  position: relative;
+  margin: 5px 5px 5px 5px;
+}
+#flip270 {
+  
+  background-image: url(/static/img/flipRight.png);
+  background-color: transparent; /* make the button transparent */
+   background-repeat: no-repeat; 
+   border: transparent;
+  height: 32px;
+  width: 32px;
+  display:inline-block;
+  position: relative;
+  margin: 5px 5px 5px 5px;
+}
 #tester {
   background-color: #212121;
 }
