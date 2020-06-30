@@ -3,7 +3,7 @@
 var canvas = new fabric.Canvas('c', { selection: true });
 
 //Grid Creation
-var gridsize = 25;
+var gridsize = 10;
 var gridXLines, gridYLines = 0;
 //Bag Creation
 var rectWidth, rectHeight, rectGussWid = 0;
@@ -1107,7 +1107,7 @@ function DeleteBag(){
 
 var rangeSlider = function(){
   var testbutton = $('#test');
-  var arr2 = [["a","b",,,"e"],["k","j"]];
+ 
   
 
   testbutton.click(function() {
