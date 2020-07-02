@@ -31,20 +31,24 @@ var leftCoord = 0;
 var topCoord = 0;
 var rotPos = 1;
 var currentObject = 0;
+
+var BagPos = [];
+var BagLeft = [];
+var BagTop = [];
 /**************************************************************************************/
 document.getElementById("confirm").onclick = function(){setSize()};
 function setSize(){
-  event.preventDefault();
+  /*event.preventDefault();
   gridXLines = parseInt(document.getElementById("BoxLength").value,10);
   gridYLines = parseInt(document.getElementById("BoxWidth").value,10);
   rectWidth = parseInt(document.getElementById("BagWidth").value*gridsize,10);
   rectHeight = parseInt(document.getElementById("BagLength").value*gridsize,10);
-  rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize,10);
-  /*gridXLines = 25;
+  rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize,10);*/
+  gridXLines = 25;
   gridYLines = 10;
   rectWidth = 125;
   rectHeight = 225;
-  rectGussWid = 25;*/
+  rectGussWid = 25;
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
@@ -478,6 +482,7 @@ function moveLeft() {
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
+  submitGrid();
   }
 }
 
@@ -496,6 +501,7 @@ function moveRight() {
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
+  submitGrid();
   }
 }
 
@@ -514,6 +520,7 @@ function moveUp() {
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
+  submitGrid();
   }
 }
 
@@ -532,6 +539,7 @@ function moveDown() {
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
+  submitGrid();
   }
 }
 
@@ -544,10 +552,15 @@ function moveDown() {
 //CALL COPY FUNCTION WHEN MOUSE CLICKED
 document.onmousedown = mouseDown;
 function mouseDown(ev) {
+
   if(prevBags.includes(canvas.getActiveObject()) == false)
   {
-      copy();
-  
+    console.log("INSIDE HERE");
+    document.getElementById("PreviousBags").value = 0;    
+    copy();
+  }
+  else{
+    console.log("NOT INSIDE COPY");
   }
 }
 
@@ -682,6 +695,16 @@ for(var x = 0; x < RectPos[0].length; x++){
 }
 
 trackEachBag[trackEachBagCount] = temptrackBag;
+BagPos[trackEachBagCount] = rotPos;
+BagLeft[trackEachBagCount] = leftCoord;
+BagTop[trackEachBagCount] = topCoord;
+console.log("Current Object is: " + currentObject);
+console.log("BagPos is:");
+console.log(BagPos);
+console.log("BagLeft is:");
+console.log(BagLeft);
+console.log("BagTop is:");
+console.log(BagTop);
 trackEachBagCount++;
 }
 
@@ -691,6 +714,9 @@ trackEachBagCount++;
 function calcArray2(leftCoord, topCoord){
   var i2 = leftCoord;
   var j2 = topCoord;
+  /*console.log("current object is: " + currentObject);
+  console.log("select object is: " + selectObject);
+  console.log("VYOOOOOO: "+document.getElementById("PreviousBags").text);*/
   if(i2 > 0){
     i2 = i2/gridsize;
   }
@@ -787,11 +813,6 @@ function delArray(delCoordl, delCoordt){
 document.getElementById("submit_grid").onclick = function() {submitGrid()};
 function submitGrid()
 {
-  if(document.getElementById("PreviousBags").value >= 1){
-    canvas.discardActiveObject();
-    canvas.renderAll();
-    document.getElementById("PreviousBags").value = 0;    
-  }
   var showData = BoxArray;
   var Lvalue = document.getElementById("PreviousLayers").value;
   if(Lvalue > 0){
@@ -831,9 +852,10 @@ var LayerCount = 0;
 var CanvasItemsFirst = [];
 var CanvasItems = [];
 var LayerSum = [];
-document.getElementById("PreviousBags").onchange = function() {PreviousBags1()};
+document.getElementById("PreviousBags").onclick = function() {PreviousBags1()};
 function PreviousBags1() {
-  var BagNum = parseInt(document.getElementById("PreviousBags").value);
+  if(document.getElementById("PreviousBags").value > 0){
+  var BagNum = parseInt(document.getElementById("PreviousBags").value,10);
   if(document.getElementById("PreviousLayers").value == 0){
     currentObject = selectObject-BagNum;
   }
@@ -847,6 +869,7 @@ function PreviousBags1() {
   console.log(CanvasItems);*/
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
+}
 }
 
 /**************************************************************************************/
@@ -930,9 +953,9 @@ function PreviousLayers(){
     for(var x = 1; x <= 32; x++){
       selectList2.remove(1);
     }
-    var temp = BoxCount[LayerCount-1];
+    var temp = BoxCount[document.getElementById("PreviousLayers").value-1];
     var selectList = document.getElementById("PreviousBags");
-    for(var x = 1; x <= BoxCount[LayerCount-1]; x++){
+    for(var x = 1; x <= BoxCount[document.getElementById("PreviousLayers").value-1]; x++){
       var optx = document.createElement("option");
       optx.setAttribute("value", temp);
       optx.text = x;
@@ -1050,11 +1073,26 @@ function DeleteBag(){
       RemoveArray[a1].push(0);
     }
   }
-  RemoveArray = trackEachBag[trackEachBagCount - document.getElementById("PreviousBags").value];
+  var ForwardLayerBags = 0;
+  if(document.getElementById("PreviousLayers").value > 0){
+  for(var x = document.getElementById("PreviousLayers").value; x < LayerComplete; x++){
+    ForwardLayerBags = ForwardLayerBags + BoxCount[x];
+  }
+  }
+  var atemp = document.getElementById("PreviousBags").value;
+  console.log("trackEachBagCount is: " + trackEachBagCount);
+  console.log("Bag Button Value: " + atemp);
+  console.log("ForwardLayerBags are: " + ForwardLayerBags);
+  console.log("trackEachBag inside is: " + trackEachBagCount- atemp - ForwardLayerBags);
+  RemoveArray = trackEachBag[trackEachBagCount-atemp-ForwardLayerBags];
+  console.log("trackEach Bag array is: ");
+  console.log(trackEachBag);
   trackEachBag.splice(trackEachBagCount - document.getElementById("PreviousBags").value,1);
   var selectListrem = document.getElementById("PreviousBags");
   trackEachBagCount--;
   canvas.renderAll();
+  console.log("Remove Array is: ");
+  console.log(RemoveArray);
   for(var x = 1; x <= 32; x++){
     selectListrem.remove(1);
   }
@@ -1094,36 +1132,3 @@ function DeleteBag(){
   }
   submitGrid();
 }
-
-
-var rangeSlider = function(){
-  var testbutton = $('#test');
-  var arr2 = [["a","b",,,"e"],["k","j"]];
-  
-
-  testbutton.click(function() {
-    var arr = BoxArray;
-   $.ajax({
-    data: {
-        box_Array: JSON.stringify(arr)
-    },
-    type: 'POST',
-    url: '/formProcess'
-})
-.done(function(data){
-    if(data.error){
-        $('#errorAlert').text(data.error).show();
-
-    }
-    else
-    {
-    }
-   
-})
-
-
-  });
-
-};
-rangeSlider();
-
