@@ -6,6 +6,9 @@ canvas {
 
 
 }
+
+
+
 .spinner-wrapper {
   position: fixed;
   top: 0;
@@ -450,7 +453,22 @@ label 				 {
 }
 #moveLeft {
   position: absolute;
-  bottom: 10%;
-  left: 6%;
-  width: 500px;
+  -webkit-appearance: none;
+  bottom: 12%;
+  left: 5%;
+  width: 505px;
+  height: 5px;
+}
+.moveUp {
+  position: absolute;
+  top: 370px;
+  left: -22%;
+  -webkit-appearance: none;
+  width: 495px;
+  height: 5px;
+  vertical-align: top;
+  -webkit-transform:rotate(90deg);
+  -moz-transform:rotate(90deg);
+  -ms-transform:rotate(90deg);  
+  transform:rotate(90deg);  
 }

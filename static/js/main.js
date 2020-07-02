@@ -466,8 +466,8 @@ function rotate270() {
 
 /********************************   MOVING THE BOXES  ***********************************/
 
-//Move Select Shape LEFT 1 Cell
-document.getElementById("moveLeft").onclick = function() {moveLeft()};
+//Move Select bag left and right function
+document.getElementById("moveLeft").oninput = function() {moveLeft()};
 function moveLeft() {
   var prevCoordl = 200;
   if(document.getElementById("PreviousBags").value < 1){
@@ -519,8 +519,8 @@ function moveRight() {
   }
 }*/
 
-//Move Select Shape UP 1 Cell
-document.getElementById("moveUp").onclick = function() {moveUp()};
+//Moving the selected bag up and down function
+document.getElementById("moveUp").oninput = function() {moveUp()};
 function moveUp() {
   if(document.getElementById("PreviousBags").value < 1){
     alert("Choose the Bag you want to move");
@@ -528,8 +528,13 @@ function moveUp() {
   else{
   delCoordl = canvas.getActiveObject().left;
   delCoordt = canvas.getActiveObject().top;
+  console.log("Coordinate top: "+delCoordt)
+  //obtaining the value from html and converting it to integer
+  var valueMoved = document.getElementById("moveUp").value;
+  var RangeCoord = parseInt(valueMoved);
+
   delArray(delCoordl,delCoordt);
-  canvas.item(currentObject).set({top:(canvas.getActiveObject().top-gridsize)});
+  canvas.item(currentObject).set({top:(RangeCoord)});
   leftCoord = canvas.getActiveObject().left;
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
@@ -537,7 +542,7 @@ function moveUp() {
   }
 }
 
-//Move Select Shape DOWN 1 Cell
+
 document.getElementById("moveDown").onclick = function() {moveDown()};
 function moveDown() {
   if(document.getElementById("PreviousBags").value < 1){
@@ -546,6 +551,7 @@ function moveDown() {
   else{
   delCoordl = canvas.getActiveObject().left;
   delCoordt = canvas.getActiveObject().top;
+  console.log("coordinate top: "+delCoordt)
   delArray(delCoordl,delCoordt);
   canvas.item(currentObject).set({top:(canvas.getActiveObject().top+gridsize)});
   leftCoord = canvas.getActiveObject().left;
@@ -875,8 +881,7 @@ function PreviousBags1() {
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
 
-  var selectList = document.getElementById("moveLeft");
-    selectList.setAttribute("value", 0);
+   document.getElementById("moveLeft").value = 0;
     
 
 }
