@@ -19,13 +19,13 @@
 
 
 <body>
-    <!--
-    <div class="spinner-wrapper" >
+
+    <!-- <div class="spinner-wrapper" >
         
         <div class="spinner"></div>
         <h2>Develop by TDC</h2>
-    </div>
-    -->
+    </div> -->
+
     <!--<div class="Top">
         
        <div>
@@ -101,9 +101,11 @@
     </div>
     
 <div class="col">
-<button  id = "test">test</button>
+<button  id = "test">Save</button>
+<button  id = "test2">show</button>
 <button id="save" src="../static/img/save.png">
 <button id="send" src="../static/img/send.png">
+
 
 </div>
         
@@ -119,31 +121,53 @@
 
 
   <!--ROTATE-->
+  <!-- Numbers of bags options-->
   <div class = "rotate">
-        <select id ="PreviousBags" name="PreviousBags">
-            <option value="0">Select Bag</option>
-            
+     
+        <!-- Layers option-->
+         <input id="Layer" class="Layer" type="button" name="Layer" value="LayerComplete"/>
+<div class= "LayerSelection">
+    <select id ="PreviousLayers" name="PreviousLayers">
+        <option value="0">Default Layer</option>
+       
         </select>
-        <input id="Layer" class="Layer" type="button" name="Layer" value="LayerComplete"/>
-        <select id ="PreviousLayers" name="PreviousLayers">
-            <option value="0">Default Layer</option>
-           
-            </select>
+</div>
+ 
 
 
-        <input id="moveLeft" class="moveLeft" type="range" name="moveLeft" value="moveLeft"/>
-        <input id="moveRight" class="moveRight" type="button" name="moveRight" value="moveRight"/>
+       <!-- <input id="moveLeft" class="moveLeft" type="range" name="moveLeft" value="moveLeft"/>-->
+        <!--<input id="moveRight" class="moveRight" type="button" name="moveRight" value="moveRight"/>-->
         <input id="moveUp" class="moveUp" type="button" name="moveUp" value="moveUp"/>
         <input id="moveDown" class="moveDown" type="button" name="moveDown" value="moveDown"/>
-        <input id="0" class="rotate0" type="submit" name="button1" value="0°"/>
-        <input id="90" class="rotate90" type="submit" name="button2" value="90°"/>
-        <input id="180" class="rotate180" type="submit" name="button3" value="180°"/>
-        <input id="270" class="rotate270" type="submit" name="button4" value="-90°"/>
-        <input id="DeleteBag" class="DeleteBag" type="submit" name="DeleteBag" value="DeleteBag"/>
+       <input id="DeleteBag" class="DeleteBag" type="submit" name="DeleteBag" value="DeleteBag"/>
+
+       <div class="box">
+        <select id ="PreviousBags" name="PreviousBags">
+            <option value="0">Select Bag</option>
+            </select>
+       </div>
+       <div id="ButtonArr">
+           <h3>Bag Rotation</h3>
+        <button class= "arrangement" id="flip0" src="../static/img/flipUp.png" title="Flip 0°" ></button>
+        <button class= "arrangement" id="flip180" src="../static/img/flip.png" title="Flip 180°" ></button>
+        <button class= "arrangement" id="flip270" src="../static/img/flipHorizontal.png" title="Flip 270°"></button>
+        <button class= "arrangement" id="flip90" src="../static/img/flipHorizontal.png" title="Flip 90°"></button>
+        
+
+       </div>
+         <!-- <input id="0" class="rotate0" type="submit" name="button1" value="0°"/>-->
+       <!--<input id="90" class="rotate90" type="submit" name="button2" value="90°"/> -->
+       <!-- <input id="180" class="rotate180" type="submit" name="button3" value="180°"/>-->
+      <!--  <input id="270" class="rotate270" type="submit" name="button4" value="-90°"/> -->
+       
 </div>
   <!-- TEST-->
-  <canvas id="c" width="600" height="600"></canvas>
-  
+  <canvas id="c"></canvas>
+
+  <!--Range to move right to left -->
+  <input id="moveLeft" class="moveLeft" type="range" name="200" step = "10" value="200" min="0" max="390"/>
+
+
 </div> <!-- cloumn  end-->
 
 <div class ="col">

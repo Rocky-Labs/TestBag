@@ -3,7 +3,7 @@
 var canvas = new fabric.Canvas('c', { selection: true });
 
 //Grid Creation
-var gridsize = 25;
+var gridsize = 10;
 var gridXLines, gridYLines = 0;
 //Bag Creation
 var rectWidth, rectHeight, rectGussWid = 0;
@@ -36,7 +36,11 @@ var BagPos = [];
 var BagLeft = [];
 var BagTop = [];
 /**************************************************************************************/
-document.getElementById("confirm").onclick = function(){setSize()};
+document.getElementById("confirm").onclick = function(){
+
+  setSize()
+  document.getElementById("ButtonArr").style.display ='inline-block';
+};
 function setSize(){
   /*event.preventDefault();
   gridXLines = parseInt(document.getElementById("BoxLength").value,10);
@@ -54,7 +58,7 @@ function setSize(){
 //Canvas Size
   var unitScale = 10;
   var canvasWidth =  87.5 * unitScale;
-  var canvasHeight = 61 * unitScale;
+  var canvasHeight = 60 * unitScale;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);
 
@@ -230,7 +234,7 @@ canvas.on('object:moving', function(options) {
 
 /******************************  ROTATE BOXES  ****************************************/
 //Rotate 0 Degrees
-document.getElementById("0").onclick = function() {rotate0()};
+document.getElementById("flip0").onclick = function() {rotate0()};
 function rotate0() {
   canvas.remove(canvas.item(selectObject));
   var rect1G = new fabric.Rect({ 
@@ -288,7 +292,7 @@ function rotate0() {
 }
 
 //Rotate 90 Degrees
-document.getElementById("90").onclick = function() {rotate90()};
+document.getElementById("flip90").onclick = function() {rotate90()};
 function rotate90() {
   canvas.remove(canvas.item(selectObject));
   var rect2G = new fabric.Rect({ 
@@ -346,7 +350,7 @@ function rotate90() {
 }
 
 //Rotate 180 Degrees
-document.getElementById("180").onclick = function() {rotate180()};
+document.getElementById("flip180").onclick = function() {rotate180()};
 function rotate180() {
   canvas.remove(canvas.item(selectObject));
   var rect3G = new fabric.Rect({ 
@@ -404,7 +408,7 @@ function rotate180() {
 }
 
 //Rotate 270 Degrees
-document.getElementById("270").onclick = function() {rotate270()};
+document.getElementById("flip270").onclick = function() {rotate270()};
 function rotate270() {
   canvas.remove(canvas.item(selectObject));
   var rect4G = new fabric.Rect({ 
@@ -469,24 +473,43 @@ function rotate270() {
 //Move Select Shape LEFT 1 Cell
 document.getElementById("moveLeft").onclick = function() {moveLeft()};
 function moveLeft() {
+  var prevCoordl = 200;
   if(document.getElementById("PreviousBags").value < 1){
     alert("Choose the Bag you want to move");
   }
   else{
   var valueMoved = document.getElementById("moveLeft").value;
+  var test = parseInt(valueMoved);
+  /*console.log("Value Moived:"+ valueMoved);*/
   delCoordl = canvas.getActiveObject().left;
+  //console.log("delCoordl:"+ delCoordl);
   delCoordt = canvas.getActiveObject().top;
   delArray(delCoordl,delCoordt);
-  canvas.item(currentObject).set({left:(canvas.getActiveObject().left-valueMoved)});
+  canvas.item(currentObject).set({left:( test)});
+/*
+  if(prevCoordl < test){
+    canvas.item(currentObject).set({left:( test)});
+    //console.log("Left: "+ canvas.getActiveObject().left);
+  }
+  else{
+    canvas.item(currentObject).set({left:(test)});
+   // console.log("Right: "+canvas.getActiveObject().left);
+  }
+ canvas.item(currentObject).set({left:(canvas.getActiveObject().left-valueMoved)});*/
   leftCoord = canvas.getActiveObject().left;
+  //console.log("leftCoord"+leftCoord)
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
+<<<<<<< HEAD
   submitGrid();
+=======
+  prevCoordl= delCoordl;
+>>>>>>> c445841752eb8f7b9f272f7eca37cf9ee9f0d6f1
   }
 }
 
-//Move Select Shape RIGHT 1 Cell
+/*Move Select Shape RIGHT 1 Cell
 document.getElementById("moveRight").onclick = function() {moveRight()};
 function moveRight() {
   if(document.getElementById("PreviousBags").value < 1){
@@ -503,7 +526,7 @@ function moveRight() {
   canvas.renderAll();
   submitGrid();
   }
-}
+}*/
 
 //Move Select Shape UP 1 Cell
 document.getElementById("moveUp").onclick = function() {moveUp()};
@@ -640,6 +663,7 @@ function paste(){
       canvas.discardActiveObject();
       canvas.renderAll();
       submitGrid();
+
     }
     else{
       correctPlacement = 0;
@@ -813,6 +837,15 @@ function delArray(delCoordl, delCoordt){
 document.getElementById("submit_grid").onclick = function() {submitGrid()};
 function submitGrid()
 {
+<<<<<<< HEAD
+=======
+  console.log(trackEachBag);
+  if(document.getElementById("PreviousBags").value >= 1){
+    canvas.discardActiveObject();
+    canvas.renderAll();
+    document.getElementById("PreviousBags").value = 0;    
+  }
+>>>>>>> c445841752eb8f7b9f272f7eca37cf9ee9f0d6f1
   var showData = BoxArray;
   var Lvalue = document.getElementById("PreviousLayers").value;
   if(Lvalue > 0){
@@ -839,7 +872,12 @@ function submitGrid()
       showticklabels: false,
       zeroline: false,
       ticklen: 0
-    }
+    },
+
+    
+      plot_bgcolor: '#212121',
+      paper_bgcolor: '#212121'
+
   };
   Plotly.newPlot('tester', data, layout);  
 }
@@ -862,13 +900,18 @@ function PreviousBags1() {
   else{
     currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
   }
-  /*console.log("Current object is: " + currentObject);
+  console.log("Current object is: " + currentObject);
   console.log("doucment: " + document.getElementById("PreviousLayers").value);
   console.log("Bagnum: "+ BagNum);
   console.log("Canvas items are: ");
-  console.log(CanvasItems);*/
+  console.log(CanvasItems);
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
+
+  var selectList = document.getElementById("moveLeft");
+    selectList.setAttribute("value", 0);
+    
+
 }
 }
 
@@ -1132,3 +1175,43 @@ function DeleteBag(){
   }
   submitGrid();
 }
+<<<<<<< HEAD
+=======
+
+
+var rangeSlider = function(){
+  var testbutton = $('#test');
+ 
+  testbutton.click(function() {
+    var arr = BoxArray;
+   $.ajax({
+    data: {
+        box_Array: JSON.stringify(arr)
+    },
+    type: 'POST',
+    url: '/formProcess'
+})
+.done(function(data){
+    if(data.error){
+        $('#errorAlert').text(data.error).show();
+    }
+    else
+    {
+      var data = [
+        {
+          z: JSON.parse(data.box_Array),
+          type: 'heatmap'
+        }
+      ];
+      
+      Plotly.newPlot('tester', data);
+    }
+})
+  });
+
+
+
+};
+rangeSlider();
+
+>>>>>>> c445841752eb8f7b9f272f7eca37cf9ee9f0d6f1
