@@ -36,6 +36,7 @@ document.getElementById("confirm").onclick = function(){
 
   setSize()
   document.getElementById("ButtonArr").style.display ='inline-block';
+ 
 };
 function setSize(){
   event.preventDefault();
@@ -543,7 +544,7 @@ function moveUp() {
   }
 }
 
-
+/*
 document.getElementById("moveDown").onclick = function() {moveDown()};
 function moveDown() {
   if(document.getElementById("PreviousBags").value < 1){
@@ -560,7 +561,7 @@ function moveDown() {
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
   }
-}
+}*/
 
 /**************************************************************************************/
 
@@ -883,6 +884,8 @@ function PreviousBags1() {
   canvas.renderAll();
 
    document.getElementById("moveLeft").value = 0;
+   document.getElementById("moveLeft").style.display ='inline-block';
+   document.getElementById("moveUp").style.display ='inline-block';
     
 
 }
