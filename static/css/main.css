@@ -455,14 +455,14 @@ label 				 {
   position: absolute;
   -webkit-appearance: none;
   bottom: 12%;
-  left: 5%;
+  right: 46%;
   width: 505px;
   height: 5px;
 }
 .moveUp {
   position: absolute;
   top: 370px;
-  left: -22%;
+  right: 72%;
   -webkit-appearance: none;
   width: 495px;
   height: 5px;

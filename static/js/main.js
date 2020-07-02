@@ -53,10 +53,11 @@ function setSize(){
   currentObject = selectObject;
 //Canvas Size
   var unitScale = 10;
-  var canvasWidth =  87.5 * unitScale;
+  var canvasWidth =  90 * unitScale;
   var canvasHeight = 60 * unitScale;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);
+  
 
 // create grid
   for (var i = 0; i <= gridXLines; i++) {
