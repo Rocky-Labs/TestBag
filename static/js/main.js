@@ -54,7 +54,7 @@ function setSize(){
 //Canvas Size
   var unitScale = 10;
   var canvasWidth =  87.5 * unitScale;
-  var canvasHeight = 61 * unitScale;
+  var canvasHeight = 60 * unitScale;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);
 
@@ -469,23 +469,39 @@ function rotate270() {
 //Move Select Shape LEFT 1 Cell
 document.getElementById("moveLeft").onclick = function() {moveLeft()};
 function moveLeft() {
+  var prevCoordl = 200;
   if(document.getElementById("PreviousBags").value < 1){
     alert("Choose the Bag you want to move");
   }
   else{
   var valueMoved = document.getElementById("moveLeft").value;
+  var test = parseInt(valueMoved);
+  /*console.log("Value Moived:"+ valueMoved);*/
   delCoordl = canvas.getActiveObject().left;
+  //console.log("delCoordl:"+ delCoordl);
   delCoordt = canvas.getActiveObject().top;
   delArray(delCoordl,delCoordt);
-  canvas.item(currentObject).set({left:(canvas.getActiveObject().left-valueMoved)});
+  canvas.item(currentObject).set({left:( test)});
+/*
+  if(prevCoordl < test){
+    canvas.item(currentObject).set({left:( test)});
+    //console.log("Left: "+ canvas.getActiveObject().left);
+  }
+  else{
+    canvas.item(currentObject).set({left:(test)});
+   // console.log("Right: "+canvas.getActiveObject().left);
+  }
+ canvas.item(currentObject).set({left:(canvas.getActiveObject().left-valueMoved)});*/
   leftCoord = canvas.getActiveObject().left;
+  //console.log("leftCoord"+leftCoord)
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
+  prevCoordl= delCoordl;
   }
 }
 
-//Move Select Shape RIGHT 1 Cell
+/*Move Select Shape RIGHT 1 Cell
 document.getElementById("moveRight").onclick = function() {moveRight()};
 function moveRight() {
   if(document.getElementById("PreviousBags").value < 1){
@@ -501,7 +517,7 @@ function moveRight() {
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
   }
-}
+}*/
 
 //Move Select Shape UP 1 Cell
 document.getElementById("moveUp").onclick = function() {moveUp()};
@@ -631,6 +647,7 @@ function paste(){
       canvas.discardActiveObject();
       canvas.renderAll();
       submitGrid();
+
     }
     else{
       correctPlacement = 0;
@@ -791,6 +808,7 @@ function delArray(delCoordl, delCoordt){
 document.getElementById("submit_grid").onclick = function() {submitGrid()};
 function submitGrid()
 {
+  console.log(trackEachBag);
   if(document.getElementById("PreviousBags").value >= 1){
     canvas.discardActiveObject();
     canvas.renderAll();
@@ -849,13 +867,18 @@ function PreviousBags1() {
   else{
     currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
   }
-  /*console.log("Current object is: " + currentObject);
+  console.log("Current object is: " + currentObject);
   console.log("doucment: " + document.getElementById("PreviousLayers").value);
   console.log("Bagnum: "+ BagNum);
   console.log("Canvas items are: ");
-  console.log(CanvasItems);*/
+  console.log(CanvasItems);
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
+
+  var selectList = document.getElementById("moveLeft");
+    selectList.setAttribute("value", 0);
+    
+
 }
 
 /**************************************************************************************/
@@ -1108,8 +1131,6 @@ function DeleteBag(){
 var rangeSlider = function(){
   var testbutton = $('#test');
  
-  
-
   testbutton.click(function() {
     var arr = BoxArray;
    $.ajax({
@@ -1122,16 +1143,22 @@ var rangeSlider = function(){
 .done(function(data){
     if(data.error){
         $('#errorAlert').text(data.error).show();
-
     }
     else
     {
+      var data = [
+        {
+          z: JSON.parse(data.box_Array),
+          type: 'heatmap'
+        }
+      ];
+      
+      Plotly.newPlot('tester', data);
     }
-   
 })
-
-
   });
+
+
 
 };
 rangeSlider();

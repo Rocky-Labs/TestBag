@@ -32,7 +32,6 @@ BoxLen = [1,2],[1,2]
 def index():
     return render_template('index.html')
     
-app.run(debug=True)
 
 @app.route('/formProcess', methods=['POST'])
 def formProcess():

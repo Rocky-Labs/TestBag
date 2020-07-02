@@ -1,3 +1,11 @@
+canvas {
+  position: absolute;
+  bottom: 10%;
+  left: 6%;
+  
+
+
+}
 .spinner-wrapper {
   position: fixed;
   top: 0;
@@ -36,65 +44,32 @@ z-index: 999999;
     -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
   }
 }
-#ButtonArr {
-  display: none;
-  position: absolute;
-  height: 100px;
-  width: 100px;
-  top: 2px;
-  right: 30px;
-
-}
-#flip0 {
-  
-  background-image: url(/static/img/flipUp.png);
-  background-color: transparent; /* make the button transparent */
-   background-repeat: no-repeat; 
-   border: transparent;
-  height: 32px;
-  width: 32px;
-  display:inline-block;
-  position: relative;
-  margin: 5px 5px 5px 5px;
+/*#ButtonArr {
+  background-color: #141414;
+}*/
+.arrangement {
+ background-color: transparent; /* make the button transparent */
+ background-repeat: no-repeat; 
+ border: transparent;
+ height: 32px;
+ width: 32px;
+ position: relative;
+ margin: 5px 5px 5px 5px;
 }
 
-#flip180 {
-  
-  background-image: url(/static/img/flip.png);
-  background-color: transparent; /* make the button transparent */
-   background-repeat: no-repeat; 
-   border: transparent;
-  height: 32px;
-  width: 32px;
-  display:inline-block;
-  position: relative;
-  margin: 5px 5px 5px 5px;
- 
-}
-#flip90 {
-  
-  background-image: url(/static/img/flipHorizontal.png);
-  background-color: transparent; /* make the button transparent */
-   background-repeat: no-repeat; 
-   border: transparent;
-  height: 32px;
-  width: 32px;
-  display:inline-block;
-  position: relative;
-  margin: 5px 5px 5px 5px;
-}
-#flip270 {
-  
-  background-image: url(/static/img/flipRight.png);
-  background-color: transparent; /* make the button transparent */
-   background-repeat: no-repeat; 
-   border: transparent;
-  height: 32px;
-  width: 32px;
-  display:inline-block;
-  position: relative;
-  margin: 5px 5px 5px 5px;
-}
+#flip0 { background-image: url(/static/img/flipUp.png);}
+#flip0:hover {background-image: url(/static/img/flipUp_Hover.png);}
+#flip0:focus {background-image: url(/static/img/flipUp_focus.png);}
+#flip180 { background-image: url(/static/img/flip.png);}
+#flip180:hover { background-image: url(/static/img/flip_Hover.png);}
+#flip180:focus { background-image: url(/static/img/flip_focus.png);}
+#flip90 {  background-image: url(/static/img/flipHorizontal.png);}
+#flip90:hover {  background-image: url(/static/img/flipHorizontal_Hover.png);}
+#flip90:focus {  background-image: url(/static/img/flipHorizontal_focus.png);}
+#flip270 {  background-image: url(/static/img/flipRight.png);}
+#flip270:hover {  background-image: url(/static/img/flipRight_Hover.png);}
+#flip270:focus {  background-image: url(/static/img/flipRight_focus.png);}
+
 #tester {
   background-color: #212121;
 }
@@ -178,7 +153,14 @@ body {
   position: relative;
   margin-left: 788px;*/
 }
-
+h3{
+  text-align: center;
+  color: white;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: x-large;
+  
+ 
+}
 h1{
   text-align: left;
   color: white;
@@ -379,5 +361,96 @@ label 				 {
   to 	{ width:0; background:transparent; }
 }
 
+.box {
+  position: absolute;
+  top: 5%;
+  left: 70%;
+  transform: translate(-50%, -50%);
+}
 
+.box select {
+  background-color: #333333;
+  color: white;
+  padding: 8px;
+  width: 150px;
+  border: none;
+  font-size: 16px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
 
+.box::before {
+  content: url(/static/img/down-arrow.png);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.box:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.box select option {
+  padding: 30px;
+}
+
+.LayerSelection {
+  position: absolute;
+  top: 5%;
+  left: 10%;
+  transform: translate(-50%, -50%);
+}
+
+.LayerSelection select {
+  background-color: #333333;
+  color: white;
+  padding: 8px;
+  width: 150px;
+  border: none;
+  font-size: 16px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+.LayerSelection::before {
+  content: url(/static/img/down-arrow.png);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+
+.LayerSelection:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.LayerSelection select option {
+  padding: 30px;
+}
+#moveLeft {
+  position: absolute;
+  bottom: 10%;
+  left: 6%;
+  width: 500px;
+}
