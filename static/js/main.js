@@ -501,11 +501,7 @@ function moveLeft() {
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
-<<<<<<< HEAD
-  submitGrid();
-=======
   prevCoordl= delCoordl;
->>>>>>> c445841752eb8f7b9f272f7eca37cf9ee9f0d6f1
   }
 }
 
@@ -837,15 +833,13 @@ function delArray(delCoordl, delCoordt){
 document.getElementById("submit_grid").onclick = function() {submitGrid()};
 function submitGrid()
 {
-<<<<<<< HEAD
-=======
+
   console.log(trackEachBag);
   if(document.getElementById("PreviousBags").value >= 1){
     canvas.discardActiveObject();
     canvas.renderAll();
     document.getElementById("PreviousBags").value = 0;    
   }
->>>>>>> c445841752eb8f7b9f272f7eca37cf9ee9f0d6f1
   var showData = BoxArray;
   var Lvalue = document.getElementById("PreviousLayers").value;
   if(Lvalue > 0){
@@ -1175,8 +1169,6 @@ function DeleteBag(){
   }
   submitGrid();
 }
-<<<<<<< HEAD
-=======
 
 
 var rangeSlider = function(){
@@ -1214,4 +1206,3 @@ var rangeSlider = function(){
 };
 rangeSlider();
 
->>>>>>> c445841752eb8f7b9f272f7eca37cf9ee9f0d6f1
