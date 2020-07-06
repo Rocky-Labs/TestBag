@@ -40,6 +40,7 @@ document.getElementById("confirm").onclick = function(){
 
   setSize();
   document.getElementById("ButtonArr").style.display ='inline-block';
+ 
 };
 function setSize(){
   /*event.preventDefault();
@@ -57,10 +58,11 @@ function setSize(){
   currentObject = selectObject;
 //Canvas Size
   var unitScale = 10;
-  var canvasWidth =  87.5 * unitScale;
+  var canvasWidth =  90 * unitScale;
   var canvasHeight = 60 * unitScale;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);
+  
 
 // create grid
   for (var i = 0; i <= gridXLines; i++) {
@@ -470,8 +472,8 @@ function rotate270() {
 
 /********************************   MOVING THE BOXES  ***********************************/
 
-//Move Select Shape LEFT 1 Cell
-document.getElementById("moveLeft").onclick = function() {moveLeft()};
+//Move Select bag left and right function
+document.getElementById("moveLeft").oninput = function() {moveLeft()};
 function moveLeft() {
   var prevCoordl = 200;
   if(document.getElementById("PreviousBags").value < 1){
@@ -524,8 +526,8 @@ function moveRight() {
   }
 }*/
 
-//Move Select Shape UP 1 Cell
-document.getElementById("moveUp").onclick = function() {moveUp()};
+//Moving the selected bag up and down function
+document.getElementById("moveUp").oninput = function() {moveUp()};
 function moveUp() {
   if(document.getElementById("PreviousBags").value < 1){
     alert("Choose the Bag you want to move");
@@ -533,8 +535,13 @@ function moveUp() {
   else{
   delCoordl = canvas.getActiveObject().left;
   delCoordt = canvas.getActiveObject().top;
+  console.log("Coordinate top: "+delCoordt)
+  //obtaining the value from html and converting it to integer
+  var valueMoved = document.getElementById("moveUp").value;
+  var RangeCoord = parseInt(valueMoved);
+
   delArray(delCoordl,delCoordt);
-  canvas.item(currentObject).set({top:(canvas.getActiveObject().top-gridsize)});
+  canvas.item(currentObject).set({top:(RangeCoord)});
   leftCoord = canvas.getActiveObject().left;
   topCoord = canvas.getActiveObject().top;
   calcArray2(leftCoord,topCoord);
@@ -543,7 +550,7 @@ function moveUp() {
   }
 }
 
-//Move Select Shape DOWN 1 Cell
+/*
 document.getElementById("moveDown").onclick = function() {moveDown()};
 function moveDown() {
   if(document.getElementById("PreviousBags").value < 1){
@@ -552,6 +559,7 @@ function moveDown() {
   else{
   delCoordl = canvas.getActiveObject().left;
   delCoordt = canvas.getActiveObject().top;
+  console.log("coordinate top: "+delCoordt)
   delArray(delCoordl,delCoordt);
   canvas.item(currentObject).set({top:(canvas.getActiveObject().top+gridsize)});
   leftCoord = canvas.getActiveObject().left;
@@ -560,7 +568,7 @@ function moveDown() {
   canvas.renderAll();
   submitGrid();
   }
-}
+}*/
 
 /**************************************************************************************/
 
@@ -906,8 +914,9 @@ function PreviousBags1() {
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
 
-  var selectList = document.getElementById("moveLeft");
-    selectList.setAttribute("value", 0);
+   document.getElementById("moveLeft").value = 0;
+   document.getElementById("moveLeft").style.display ='inline-block';
+   document.getElementById("moveUp").style.display ='inline-block';
     
 
 }
@@ -1174,33 +1183,53 @@ function DeleteBag(){
   submitGrid();
 }
 
+$('#save').click(function() {
+    
+  document.getElementById("saveForm").style.display ='inline';
+  //document.getElementById("save").style.display ='none';
+});
+
+
+
 
 var rangeSlider = function(){
-  var testbutton = $('#test');
+  var testbutton = $('#SaveConfirm');
  
-  testbutton.click(function() {
+  testbutton.click(function(e) {
+    e.preventDefault();
     var arr = BoxArray;
+    var nameTemp = document.getElementById("nameInput").value;
    $.ajax({
     data: {
-        box_Array: JSON.stringify(arr)
+      bagPattern_name: nameTemp,
+      grid_size: gridsize,
+      rect_width: rectWidth,
+      rect_height: rectHeight,
+      rect_guss: rectGussWid,
+      box_Array: JSON.stringify(arr),
+      bag_position_arr: JSON.stringify(arr), //change arr to the correct name variable
+      bag_left_arr: JSON.stringify(arr),  //change arr to the correct name variable
+      bag_top_arr: JSON.stringify(arr)  //change arr to the correct name variable
     },
     type: 'POST',
     url: '/formProcess'
 })
 .done(function(data){
     if(data.error){
-        $('#errorAlert').text(data.error).show();
+        $('#errorAlert2').text(data.error).show();
     }
     else
     {
+      $('#successAlert2').text(data.success).show();
+      /*
       var data = [
         {
-          z: JSON.parse(data.box_Array),
+          z: JSON.parse(data.success),
           type: 'heatmap'
         }
       ];
       
-      Plotly.newPlot('tester', data);
+      Plotly.newPlot('tester', data);*/
     }
 })
   });
@@ -1209,4 +1238,5 @@ var rangeSlider = function(){
 
 };
 rangeSlider();
+
 

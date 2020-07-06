@@ -6,6 +6,9 @@ canvas {
 
 
 }
+
+
+
 .spinner-wrapper {
   position: fixed;
   top: 0;
@@ -44,9 +47,15 @@ z-index: 999999;
     -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
   }
 }
-/*#ButtonArr {
-  background-color: #141414;
-}*/
+#ButtonArr {
+  position: absolute;
+  top:10%;
+  right: 5%;
+}
+#c{
+  position: absolute;
+  top: 65%;
+}
 .arrangement {
  background-color: transparent; /* make the button transparent */
  background-repeat: no-repeat; 
@@ -198,7 +207,64 @@ label {
   height: 100px;
   background: #555;*/
 }
+#Layer {
+  position: absolute;
+  background-image: url(/static/img/checklist.png); /* 16px x 16px */
+  background-color: #333333; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position-y: left;
+  background-position: 10px;
+  border: #2980b9;
+  color: whitesmoke;
+  line-height: 2;
+  /*width: 130px;
+  font-size: 12px;*/
+  text-align: right;
+  top: 2.3%;
+  left: 20%;
+  width: 165px;
+  height: 40px;
+  border: none;
+  font-size: 16px;
+  padding-right: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+#Layer:hover {
+  background-image: url(/static/img/checklist_focus.png);
+  color: #00AF80;
+  background-color: #292929;
+}
+#Layer:focus {
+  background-image: url(/static/img/checklist_focus.png);
+}
 
+#DeleteBag{
+  position: absolute;
+  background-image: url(/static/img/trash.png); /* 16px x 16px */
+  background-color: #333333; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position-y: left;
+  background-position: 10px;
+  border: #2980b9;
+  color: whitesmoke;
+  line-height: 2;
+  /*width: 130px;
+  font-size: 12px;*/
+  text-align: right;
+  top: 2.3%;
+  left: 80%;
+  width: 135px;
+  height: 40px;
+  border: none;
+  font-size: 16px;
+  padding-right: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  
+}
+#DeleteBag:hover{background-image: url(/static/img/trash_hover.png);
+  color: #FB5252;
+  background-color: #292929;
+}
 #submit_grid {
 
   background-image: url(/static/img/update.png); /* 16px x 16px */
@@ -449,8 +515,49 @@ label 				 {
   padding: 30px;
 }
 #moveLeft {
+  display: none;
   position: absolute;
-  bottom: 10%;
-  left: 6%;
-  width: 500px;
+  -webkit-appearance: none;
+  bottom: 12%;
+  right: 46%;
+  width: 505px;
+  height: 5px;
+}
+.moveUp {
+  display: none;
+  position: absolute;
+  top: 370px;
+  right: 72%;
+  -webkit-appearance: none;
+  width: 495px;
+  height: 5px;
+  vertical-align: top;
+  -webkit-transform:rotate(90deg);
+  -moz-transform:rotate(90deg);
+  -ms-transform:rotate(90deg);  
+  transform:rotate(90deg);  
+}
+#saveForm {
+  display: none;
+  position: absolute;
+  top: -50px;
+  left: -200px;
+}
+#successAlert2{
+  background-color: lawngreen;
+  display: none;
+  position: absolute;
+  color:white;
+  top: -50px;
+  left: -20px;
+  width: 400px;
+}
+#errorAlert2{
+  position: absolute;
+  top: -50px;
+  left: -200px;
+  background-color: red;
+  color: #00AF80;
+  display: none;
+  width: 400px;
 }
