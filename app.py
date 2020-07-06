@@ -53,10 +53,11 @@ def formProcess():
 
     print(type(Bag_Pattern_Arr_Total))
     for row in Bag_Pattern_Arr_Total:
-        print()
+        #print()
         for elem in row:
             print(elem, end=' ')
 
+    print()
     print("Bag Pattern Name: "+Bag_Pattern_Name)
     print("Grid Size : "+ Grid_Size)
     print("Rect Width: "+Rect_Width)
@@ -65,19 +66,19 @@ def formProcess():
     print("Bag Postion : ")
     print(type(Bag_Position_Array))
     for row in Bag_Position_Array:
-        print()
+        #print()
         for elem in row:
             print(elem, end=' ')
     print("Bag Left Array : ")
     print(type(Bag_Left_Array))
     for row in Bag_Left_Array:
-        print()
+        #print()
         for elem in row:
             print(elem, end=' ')
     print("Bag Top Array : ")
     print(type(Bag_Top_Array))
     for row in Bag_Top_Array:
-        print()
+        #print()
         for elem in row:
             print(elem, end=' ')
     #print()

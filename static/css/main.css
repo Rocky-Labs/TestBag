@@ -547,8 +547,9 @@ label 				 {
   background-color: lawngreen;
   display: none;
   position: absolute;
+  color:white;
   top: -50px;
-  left: -200px;
+  left: -20px;
   width: 400px;
 }
 #errorAlert2{
@@ -556,6 +557,7 @@ label 				 {
   top: -50px;
   left: -200px;
   background-color: red;
+  color: #00AF80;
   display: none;
   width: 400px;
 }

@@ -1136,62 +1136,60 @@ function DeleteBag(){
   submitGrid();
 }
 
-
-var SaveFunction = function(){
-  var testbutton = $('#save');
-  var saveForm = $('#saveConfirm');
-  var arr = BoxArray;
-  
-  testbutton.click(function() {
+$('#save').click(function() {
     
-    document.getElementById("saveForm").style.display ='inline';
-    //document.getElementById("save").style.display ='none';
-  });
-saveForm.on('submit',function(e) {
-  e.preventDefault();
+  document.getElementById("saveForm").style.display ='inline';
+  //document.getElementById("save").style.display ='none';
+});
 
-  var nameTemp = $('#nameInput').value();
+
+
+
+var rangeSlider = function(){
+  var testbutton = $('#SaveConfirm');
  
+  testbutton.click(function(e) {
+    e.preventDefault();
+    var arr = BoxArray;
+    var nameTemp = document.getElementById("nameInput").value;
    $.ajax({
     data: {
-        bagPattern_name: nameTemp,
-        grid_size: gridsize,
-        rect_width: rectWidth,
-        rect_height: rectHeight,
-        rect_guss: rectGussWid,
-        box_Array: JSON.stringify(arr),
-        bag_position_arr: JSON.stringify(arr), //change arr to the correct name variable
-        bag_left_arr: JSON.stringify(arr),  //change arr to the correct name variable
-        bag_top_arr: JSON.stringify(arr)  //change arr to the correct name variable
-
+      bagPattern_name: nameTemp,
+      grid_size: gridsize,
+      rect_width: rectWidth,
+      rect_height: rectHeight,
+      rect_guss: rectGussWid,
+      box_Array: JSON.stringify(arr),
+      bag_position_arr: JSON.stringify(arr), //change arr to the correct name variable
+      bag_left_arr: JSON.stringify(arr),  //change arr to the correct name variable
+      bag_top_arr: JSON.stringify(arr)  //change arr to the correct name variable
     },
     type: 'POST',
     url: '/formProcess'
 })
 .done(function(data){
     if(data.error){
-        $('#errorAlert').text(data.error).show();
-        document.getElementById("errorAlert2").style.display ='inline';
+        $('#errorAlert2').text(data.error).show();
     }
     else
     {
-      document.getElementById("successAlert2").style.display ='inline';
-      $('#errorAlert').text(data.success).show();
-      console.log(data.success);
+      $('#successAlert2').text(data.success).show();
       /*
       var data = [
         {
-          z: JSON.parse(data.box_Array),
+          z: JSON.parse(data.success),
           type: 'heatmap'
         }
       ];
       
-      Plotly.newPlot('tester', data);
-    */
-   }
-
+      Plotly.newPlot('tester', data);*/
+    }
 })
-});
+  });
+
+
+
 };
-SaveFunction();
+rangeSlider();
+
 
