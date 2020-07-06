@@ -18,7 +18,12 @@ db = SQLAlchemy(app)
 class BagPattern_Class(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     BagPattern_name = db.Column(db.String(50))
+    GridSize = db.Column(db.Integer)
+    RectWidth = db.Column(db.Integer)
+    RectHeight = db.Column(db.Integer)
+    RectGuss = db.Column(db.Integer)
     BagPattern_arrTotal = db.Column(db.String(255))
+    LayerArray = db.Column(db.String(255))
     date_created = db.Column(db.DateTime, default = datetime.now )
 
 
