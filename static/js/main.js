@@ -3,7 +3,7 @@
 var canvas = new fabric.Canvas('c', { selection: true });
 
 //Grid Creation
-var gridsize = 10;
+var gridsize = 25;
 var gridXLines, gridYLines = 0;
 //Bag Creation
 var rectWidth, rectHeight, rectGussWid = 0;
@@ -38,7 +38,7 @@ var BagTop = [];
 /**************************************************************************************/
 document.getElementById("confirm").onclick = function(){
 
-  setSize()
+  setSize();
   document.getElementById("ButtonArr").style.display ='inline-block';
 };
 function setSize(){
@@ -774,6 +774,10 @@ function calcArray2(leftCoord, topCoord){
     }
     i2++;
   }
+
+
+  //EDIT THE COORDINATE ARRAYS
+  console.log(canvas.item())
 }
 
 
