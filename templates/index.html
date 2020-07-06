@@ -101,13 +101,21 @@
     </div>
     
 <div class="col">
-<button  id = "test">Save</button>
-<button  id = "test2">show</button>
 <button id="save" src="../static/img/save.png">
-<button id="send" src="../static/img/send.png">
-
-
+    <!-- Save form -->
+    <form id="saveForm">
+        <div class = "group">
+        <input class = "test" id="nameInput" type="text" required>
+        <span class ="highlight"></span>
+        <span class="bar"></span>
+        <label>Name: </label>
+        </div>
+    <input class ="btn btn-primary" id ="SaveConfirm" type="submit" value="Submit">
+    </form>
+    <div id= "successAlert2"><h1>success</h1></div>
+    <div id= "errorAlert2"><h1>error!!</h1></div>
 </div>
+
         
     <div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
     <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>

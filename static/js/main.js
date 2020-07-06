@@ -1137,14 +1137,33 @@ function DeleteBag(){
 }
 
 
-var rangeSlider = function(){
-  var testbutton = $('#test');
- 
+var SaveFunction = function(){
+  var testbutton = $('#save');
+  var saveForm = $('#saveConfirm');
+  var arr = BoxArray;
+  
   testbutton.click(function() {
-    var arr = BoxArray;
+    
+    document.getElementById("saveForm").style.display ='inline';
+    //document.getElementById("save").style.display ='none';
+  });
+saveForm.on('submit',function(e) {
+  e.preventDefault();
+
+  var nameTemp = $('#nameInput').value();
+ 
    $.ajax({
     data: {
-        box_Array: JSON.stringify(arr)
+        bagPattern_name: nameTemp,
+        grid_size: gridsize,
+        rect_width: rectWidth,
+        rect_height: rectHeight,
+        rect_guss: rectGussWid,
+        box_Array: JSON.stringify(arr),
+        bag_position_arr: JSON.stringify(arr), //change arr to the correct name variable
+        bag_left_arr: JSON.stringify(arr),  //change arr to the correct name variable
+        bag_top_arr: JSON.stringify(arr)  //change arr to the correct name variable
+
     },
     type: 'POST',
     url: '/formProcess'
@@ -1152,9 +1171,14 @@ var rangeSlider = function(){
 .done(function(data){
     if(data.error){
         $('#errorAlert').text(data.error).show();
+        document.getElementById("errorAlert2").style.display ='inline';
     }
     else
     {
+      document.getElementById("successAlert2").style.display ='inline';
+      $('#errorAlert').text(data.success).show();
+      console.log(data.success);
+      /*
       var data = [
         {
           z: JSON.parse(data.box_Array),
@@ -1163,12 +1187,11 @@ var rangeSlider = function(){
       ];
       
       Plotly.newPlot('tester', data);
-    }
+    */
+   }
+
 })
-  });
-
-
-
+});
 };
-rangeSlider();
+SaveFunction();
 

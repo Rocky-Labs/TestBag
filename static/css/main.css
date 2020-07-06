@@ -537,3 +537,25 @@ label 				 {
   -ms-transform:rotate(90deg);  
   transform:rotate(90deg);  
 }
+#saveForm {
+  display: none;
+  position: absolute;
+  top: -50px;
+  left: -200px;
+}
+#successAlert2{
+  background-color: lawngreen;
+  display: none;
+  position: absolute;
+  top: -50px;
+  left: -200px;
+  width: 400px;
+}
+#errorAlert2{
+  position: absolute;
+  top: -50px;
+  left: -200px;
+  background-color: red;
+  display: none;
+  width: 400px;
+}
