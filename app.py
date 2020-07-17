@@ -95,6 +95,7 @@ def formProcess():
         return jsonify({'success':'Success'})
 
     return jsonify({'error': 'Missing Data'})
+#Load button function that searches by name and ouputs to javascript
 @app.route('/LoadProcess', methods=['POST'])
 def LoadProcess():
     name_Temp = request.form['bagPattern_name']
