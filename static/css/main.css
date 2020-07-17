@@ -288,7 +288,13 @@ label {
   background-color: #2980b9;
 }
 
+.load{
+  width: 50px;
+  height: 25px;
+  font-size: 14px;
   
+}  
+
 #save {
  background-image: url(/static/img/save.png);
  background-color: transparent; /* make the button transparent */
@@ -542,6 +548,12 @@ label 				 {
   position: absolute;
   top: -50px;
   left: -200px;
+}
+#loadForm {
+  display: none;
+  position: absolute;
+  top: -70px;
+  left: -350px;
 }
 #successAlert2{
   background-color: lawngreen;

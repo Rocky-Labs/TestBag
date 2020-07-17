@@ -1136,15 +1136,71 @@ function DeleteBag(){
   submitGrid();
 }
 
-$('#save').click(function() {
+
+/*   Beginning of load function */
+$('#load').click(function() {
     
-  document.getElementById("saveForm").style.display ='inline';
+  document.getElementById("loadForm").style.display ='inline';
   //document.getElementById("save").style.display ='none';
 });
 
+var LoadFunction = function(){
+  var testbutton = $('#loadConfirm');
+ 
+  testbutton.click(function(e) {
+    e.preventDefault();
+    var arr = BoxArray;
+    var nameTemp = document.getElementById("nameSearch").value;
+   $.ajax({
+    data: {
+      bagPattern_name: nameTemp
+    },
+    type: 'POST',
+    url: '/LoadProcess'
+})
+.done(function(data){
+    if(data.error){
+        $('#errorAlert2').text(data.bag_pattern_name).show();
+    }
+    else
+    {
+      $('#successAlert2').text(data.bag_pattern_name).show();
+      console.log( "Bag pattern name: "+ data.bag_pattern_name);
+      console.log("Grid Size: " + data.grid_size);
+      console.log("Rect Width: "+ data.rect_width);
+      var RectWidthNormaltype = JSON.parse(data.rect_width)
+      console.log("Rect Width as a : "+ typeof(RectWidthNormaltype));
+      console.log("Rect Height: "+ data.rect_height);
+
+      /*
+      var data = [
+        {
+          z: JSON.parse(data.success),
+          type: 'heatmap'
+        }
+      ];
+      
+      Plotly.newPlot('tester', data);*/
+    }
+})
+  });
 
 
 
+};
+LoadFunction();
+
+/*   *******End of load function********* */
+
+
+$('#save').click(function() {
+    
+  document.getElementById("saveForm").style.display ='inline';
+  document.getElementById("load").style.display ='none';
+  //document.getElementById("save").style.display ='none';
+});
+
+/*   Beginning of save function */
 var rangeSlider = function(){
   var testbutton = $('#SaveConfirm');
  
