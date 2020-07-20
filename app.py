@@ -95,3 +95,16 @@ def formProcess():
         return jsonify({'success':'Success'})
 
     return jsonify({'error': 'Missing Data'})
+#Load button function that searches by name and ouputs to javascript
+@app.route('/LoadProcess', methods=['POST'])
+def LoadProcess():
+    name_Temp = request.form['bagPattern_name']
+    print(name_Temp)
+    #filters the database by the name of the pattern and outputs the first result
+    result = BagPattern_Class.query.filter_by(BagPattern_name = name_Temp).first_or_404(description='It did not find it in the database {}'.format(name_Temp))
+ 
+    if name_Temp != result.BagPattern_name:
+        return jsonify({'error': 'Missing Data'})
+
+#it output a string to javascript it needs to be convert it back to the correct type in javascript
+    return jsonify({'bag_pattern_name': result.BagPattern_name, 'grid_size': result.GridSize, 'rect_width': result.RectWidth, 'rect_height': result.RectHeight,'rect_guss': result.RectGuss, 'bag_position_arr': result.BagPosition_Array,'bag_left_arr': result.BagLeftArray,'bag_top_arr': result.BagTopArray, 'box_Array': result.BagPattern_arrTotal})

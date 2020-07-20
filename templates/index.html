@@ -17,7 +17,6 @@
     
 </head>
 
-
 <body>
 
     <!-- <div class="spinner-wrapper" >
@@ -101,7 +100,9 @@
     </div>
     
 <div class="col">
-<button id="save" src="../static/img/save.png">
+    <button id= "load" class="load" value="load">load</button>
+    <button id="save" src="../static/img/save.png">
+
     <!-- Save form -->
     <form id="saveForm">
         <div class = "group">
@@ -112,6 +113,20 @@
         </div>
     <input class ="btn btn-primary" id ="SaveConfirm" type="submit" value="Submit">
     </form>
+    <!-- END - Save form -->
+
+     <!-- Load form -->
+     <form id="loadForm">
+        <div class = "group">
+        <input class = "test" id="nameSearch" type="text" required>
+        <span class ="highlight"></span>
+        <span class="bar"></span>
+        <label>Name: </label>
+        </div>
+    <input class ="btn btn-primary" id ="loadConfirm" type="submit" value="Submit">
+    </form>
+     <!-- END - Load form -->
+
    <div id= "successAlert2"><h1>success</h1></div>-
     <div id= "errorAlert2"><h1>error!!</h1></div>
 </div>
