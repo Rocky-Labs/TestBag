@@ -50,7 +50,7 @@ function setSize(){
   rectHeight = parseInt(document.getElementById("BagLength").value*gridsize,10);
   rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize,10);*/
   gridXLines = 25;
-  gridYLines = 10;
+  gridYLines = 20;
   rectWidth = 125;
   rectHeight = 225;
   rectGussWid = 25;
@@ -504,6 +504,7 @@ function moveLeft() {
   calcArray2(leftCoord,topCoord);
   canvas.renderAll();
   prevCoordl= delCoordl;
+  submitGrid();
   }
 }
 
@@ -582,12 +583,10 @@ function mouseDown(ev) {
 
   if(prevBags.includes(canvas.getActiveObject()) == false)
   {
-    console.log("INSIDE HERE");
-    document.getElementById("PreviousBags").value = 0;    
+    //document.getElementById("PreviousBags").value = 0;    
     copy();
   }
   else{
-    console.log("NOT INSIDE COPY");
   }
 }
 
@@ -726,13 +725,6 @@ trackEachBag[trackEachBagCount] = temptrackBag;
 BagPos[trackEachBagCount] = rotPos;
 BagLeft[trackEachBagCount] = leftCoord;
 BagTop[trackEachBagCount] = topCoord;
-console.log("Current Object is: " + currentObject);
-console.log("BagPos is:");
-console.log(BagPos);
-console.log("BagLeft is:");
-console.log(BagLeft);
-console.log("BagTop is:");
-console.log(BagTop);
 trackEachBagCount++;
 }
 
@@ -742,9 +734,6 @@ trackEachBagCount++;
 function calcArray2(leftCoord, topCoord){
   var i2 = leftCoord;
   var j2 = topCoord;
-  /*console.log("current object is: " + currentObject);
-  console.log("select object is: " + selectObject);
-  console.log("VYOOOOOO: "+document.getElementById("PreviousBags").text);*/
   if(i2 > 0){
     i2 = i2/gridsize;
   }
@@ -785,7 +774,12 @@ function calcArray2(leftCoord, topCoord){
 
 
   //EDIT THE COORDINATE ARRAYS
-  console.log(canvas.item())
+  /*console.log("Current Object is: "+currentObject);
+  console.log("BagTop array is:");
+  console.log(BagTop);
+  console.log("BagLeft array is:");
+  console.log(BagLeft);*/
+  
 }
 
 
@@ -845,12 +839,11 @@ function delArray(delCoordl, delCoordt){
 document.getElementById("submit_grid").onclick = function() {submitGrid()};
 function submitGrid()
 {
-
+  console.log("track Each Bag Array is:");
   console.log(trackEachBag);
-  if(document.getElementById("PreviousBags").value >= 1){
+  if(document.getElementById("PreviousBags").value == 1){
     canvas.discardActiveObject();
-    canvas.renderAll();
-    document.getElementById("PreviousBags").value = 0;    
+    canvas.renderAll();  
   }
   var showData = BoxArray;
   var Lvalue = document.getElementById("PreviousLayers").value;
@@ -906,11 +899,11 @@ function PreviousBags1() {
   else{
     currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
   }
-  console.log("Current object is: " + currentObject);
+  /*console.log("Current object is: " + currentObject);
   console.log("doucment: " + document.getElementById("PreviousLayers").value);
   console.log("Bagnum: "+ BagNum);
   console.log("Canvas items are: ");
-  console.log(CanvasItems);
+  console.log(CanvasItems);*/
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
 
@@ -1138,6 +1131,9 @@ function DeleteBag(){
   console.log("trackEach Bag array is: ");
   console.log(trackEachBag);
   trackEachBag.splice(trackEachBagCount - document.getElementById("PreviousBags").value,1);
+  BagPos.splice(trackEachBagCount - document.getElementById("PreviousBags").value,1);
+  BagLeft.splice(trackEachBagCount - document.getElementById("PreviousBags").value,1);
+  BagTop.splice(trackEachBagCount - document.getElementById("PreviousBags").value,1)
   var selectListrem = document.getElementById("PreviousBags");
   trackEachBagCount--;
   canvas.renderAll();
@@ -1240,3 +1236,226 @@ var rangeSlider = function(){
 rangeSlider();
 
 
+//ADD load button that will generate this function
+function revGen(){
+  /**********************************************/
+  //Load variables
+  var BagLeft1 = [];
+  var BagTop1 = [];
+  var rectWidth1 = 0;
+  var rectHeight1 = 0;
+  var rectGussWid1 = 0;
+  var gridXLines1 = 0;
+  var gridYLines1 = 0;
+  var gridsize1 = 0;
+  /**********************************************/
+  canvas.setWidth(900);
+  canvas.setHeight(600);
+  for (var i = 0; i <= gridXLines1; i++) {
+    canvas.add(new fabric.Line([ i * gridsize1, 0, i * gridsize1, (gridsize1*gridYLines1)], { type:'line', stroke: '#ccc', selectable: false }));
+  }
+  for(var j = 0; j <= gridYLines1; j++){
+    canvas.add(new fabric.Line([ 0, j * gridsize1, (gridsize1*gridXLines1), j * gridsize1], { type: 'line', stroke: '#ccc', selectable: false }));
+  }
+  var BagCycle = 0;
+  while(BagCycle < trackEachBagCount){ 
+    if(BagPos[BagCycle]==1){
+      var rect1G = new fabric.Rect({ 
+        left: BagLeft1[BagCycle], 
+        top: BagTop1[BagCycle], 
+        width: rectWidth1, 
+        height: rectHeight1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true
+      });
+      var rect1G1 = new fabric.Rect({ 
+        left: rect1G.left+rectWidth1-rectGussWid1, 
+        top: BagTop1[BagCycle], 
+        width: rectGussWid1, 
+        height: rectHeight1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true
+      });
+      var rect1G2 = new fabric.Rect({ 
+        left: BagLeft1[BagCycle], 
+        top: BagTop1[BagCycle], 
+        width: rectGussWid1, 
+        height: rectHeight1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true
+      });
+      var rect1G3 = new fabric.Rect({ 
+        left: BagLeft1[BagCycle], 
+        top: rect1G.top+rectHeight1-rectGussWid1, 
+        width: rectWidth1, 
+        height: rectGussWid1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true
+      });
+      var rect1 = new fabric.Group([rect1G, rect1G1, rect1G2, rect1G3]);
+      canvas.add(rect1);
+    }
+    else if(BagPos[BagCycle]==2){
+      canvas.remove(canvas.item(selectObject));
+      var rect3G = new fabric.Rect({ 
+          left: BagLeft1[BagCycle], 
+          top: BagTop1[BagCycle], 
+          width: rectWidth1, 
+          height: rectHeight1, 
+          fill: '#1273EB',
+          stroke:  '#292929',
+          originX: 'left', 
+          originY: 'top',
+          centeredRotation: true    
+      });
+      var rect3G1 = new fabric.Rect({ 
+          left: rect3G.left+rectWidth1-rectGussWid1, 
+          top: BagTop1[BagCycle], 
+          width: rectGussWid1, 
+          height: rectHeight1, 
+          fill: '#1273EB',
+          stroke:  '#292929',
+          originX: 'left', 
+          originY: 'top',
+          centeredRotation: true  
+      });
+      var rect3G2 = new fabric.Rect({ 
+          left: BagLeft1[BagCycle], 
+          top: BagTop1[BagCycle], 
+          width: rectGussWid1, 
+          height: rectHeight1, 
+          fill: '#1273EB',
+          stroke:  '#292929',
+          originX: 'left', 
+          originY: 'top',
+          centeredRotation: true   
+      });
+      var rect3G3 = new fabric.Rect({ 
+          left: BagLeft1[BagCycle], 
+          top: BagTop1[BagCycle], 
+          width: rectWidth1, 
+          height: rectGussWid1, 
+          fill: '#1273EB',
+          stroke:  '#292929',
+          originX: 'left', 
+          originY: 'top',
+          centeredRotation: true    
+      });
+      var rect3 = new fabric.Group([rect3G, rect3G1, rect3G2, rect3G3]);
+      canvas.add(rect3);
+      canvas.renderAll(); 
+    }
+    else if(BagPos[BagCycle]==3){
+      var rect3G = new fabric.Rect({ 
+        left: BagLeft1[BagCycle], 
+        top: BagTop1[BagCycle], 
+        width: rectWidth1, 
+        height: rectHeight1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true
+      });
+      var rect3G1 = new fabric.Rect({ 
+        left: rect3G.left+rectWidth1-rectGussWid1, 
+        top: BagTop1[BagCycle], 
+        width: rectGussWid1, 
+        height: rectHeight1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true  
+      });
+      var rect3G2 = new fabric.Rect({ 
+        left: BagLeft1[BagCycle], 
+        top: BagTop1[BagCycle], 
+        width: rectGussWid1, 
+        height: rectHeight1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true    
+      });
+      var rect3G3 = new fabric.Rect({ 
+        left: BagLeft1[BagCycle], 
+        top: BagTop1[BagCycle], 
+        width: rectWidth1, 
+        height: rectGussWid1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true    
+      });
+      var rect3 = new fabric.Group([rect3G, rect3G1, rect3G2, rect3G3]);
+      canvas.add(rect3);
+      canvas.renderAll();
+    }  
+    else{
+      var rect4G = new fabric.Rect({ 
+        left: BagLeft1[BagCycle], 
+        top: BagTop1[BagCycle], 
+        width: rectHeight1, 
+        height: rectWidth1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true    
+      });
+      var rect4G1 = new fabric.Rect({ 
+        left: BagLeft1[BagCycle], 
+        top: BagTop1[BagCycle], 
+        width: rectHeight1, 
+        height: rectGussWid1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true    
+      });
+      var rect4G2 = new fabric.Rect({ 
+        left: BagLeft1[BagCycle], 
+        top: rectWidth1+rect4G1.top-rectGussWid1, 
+        width: rectHeight1, 
+        height: rectGussWid1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true    
+      });
+      var rect4G3 = new fabric.Rect({ 
+        left: rect4G1.left+rectHeight1-rectGussWid1, 
+        top: BagTop1[BagCycle], 
+        width: rectGussWid1, 
+        height: rectWidth1, 
+        fill: '#1273EB',
+        stroke:  '#292929',
+        originX: 'left', 
+        originY: 'top',
+        centeredRotation: true    
+      });
+      var rect4 = new fabric.Group([rect4G, rect4G1, rect4G2, rect4G3]);
+      canvas.add(rect4);
+      canvas.renderAll();
+    }
+    BagCycle++;
+  }
+
+}
