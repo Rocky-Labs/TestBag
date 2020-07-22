@@ -46,16 +46,16 @@ document.getElementById("confirm").onclick = function(e){
  
 };
 function setSize(){*/
-  /*e.preventDefault();
+  e.preventDefault();
   gridXLines = parseInt(document.getElementById("BoxLength").value*2,10);
   gridYLines = parseInt(document.getElementById("BoxWidth").value*2,10);
-  */gridXLines = 25;
+  /*gridXLines = 25;
   gridYLines = 25;
   rectWidth = 150;
   rectHeight = 250;
   rectGussWid = 25;
-  gridsize = 25;
-  /*if(gridXLines < 38*2 || gridYLines < 38*2)
+  gridsize = 25;*/
+  if(gridXLines < 38*2 || gridYLines < 38*2)
   {
     gridsize = 8;
   }
@@ -74,7 +74,7 @@ function setSize(){*/
   //console.log("gridsize is: " + gridsize);
   rectWidth = parseInt(document.getElementById("BagWidth").value*gridsize*2,10);
   rectHeight = parseInt(document.getElementById("BagLength").value*gridsize*2,10);
-  rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize*2,10);*/
+  rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize*2,10);
   //console.log("rectWidth is: "+rectWidth);
   //console.log("rectheight is: "+rectHeight);
   //console.log('rectGussWid is: '+rectGussWid);
@@ -739,6 +739,15 @@ function calcArray2(leftCoord, topCoord){
   var initi2 = i2;
   var initj2 = j2;
   var RectPosX = [[],[]];
+  var temptrackBag = [[],[]];
+  for(var a3 = 0; a3<BoxArrayCol-2; a3++){
+    temptrackBag.push([0]);
+  }
+  for(var a1 = 0; a1<BoxArrayCol; a1++){
+    for(var a2 = temptrackBag[a1].length; a2<BoxArrayRow; a2++){
+      temptrackBag[a1].push(0);
+    } 
+  }
   if(prevRect[currentObject-(gridXLines+gridYLines+2)]==1){
     RectPosX = RectPos1;
   }
@@ -757,10 +766,12 @@ function calcArray2(leftCoord, topCoord){
     for(var y2 = 0; y2 < RectPosX.length; y2++){
       BoxArray[j2][i2] = BoxArray[j2][i2] + RectPosX[y2][x2];
       LayerArray[j2][i2] = LayerArray[j2][i2] + RectPosX[y2][x2];
+      temptrackBag[j2][i2] = temptrackBag[j2][i2]+RectPos[y2][x2];
       j2++;
     }
     i2++;
   }
+  trackEachBag[currentObject-(gridXLines+gridYLines+2)] = temptrackBag;
   console.log("BagLeft Array is: "+BagLeft);
   console.log("BagTop Array is: "+BagTop);
 }
@@ -804,11 +815,24 @@ function delArray(delCoordl, delCoordt){
   {
     PrevRectPos = RectPos4;
   }
+  var temptrackBag = [[],[]];
+  for(var a3 = 0; a3<BoxArrayCol-2; a3++){
+    temptrackBag.push([0]);
+  }
+  for(var a1 = 0; a1<BoxArrayCol; a1++){
+    for(var a2 = temptrackBag[a1].length; a2<BoxArrayRow; a2++){
+      temptrackBag[a1].push(0);
+    } 
+  }
+  temptrackBag = trackEachBag[currentObject-(gridXLines+gridYLines+2)];
+  console.log("initj1 islssdljfffffffffflsdfjk: " + initj1);
+  console.log("initI1 is: "+initi1);
   for(var x1 = 0; x1 < PrevRectPos[0].length; x1++){
     j1 = initj1;
     for(var y1 = 0; y1 < PrevRectPos.length; y1++){
       BoxArray[j1][i1] = BoxArray[j1][i1] - PrevRectPos[y1][x1];
       LayerArray[j1][i1] = LayerArray[j1][i1] - PrevRectPos[y1][x1];
+      temptrackBag[j1][i1] = temptrackBag[j1][i1]+RectPos[y1][x1];
       j1++;
     }
     i1++;
@@ -819,11 +843,6 @@ function delArray(delCoordl, delCoordt){
 
 /********************************  DISPLAY HEATMAP  ***********************************/
 
-<<<<<<< HEAD
-//document.getElementById("submit_grid").onclick = function() {submitGrid()};
-=======
-
->>>>>>> 381588c8089a8cab15f7509de66dad118f9276e3
 function submitGrid()
 {
   if(document.getElementById("PreviousBags").value == 0){
@@ -917,6 +936,8 @@ function PreviousBags1() {
   if(LoadBag == 1){
     submitGrid();
   }
+  console.log("track EACH BAG is: ");
+  console.log(trackEachBag);
 }
 
 /**************************************************************************************/
