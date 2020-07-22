@@ -266,23 +266,95 @@ label {
   background-color: #292929;
 }
 
-.load{
-  width: 50px;
-  height: 25px;
-  font-size: 14px;
+#restart{
+  /*width: 50px;
+  height: 25px;*/
   
-}  
+  position: absolute;
+  background-image: url(/static/img/restart.png);
+  background-color: #333333; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position-y: left;
+  background-position: 10px;
+  border: #2980b9;
+  color: whitesmoke;
+  line-height: 2;
+  width: 130px;
+  font-size: 12px;
+  text-align: right;
+  top: 40%;
+  left: 66%;
+  width: 110px;
+  height: 40px;
+  border: none;
+  font-size: 16px;
+  padding-right: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  
+} 
+#restart:hover {
+  background-image: url(/static/img/restart_hover.png);
+  background-color: #292929;
+  color: #2980b9;
+}
+.load{
+  /*width: 50px;
+  height: 25px;*/
+  
+  position: absolute;
+  background-image: url(/static/img/open.png);
+  background-color: #333333; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position-y: left;
+  background-position: 10px;
+  border: #2980b9;
+  color: whitesmoke;
+  line-height: 2;
+  width: 130px;
+  font-size: 12px;
+  text-align: right;
+  top: 40%;
+  left: 36%;
+  width: 110px;
+  height: 40px;
+  border: none;
+  font-size: 16px;
+  padding-right: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  
+} 
+#load:hover {
+  background-image: url(/static/img/Open_hover.png);
+  background-color: #292929;
+  color: #2980b9;
+}
 
 #save {
- background-image: url(/static/img/save.png);
- background-color: transparent; /* make the button transparent */
-  background-repeat: no-repeat; 
-  border: transparent;
- height: 36px;
- width: 36px;
- display: inline-block;
- position: absolute;
-  right: 120px;
+  position: absolute;
+ background-image: url(/static/img/save_white.png);
+ background-color: #333333; /* make the button transparent */
+ background-repeat: no-repeat;  /* make the background image appear only once */
+ background-position-y: left;
+ background-position: 10px;
+ border: #2980b9;
+ color: whitesmoke;
+ line-height: 2;
+ width: 130px;
+ font-size: 12px;
+ text-align: right;
+ top: 40%;
+ left: 6%;
+ width: 110px;
+ height: 40px;
+ border: none;
+ font-size: 16px;
+ padding-right: 15px;
+ box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+#save:hover {
+  background-image: url(/static/img/save.png);
+  background-color: #292929;
+  color: #2980b9;
 }
 #send {
   background-image: url(/static/img/send.png);
