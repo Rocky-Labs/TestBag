@@ -80,6 +80,7 @@ z-index: 999999;
 #flip270:focus {  background-image: url(/static/img/flipRight_focus.png);}
 
 #tester {
+ 
   background-color: #212121;
 }
 
@@ -596,14 +597,14 @@ label 				 {
 #saveForm {
   display: none;
   position: absolute;
-  top: -50px;
-  left: -200px;
+  top: 30px;
+  left: 5px;
 }
 #loadForm {
   display: none;
   position: absolute;
-  top: -70px;
-  left: -350px;
+  top: 30px;
+  left: 190px;
 }
 #successAlert2{
   background-color: lawngreen;

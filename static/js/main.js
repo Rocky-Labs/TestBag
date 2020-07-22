@@ -842,7 +842,7 @@ function delArray(delCoordl, delCoordt){
 
 /********************************  DISPLAY HEATMAP  ***********************************/
 
-document.getElementById("submit_grid").onclick = function() {submitGrid()};
+
 function submitGrid()
 {
 
@@ -1188,7 +1188,9 @@ function DeleteBag(){
 $('#load').click(function() {
     
   document.getElementById("loadForm").style.display ='inline';
-  //document.getElementById("save").style.display ='none';
+  document.getElementById("load").style.display ='none';
+  document.getElementById("saveForm").style.display ='none';
+  document.getElementById("save").style.display ='inline';
 });
 
 var LoadFunction = function(){
@@ -1243,8 +1245,9 @@ LoadFunction();
 $('#save').click(function() {
     
   document.getElementById("saveForm").style.display ='inline';
-  document.getElementById("load").style.display ='none';
-  //document.getElementById("save").style.display ='none';
+  document.getElementById("save").style.display ='none';
+  document.getElementById("load").style.display ='inline';
+  document.getElementById("loadForm").style.display ='none';
 });
 
 /*   Beginning of save function */
