@@ -819,7 +819,11 @@ function delArray(delCoordl, delCoordt){
 
 /********************************  DISPLAY HEATMAP  ***********************************/
 
+<<<<<<< HEAD
 //document.getElementById("submit_grid").onclick = function() {submitGrid()};
+=======
+
+>>>>>>> 381588c8089a8cab15f7509de66dad118f9276e3
 function submitGrid()
 {
   if(document.getElementById("PreviousBags").value == 0){
@@ -1203,7 +1207,9 @@ function DeleteBag(){
 $('#load').click(function() {
     
   document.getElementById("loadForm").style.display ='inline';
-  //document.getElementById("save").style.display ='none';
+  document.getElementById("load").style.display ='none';
+  document.getElementById("saveForm").style.display ='none';
+  document.getElementById("save").style.display ='inline';
 });
 
 var LoadFunction = function(){
@@ -1495,8 +1501,9 @@ LoadFunction();
 $('#save').click(function() {
     
   document.getElementById("saveForm").style.display ='inline';
-  document.getElementById("load").style.display ='none';
-  //document.getElementById("save").style.display ='none';
+  document.getElementById("save").style.display ='none';
+  document.getElementById("load").style.display ='inline';
+  document.getElementById("loadForm").style.display ='none';
 });
 
 /*   Beginning of save function */
