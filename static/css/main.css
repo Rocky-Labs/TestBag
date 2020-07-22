@@ -49,8 +49,8 @@ z-index: 999999;
 }
 #ButtonArr {
   position: absolute;
-  top:10%;
-  right: 5%;
+  top:.5%;
+  right: 3%;
 }
 #c{
   position: absolute;
@@ -166,7 +166,7 @@ h3{
   text-align: center;
   color: white;
   font-family: 'Ubuntu', sans-serif;
-  font-size: x-large;
+  font-size: medium;
   
  
 }
@@ -220,7 +220,7 @@ label {
   /*width: 130px;
   font-size: 12px;*/
   text-align: right;
-  top: 2.3%;
+  top: 4%;
   left: 20%;
   width: 165px;
   height: 40px;
@@ -251,8 +251,8 @@ label {
   /*width: 130px;
   font-size: 12px;*/
   text-align: right;
-  top: 2.3%;
-  left: 80%;
+  top: 4%;
+  left: 64%;
   width: 135px;
   height: 40px;
   border: none;
@@ -264,28 +264,6 @@ label {
 #DeleteBag:hover{background-image: url(/static/img/trash_hover.png);
   color: #FB5252;
   background-color: #292929;
-}
-#submit_grid {
-
-  background-image: url(/static/img/update.png); /* 16px x 16px */
-  background-color: transparent; /* make the button transparent */
-  background-repeat: no-repeat;  /* make the background image appear only once */
-  background-position-y: center;
-  background-position: 10px;
-  border: #2980b9;
-  color: whitesmoke;
-  text-align: right;
-  display: inline-block;
-  height: 100%;
-  line-height: 3;
-  font-size: 140%;
-  width: 130px;
-  margin-left: 10px;
-  
-   
-}
-#submit_grid:hover {
-  background-color: #2980b9;
 }
 
 .load{
@@ -435,8 +413,8 @@ label 				 {
 
 .box {
   position: absolute;
-  top: 5%;
-  left: 70%;
+  top: 6.5%;
+  left: 55%;
   transform: translate(-50%, -50%);
 }
 
@@ -479,7 +457,7 @@ label 				 {
 
 .LayerSelection {
   position: absolute;
-  top: 5%;
+  top: 6.5%;
   left: 10%;
   transform: translate(-50%, -50%);
 }
