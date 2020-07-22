@@ -288,12 +288,7 @@ label {
   background-color: #2980b9;
 }
 
-.load{
-  width: 50px;
-  height: 25px;
-  font-size: 14px;
-  
-}  
+
 
 #save {
  background-image: url(/static/img/save.png);
@@ -306,7 +301,7 @@ label {
  position: absolute;
   right: 120px;
 }
-#send {
+#load {
   background-image: url(/static/img/send.png);
  background-color: transparent; /* make the button transparent */
   background-repeat: no-repeat; 
@@ -315,7 +310,7 @@ label {
  width: 36px;
  display: inline-block;
  position: absolute;
-  right: 50px;
+  right: 500px;
  }
 
  /* form starting stylings*/

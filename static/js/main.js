@@ -3,7 +3,7 @@
 var canvas = new fabric.Canvas('c', { selection: true });
 
 //Grid Creation
-var gridsize = 25;
+var gridsize =0;
 var gridXLines, gridYLines = 0;
 //Bag Creation
 var rectWidth, rectHeight, rectGussWid = 0;
@@ -17,9 +17,11 @@ var RectPos4 = [[],[]];
 var arrRow, arrCol, arrGuss = 0;
 var BoxArrayRow, BoxArrayCol = 0;
 var selectObject = 0;
+var LoadBag = 0;
 /***************************  CALCULATION VARIABLES **********************************/
 var LayerComplete = 0;
 var trackEachBag = [];
+var trackEachBag1 = [];
 var trackEachBagCount = 0;
 var prevBags = [];
 var prevBagsCount = 0;
@@ -36,24 +38,46 @@ var BagPos = [];
 var BagLeft = [];
 var BagTop = [];
 /**************************************************************************************/
-document.getElementById("confirm").onclick = function(){
 
+document.getElementById("confirm").onclick = function(e){
+  /*
   setSize();
   document.getElementById("ButtonArr").style.display ='inline-block';
  
 };
-function setSize(){
-  /*event.preventDefault();
-  gridXLines = parseInt(document.getElementById("BoxLength").value,10);
-  gridYLines = parseInt(document.getElementById("BoxWidth").value,10);
-  rectWidth = parseInt(document.getElementById("BagWidth").value*gridsize,10);
-  rectHeight = parseInt(document.getElementById("BagLength").value*gridsize,10);
-  rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize,10);*/
-  gridXLines = 25;
-  gridYLines = 20;
-  rectWidth = 125;
-  rectHeight = 225;
+function setSize(){*/
+  /*e.preventDefault();
+  gridXLines = parseInt(document.getElementById("BoxLength").value*2,10);
+  gridYLines = parseInt(document.getElementById("BoxWidth").value*2,10);
+  */gridXLines = 25;
+  gridYLines = 25;
+  rectWidth = 150;
+  rectHeight = 250;
   rectGussWid = 25;
+  gridsize = 25;
+  /*if(gridXLines < 38*2 || gridYLines < 38*2)
+  {
+    gridsize = 8;
+  }
+  else if(gridXLines < 43*2 || gridYLines < 43*2)
+  {
+    girdsize = 7;
+  }
+  else if(gridXLines < 50*2 || gridYLines < 50*2)
+  {
+    gridsize = 6;
+  }
+  else
+  {
+    gridsize = 5;
+  }
+  //console.log("gridsize is: " + gridsize);
+  rectWidth = parseInt(document.getElementById("BagWidth").value*gridsize*2,10);
+  rectHeight = parseInt(document.getElementById("BagLength").value*gridsize*2,10);
+  rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize*2,10);*/
+  //console.log("rectWidth is: "+rectWidth);
+  //console.log("rectheight is: "+rectHeight);
+  //console.log('rectGussWid is: '+rectGussWid);
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
@@ -79,6 +103,9 @@ arrCol = rectWidth/gridsize;
 arrGuss = rectGussWid/gridsize;
 BoxArrayRow = gridXLines;
 BoxArrayCol = gridYLines;
+//console.log("array Row is: "+arrRow);
+//console.log("array Col is: "+arrCol);
+//console.log("array Gus is: "+arrGuss);
 //Create Bag Position 0 Array
 for(var x = 0; x<arrRow-2; x++){
   RectPos1.push([0]);
@@ -104,6 +131,8 @@ for(var x = 0; x < arrRow; x++){
     }
   }
 }
+//console.log("Rect Array is: ");
+//console.log(RectPos1);
 //Create Bag Position 90 Array
 for(var x = 0; x<arrCol-2; x++){
   RectPos2.push([0]);
@@ -475,57 +504,28 @@ function rotate270() {
 //Move Select bag left and right function
 document.getElementById("moveLeft").oninput = function() {moveLeft()};
 function moveLeft() {
-  var prevCoordl = 200;
   if(document.getElementById("PreviousBags").value < 1){
     alert("Choose the Bag you want to move");
   }
   else{
-  var valueMoved = document.getElementById("moveLeft").value;
-  var test = parseInt(valueMoved);
-  /*console.log("Value Moived:"+ valueMoved);*/
-  delCoordl = canvas.getActiveObject().left;
-  //console.log("delCoordl:"+ delCoordl);
-  delCoordt = canvas.getActiveObject().top;
-  delArray(delCoordl,delCoordt);
-  canvas.item(currentObject).set({left:( test)});
-/*
-  if(prevCoordl < test){
+    var valueMoved = document.getElementById("moveLeft").value;
+    var test = parseInt(valueMoved);
+    delCoordl = canvas.getActiveObject().left;
+    delCoordt = canvas.getActiveObject().top;
+    delArray(delCoordl,delCoordt);
     canvas.item(currentObject).set({left:( test)});
-    //console.log("Left: "+ canvas.getActiveObject().left);
-  }
-  else{
-    canvas.item(currentObject).set({left:(test)});
-   // console.log("Right: "+canvas.getActiveObject().left);
-  }
- canvas.item(currentObject).set({left:(canvas.getActiveObject().left-valueMoved)});*/
-  leftCoord = canvas.getActiveObject().left;
-  //console.log("leftCoord"+leftCoord)
-  topCoord = canvas.getActiveObject().top;
-  calcArray2(leftCoord,topCoord);
-  canvas.renderAll();
-  prevCoordl= delCoordl;
-  submitGrid();
+
+    leftCoord = canvas.getActiveObject().left;
+    topCoord = canvas.getActiveObject().top;
+    BagLeft[currentObject-(gridXLines+gridYLines+2)]=leftCoord;
+    calcArray2(leftCoord,topCoord);
+    canvas.renderAll();
+    prevCoordl= delCoordl;
+    submitGrid();
   }
 }
 
-/*Move Select Shape RIGHT 1 Cell
-document.getElementById("moveRight").onclick = function() {moveRight()};
-function moveRight() {
-  if(document.getElementById("PreviousBags").value < 1){
-    alert("Choose the Bag you want to move");
-  }
-  else{
-  delCoordl = canvas.getActiveObject().left;
-  delCoordt = canvas.getActiveObject().top;
-  delArray(delCoordl,delCoordt);
-  canvas.item(currentObject).set({left:(canvas.getActiveObject().left+gridsize)});
-  leftCoord = canvas.getActiveObject().left;
-  topCoord = canvas.getActiveObject().top;
-  calcArray2(leftCoord,topCoord);
-  canvas.renderAll();
-  submitGrid();
-  }
-}*/
+
 
 //Moving the selected bag up and down function
 document.getElementById("moveUp").oninput = function() {moveUp()};
@@ -534,42 +534,22 @@ function moveUp() {
     alert("Choose the Bag you want to move");
   }
   else{
-  delCoordl = canvas.getActiveObject().left;
-  delCoordt = canvas.getActiveObject().top;
-  console.log("Coordinate top: "+delCoordt)
+    delCoordl = canvas.getActiveObject().left;
+    delCoordt = canvas.getActiveObject().top;
   //obtaining the value from html and converting it to integer
-  var valueMoved = document.getElementById("moveUp").value;
-  var RangeCoord = parseInt(valueMoved);
-
-  delArray(delCoordl,delCoordt);
-  canvas.item(currentObject).set({top:(RangeCoord)});
-  leftCoord = canvas.getActiveObject().left;
-  topCoord = canvas.getActiveObject().top;
-  calcArray2(leftCoord,topCoord);
-  canvas.renderAll();
-  submitGrid();
+    var valueMoved = document.getElementById("moveUp").value;
+    var RangeCoord = parseInt(valueMoved);
+    delArray(delCoordl,delCoordt);
+    canvas.item(currentObject).set({top:(RangeCoord)});
+    leftCoord = canvas.getActiveObject().left;
+    topCoord = canvas.getActiveObject().top;
+    BagTop[currentObject-(gridXLines+gridYLines+2)]=topCoord;
+    calcArray2(leftCoord,topCoord);
+    canvas.renderAll();
+    submitGrid();
   }
 }
 
-/*
-document.getElementById("moveDown").onclick = function() {moveDown()};
-function moveDown() {
-  if(document.getElementById("PreviousBags").value < 1){
-    alert("Choose the Bag you want to move");
-  }
-  else{
-  delCoordl = canvas.getActiveObject().left;
-  delCoordt = canvas.getActiveObject().top;
-  console.log("coordinate top: "+delCoordt)
-  delArray(delCoordl,delCoordt);
-  canvas.item(currentObject).set({top:(canvas.getActiveObject().top+gridsize)});
-  leftCoord = canvas.getActiveObject().left;
-  topCoord = canvas.getActiveObject().top;
-  calcArray2(leftCoord,topCoord);
-  canvas.renderAll();
-  submitGrid();
-  }
-}*/
 
 /**************************************************************************************/
 
@@ -581,10 +561,12 @@ function moveDown() {
 document.onmousedown = mouseDown;
 function mouseDown(ev) {
 
-  if(prevBags.includes(canvas.getActiveObject()) == false)
+  if(prevBags.includes(canvas.getActiveObject()) == false && LoadBag == 0)
   {
-    //document.getElementById("PreviousBags").value = 0;    
+    //document.getElementById("PreviousBags").value = 0;
     copy();
+    document.getElementById("moveLeft").style.display ='none';
+    document.getElementById("moveUp").style.display ='none';
   }
   else{
   }
@@ -595,7 +577,7 @@ var countBag = 1;
 var correctPlacement = 1;
 document.onmouseup = mouseUp;
 function mouseUp(ev) {
-  if(prevBags.includes(canvas.getActiveObject()) == false && activeObject ==1)
+  if(prevBags.includes(canvas.getActiveObject()) == false && activeObject ==1 && LoadBag==0)
   {
     activeObject--;
     paste();
@@ -641,6 +623,15 @@ function paste(){
     }));
     copiedObject = canvas.getActiveObject();
     //placed correct
+    if(document.getElementById("PreviousLayers").value > 0){
+      correctPlacement = 0;
+      alert("Cannot add a bag to a completed layer, Must be in Default Layer");
+      canvas.remove(canvas.getActiveObject());
+      canvas.discardActiveObject();
+      canvas.renderAll();
+    }
+    else{
+      LayerComplete = 0;
     if((rotPos == 1 || rotPos == 3) && copiedObject.left >= 0 && copiedObject.top >= 0 && copiedObject.left <= (gridXLines*gridsize-rectWidth) 
     && copiedObject.top <= (gridYLines*gridsize-rectHeight)){
       correctPlacement = 1;
@@ -666,7 +657,6 @@ function paste(){
       canvas.discardActiveObject();
       canvas.renderAll();
       submitGrid();
-
     }
     else{
       correctPlacement = 0;
@@ -675,7 +665,7 @@ function paste(){
       canvas.discardActiveObject();
       canvas.renderAll();
     }
-
+  }
 }
 
 /**************************************************************************************/
@@ -771,15 +761,8 @@ function calcArray2(leftCoord, topCoord){
     }
     i2++;
   }
-
-
-  //EDIT THE COORDINATE ARRAYS
-  /*console.log("Current Object is: "+currentObject);
-  console.log("BagTop array is:");
-  console.log(BagTop);
-  console.log("BagLeft array is:");
-  console.log(BagLeft);*/
-  
+  console.log("BagLeft Array is: "+BagLeft);
+  console.log("BagTop Array is: "+BagTop);
 }
 
 
@@ -836,12 +819,10 @@ function delArray(delCoordl, delCoordt){
 
 /********************************  DISPLAY HEATMAP  ***********************************/
 
-document.getElementById("submit_grid").onclick = function() {submitGrid()};
+//document.getElementById("submit_grid").onclick = function() {submitGrid()};
 function submitGrid()
 {
-  console.log("track Each Bag Array is:");
-  console.log(trackEachBag);
-  if(document.getElementById("PreviousBags").value == 1){
+  if(document.getElementById("PreviousBags").value == 0){
     canvas.discardActiveObject();
     canvas.renderAll();  
   }
@@ -849,6 +830,14 @@ function submitGrid()
   var Lvalue = document.getElementById("PreviousLayers").value;
   if(Lvalue > 0){
     showData = LayerSum[Lvalue-1];
+  }
+  if(LoadBag == 1){
+    if(document.getElementById("PreviousBags").value > 0){
+      showData = trackEachBag1[document.getElementById("PreviousBags").value-1]
+    }
+    else{
+      showData=BoxArray;
+    }
   }
   var data = [
     {
@@ -899,20 +888,31 @@ function PreviousBags1() {
   else{
     currentObject = CanvasItems[document.getElementById("PreviousLayers").value-1]+1-BagNum;
   }
-  /*console.log("Current object is: " + currentObject);
-  console.log("doucment: " + document.getElementById("PreviousLayers").value);
-  console.log("Bagnum: "+ BagNum);
-  console.log("Canvas items are: ");
-  console.log(CanvasItems);*/
   canvas.setActiveObject(canvas.item(currentObject));
   canvas.renderAll();
-
-   document.getElementById("moveLeft").value = 0;
-   document.getElementById("moveLeft").style.display ='inline-block';
-   document.getElementById("moveUp").style.display ='inline-block';
-    
-
-}
+  document.getElementById("moveLeft").step = gridsize;
+  document.getElementById("moveUp").step = gridsize;
+  if(BagPos[currentObject-(gridXLines+gridYLines+2)] == 1 || BagPos[currentObject-(gridXLines+gridYLines+2)] == 3){
+    document.getElementById("moveLeft").max = gridXLines*gridsize-rectWidth;
+  }
+  else{
+    document.getElementById("moveLeft").max = ((gridXLines*gridsize)-rectHeight);
+  }
+  if(BagPos[currentObject-(gridXLines+gridYLines+2)] == 1 || BagPos[currentObject-(gridXLines+gridYLines+2)] == 3){
+    document.getElementById("moveUp").max = (gridYLines*gridsize-rectHeight);
+  }
+  else{
+    document.getElementById("moveUp").max = (gridYLines*gridsize-rectWidth);
+  }
+  document.getElementById("moveLeft").value = canvas.getActiveObject().left;
+  document.getElementById("moveUp").value = canvas.getActiveObject().top;
+  document.getElementById("moveLeft").style.display ='inline-block';
+  document.getElementById("moveUp").style.display ='inline-block';
+  
+  }
+  if(LoadBag == 1){
+    submitGrid();
+  }
 }
 
 /**************************************************************************************/
@@ -1015,10 +1015,14 @@ function PreviousLayers(){
 
   if(document.getElementById("PreviousLayers").value <= LayerCount && LayerCount > 0){
   if(moveCount > 0){
+    console.log("Moving Object lenght is: "+movedObjects.length);
+    console.log("Moved Objects Array is: ");
+    console.log(movedObjects);
     for(var x = 0; x <movedObjects.length; x++)
     {
       canvas.setActiveObject(canvas.item(movedObjects[x]));
-      canvas.item(movedObjects[x]).set({top:(canvas.getActiveObject().top+525)});
+      canvas.item(movedObjects[x]).set({top:(canvas.getActiveObject().top+725)});
+      console.log("Object moved off grid is: "+canvas.item(x));
       canvas.discardActiveObject();
     }
     movedObjects = [];
@@ -1031,15 +1035,25 @@ function PreviousLayers(){
   testArray = LayerSum[ActiveLayer-1];
   LayerArray = testArray;
   if(ActiveLayer>0){
-    var FirstGridItem = gridXLines+gridYLines+2;
+    var FirstGridItem = parseInt(gridXLines,10)+parseInt(gridYLines,10)+2;
     var LastGridItem = selectObject-1;
     var nextLayerItem = CanvasItems[ActiveLayer];
     var FirstLayerItem = CanvasItemsFirst[ActiveLayer-1];
     var LastLayerItem = CanvasItems[ActiveLayer-1];
+    console.log("Active Layer is: "+ActiveLayer);
+    console.log("FirstGridItem is: "+FirstGridItem);
+    console.log("LastGridItem is: "+LastGridItem);
+    console.log("nextLayer item is: "+CanvasItems[ActiveLayer]);
+    console.log("First Layer Item is: "+CanvasItemsFirst[ActiveLayer-1]);
+    console.log("Last Layer Item is: "+ CanvasItems[ActiveLayer-1] );
+    console.log("Canvas items array is:");
+    console.log(CanvasItems);
     if(ActiveLayer == 1){
+      console.log("AciveLayer == 1");
       for(var x = LastLayerItem+1; x <= LastGridItem; x++){
         canvas.setActiveObject(canvas.item(x));
-        canvas.item(x).set({top:(canvas.getActiveObject().top-525)});
+        canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
+        console.log("Object movied back is: " + canvas.item(x));
         canvas.discardActiveObject();
         movedObjects[moveCount] = x;
         moveCount++;
@@ -1047,16 +1061,18 @@ function PreviousLayers(){
       canvas.renderAll();
     }
     else if(nextLayerItem === undefined){
+      console.log("nextLayerItem === undefined");
       for(var x = FirstGridItem; x < FirstLayerItem; x++){
         canvas.setActiveObject(canvas.item(x));
-        canvas.item(x).set({top:(canvas.getActiveObject().top-525)});
+        canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
+        console.log("Object movied back is: " + canvas.item(x));
         canvas.discardActiveObject();
         movedObjects[moveCount] = x;
         moveCount++;
       }
       for(var x = LastLayerItem+1; x <= LastGridItem; x++){
         canvas.setActiveObject(canvas.item(x));
-        canvas.item(x).set({top:(canvas.getActiveObject().top-525)});
+        canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
         canvas.discardActiveObject();
         movedObjects[moveCount] = x;
         moveCount++;
@@ -1064,16 +1080,17 @@ function PreviousLayers(){
       canvas.renderAll();
     }
     else{
+      console.log("INSIDE ELSE OF MOVING");
       for(var x = FirstGridItem; x < FirstLayerItem; x++){
         canvas.setActiveObject(canvas.item(x));
-        canvas.item(x).set({top:(canvas.getActiveObject().top-525)});
+        canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
         canvas.discardActiveObject();
         movedObjects[moveCount] = x;
         moveCount++;
         }
         for(var x = LastLayerItem+1; x <= LastGridItem; x++){
           canvas.setActiveObject(canvas.item(x));
-          canvas.item(x).set({top:(canvas.getActiveObject().top-525)});
+          canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
           canvas.discardActiveObject();
           movedObjects[moveCount] = x;
           moveCount++;
@@ -1097,6 +1114,9 @@ function PreviousLayers(){
   }
   }
 }
+console.log("initial movedObjects array is: ");
+console.log(movedObjects);
+console.log("initial movedObjects Length is: "+movedObjects.length);
 }
 /******************************  Delete Bag  *****************************************/
 var LayerLevel = 0;
@@ -1106,7 +1126,10 @@ function DeleteBag(){
   selectObject--;
   if(document.getElementById("PreviousLayers").value == 0){
   countBag--;}
-  canvas.remove(canvas.getActiveObject());
+  canvas.remove(canvas.item(currentObject));
+  console.log("delete executed on object num: "+currentObject);
+  canvas.discardActiveObject();
+  canvas.renderAll();
   var RemoveArray = [[],[]];
   for(var a3 = 0; a3<BoxArrayCol-2; a3++){
     RemoveArray.push([0]);
@@ -1123,22 +1146,14 @@ function DeleteBag(){
   }
   }
   var atemp = document.getElementById("PreviousBags").value;
-  console.log("trackEachBagCount is: " + trackEachBagCount);
-  console.log("Bag Button Value: " + atemp);
-  console.log("ForwardLayerBags are: " + ForwardLayerBags);
-  console.log("trackEachBag inside is: " + trackEachBagCount- atemp - ForwardLayerBags);
-  RemoveArray = trackEachBag[trackEachBagCount-atemp-ForwardLayerBags];
-  console.log("trackEach Bag array is: ");
-  console.log(trackEachBag);
-  trackEachBag.splice(trackEachBagCount - document.getElementById("PreviousBags").value,1);
-  BagPos.splice(trackEachBagCount - document.getElementById("PreviousBags").value,1);
-  BagLeft.splice(trackEachBagCount - document.getElementById("PreviousBags").value,1);
-  BagTop.splice(trackEachBagCount - document.getElementById("PreviousBags").value,1)
+  RemoveArray = trackEachBag[currentObject-(gridXLines+gridYLines+2)];
+  trackEachBag.splice(currentObject-(gridXLines+gridYLines+2),1);
+  BagPos.splice(currentObject-(gridXLines+gridYLines+2),1);
+  BagLeft.splice(currentObject-(gridXLines+gridYLines+2),1);
+  BagTop.splice(currentObject-(gridXLines+gridYLines+2),1);
   var selectListrem = document.getElementById("PreviousBags");
   trackEachBagCount--;
   canvas.renderAll();
-  console.log("Remove Array is: ");
-  console.log(RemoveArray);
   for(var x = 1; x <= 32; x++){
     selectListrem.remove(1);
   }
@@ -1170,6 +1185,10 @@ function DeleteBag(){
     BoxCount[document.getElementById("PreviousLayers").value-1] =  BoxCount[document.getElementById("PreviousLayers").value-1]-1;
     LayerLevel = document.getElementById("PreviousLayers").value;
   }
+  console.log("TrackEachBag Array is: ");
+  console.log(trackEachBag);
+  console.log("Remove Array is: ");
+  console.log(RemoveArray);
   for(var i = 0; i<BoxArrayCol; i++){
     for(var j = 0; j < BoxArrayRow; j++){
       BoxArray[i][j] = BoxArray[i][j]-RemoveArray[i][j];
@@ -1191,6 +1210,7 @@ var LoadFunction = function(){
   var testbutton = $('#loadConfirm');
  
   testbutton.click(function(e) {
+
     e.preventDefault();
     var arr = BoxArray;
     var nameTemp = document.getElementById("nameSearch").value;
@@ -1208,12 +1228,248 @@ var LoadFunction = function(){
     else
     {
       $('#successAlert2').text(data.bag_pattern_name).show();
-      console.log( "Bag pattern name: "+ data.bag_pattern_name);
+      /*console.log( "Bag pattern name: "+ data.bag_pattern_name);
       console.log("Grid Size: " + data.grid_size);
       console.log("Rect Width: "+ data.rect_width);
       var RectWidthNormaltype = JSON.parse(data.rect_width)
       console.log("Rect Width as a : "+ typeof(RectWidthNormaltype));
       console.log("Rect Height: "+ data.rect_height);
+      console.log("Bag Left Arr is: " + data.bag_left_arr);*/
+      var rectWidth1 = data.rect_width;
+      var rectHeight1 = data.rect_height;
+      var rectGussWid1 = data.rect_guss;
+      var gridXLines1 = data.grid_X;
+      var gridYLines1 = data.grid_Y;
+      var BagCount = data.totalBags;
+      var gridsize1 = data.grid_size;
+      var BagLeft1 = JSON.parse(data.bag_left_arr);
+      var BagTop1 = JSON.parse(data.bag_top_arr);
+      var BagPos1 = JSON.parse(data.bag_position_arr);
+      BoxArray = JSON.parse(data.box_Array);
+      trackEachBag1 = JSON.parse(data.trackBags);
+      /**********************************************/
+      canvas.clear();
+      canvas.setWidth(900);
+      canvas.setHeight(600);
+      for (var i = 0; i <= gridXLines1; i++) {
+        canvas.add(new fabric.Line([ i * gridsize1, 0, i * gridsize1, (gridsize1*gridYLines1)], { type:'line', stroke: '#ccc', selectable: false }));
+      }
+      for(var j = 0; j <= gridYLines1; j++){
+        canvas.add(new fabric.Line([ 0, j * gridsize1, (gridsize1*gridXLines1), j * gridsize1], { type: 'line', stroke: '#ccc', selectable: false }));
+      }
+      var tempBag = 1;
+      var selectListx = document.getElementById("PreviousBags");
+      for(var x = 1; x <= BagCount; x++)
+      {
+        var optx = document.createElement("option");
+        optx.setAttribute("value", tempBag);
+        optx.text = x;
+        selectListx.appendChild(optx);
+        tempBag++;
+      }
+      var BagCycle = 0;
+      while(BagPos1[BagCycle] >= 1){
+        if(BagPos1[BagCycle]==1){
+          var rect1G = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: BagTop1[BagCycle], 
+            width: rectWidth1, 
+            height: rectHeight1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true
+          });
+          var rect1G1 = new fabric.Rect({ 
+            left: rect1G.left+rectWidth1-rectGussWid1, 
+            top: BagTop1[BagCycle], 
+            width: rectGussWid1, 
+            height: rectHeight1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true
+          });
+          var rect1G2 = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: BagTop1[BagCycle], 
+            width: rectGussWid1, 
+            height: rectHeight1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true
+          });
+          var rect1G3 = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: rect1G.top+rectHeight1-rectGussWid1, 
+            width: rectWidth1, 
+            height: rectGussWid1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true
+          });
+          var rect1 = new fabric.Group([rect1G, rect1G1, rect1G2, rect1G3]);
+          canvas.add(rect1);
+        }
+        else if(BagPos1[BagCycle]==2){
+          var rect2G = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: BagTop1[BagCycle], 
+            width: rectHeight1, 
+            height: rectWidth1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true
+            
+          });
+          var rect2G1 = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: BagTop1[BagCycle], 
+            width: rectHeight1, 
+            height: rectGussWid1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true
+            
+          });
+          var rect2G2 = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: rectWidth1+rect2G.top-rectGussWid1, 
+            width: rectHeight1, 
+            height: rectGussWid1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true
+            
+          });
+          var rect2G3 = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: BagTop1[BagCycle], 
+            width: rectGussWid1, 
+            height: rectWidth1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true
+            
+          });
+          var rect2 = new fabric.Group([rect2G, rect2G1, rect2G2, rect2G3]);
+          canvas.add(rect2);
+        }
+        else if(BagPos1[BagCycle]==3){
+          var rect3G = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: BagTop1[BagCycle], 
+            width: rectWidth1, 
+            height: rectHeight1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true
+          });
+          var rect3G1 = new fabric.Rect({ 
+            left: rect3G.left+rectWidth1-rectGussWid1, 
+            top: BagTop1[BagCycle], 
+            width: rectGussWid1, 
+            height: rectHeight1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true  
+          });
+          var rect3G2 = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: BagTop1[BagCycle], 
+            width: rectGussWid1, 
+            height: rectHeight1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true    
+          });
+          var rect3G3 = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: BagTop1[BagCycle], 
+            width: rectWidth1, 
+            height: rectGussWid1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true    
+          });
+          var rect3 = new fabric.Group([rect3G, rect3G1, rect3G2, rect3G3]);
+          canvas.add(rect3);
+        }  
+        else{
+          var rect4G = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: BagTop1[BagCycle], 
+            width: rectHeight1, 
+            height: rectWidth1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true    
+          });
+          var rect4G1 = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: BagTop1[BagCycle], 
+            width: rectHeight1, 
+            height: rectGussWid1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true    
+          });
+          var rect4G2 = new fabric.Rect({ 
+            left: BagLeft1[BagCycle], 
+            top: rectWidth1+rect4G1.top-rectGussWid1, 
+            width: rectHeight1, 
+            height: rectGussWid1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true    
+          });
+          var rect4G3 = new fabric.Rect({ 
+            left: rect4G1.left+rectHeight1-rectGussWid1, 
+            top: BagTop1[BagCycle], 
+            width: rectGussWid1, 
+            height: rectWidth1, 
+            fill: '#1273EB',
+            stroke:  '#292929',
+            originX: 'left', 
+            originY: 'top',
+            centeredRotation: true    
+          });
+          var rect4 = new fabric.Group([rect4G, rect4G1, rect4G2, rect4G3]);
+          canvas.add(rect4);
+        }
+        BagCycle++;
+      }
+      canvas.renderAll();
+      LoadBag = 1;
+      submitGrid();
 
       /*
       var data = [
@@ -1251,6 +1507,7 @@ var rangeSlider = function(){
     e.preventDefault();
     var arr = BoxArray;
     var nameTemp = document.getElementById("nameInput").value;
+
    $.ajax({
     data: {
       bagPattern_name: nameTemp,
@@ -1258,10 +1515,14 @@ var rangeSlider = function(){
       rect_width: rectWidth,
       rect_height: rectHeight,
       rect_guss: rectGussWid,
+      grid_X: gridXLines,
+      grid_Y: gridYLines,
+      totalBags: trackEachBagCount,
       box_Array: JSON.stringify(arr),
-      bag_position_arr: JSON.stringify(arr), //change arr to the correct name variable
-      bag_left_arr: JSON.stringify(arr),  //change arr to the correct name variable
-      bag_top_arr: JSON.stringify(arr)  //change arr to the correct name variable
+      bag_position_arr: JSON.stringify(BagPos), //change arr to the correct name variable
+      bag_left_arr: JSON.stringify(BagLeft),  //change arr to the correct name variable
+      bag_top_arr: JSON.stringify(BagTop),  //change arr to the correct name variable
+      trackBags: JSON.stringify(trackEachBag)
     },
     type: 'POST',
     url: '/formProcess'
@@ -1292,226 +1553,3 @@ var rangeSlider = function(){
 rangeSlider();
 
 
-//ADD load button that will generate this function
-function revGen(){
-  /**********************************************/
-  //Load variables
-  var BagLeft1 = [];
-  var BagTop1 = [];
-  var rectWidth1 = 0;
-  var rectHeight1 = 0;
-  var rectGussWid1 = 0;
-  var gridXLines1 = 0;
-  var gridYLines1 = 0;
-  var gridsize1 = 0;
-  /**********************************************/
-  canvas.setWidth(900);
-  canvas.setHeight(600);
-  for (var i = 0; i <= gridXLines1; i++) {
-    canvas.add(new fabric.Line([ i * gridsize1, 0, i * gridsize1, (gridsize1*gridYLines1)], { type:'line', stroke: '#ccc', selectable: false }));
-  }
-  for(var j = 0; j <= gridYLines1; j++){
-    canvas.add(new fabric.Line([ 0, j * gridsize1, (gridsize1*gridXLines1), j * gridsize1], { type: 'line', stroke: '#ccc', selectable: false }));
-  }
-  var BagCycle = 0;
-  while(BagCycle < trackEachBagCount){ 
-    if(BagPos[BagCycle]==1){
-      var rect1G = new fabric.Rect({ 
-        left: BagLeft1[BagCycle], 
-        top: BagTop1[BagCycle], 
-        width: rectWidth1, 
-        height: rectHeight1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true
-      });
-      var rect1G1 = new fabric.Rect({ 
-        left: rect1G.left+rectWidth1-rectGussWid1, 
-        top: BagTop1[BagCycle], 
-        width: rectGussWid1, 
-        height: rectHeight1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true
-      });
-      var rect1G2 = new fabric.Rect({ 
-        left: BagLeft1[BagCycle], 
-        top: BagTop1[BagCycle], 
-        width: rectGussWid1, 
-        height: rectHeight1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true
-      });
-      var rect1G3 = new fabric.Rect({ 
-        left: BagLeft1[BagCycle], 
-        top: rect1G.top+rectHeight1-rectGussWid1, 
-        width: rectWidth1, 
-        height: rectGussWid1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true
-      });
-      var rect1 = new fabric.Group([rect1G, rect1G1, rect1G2, rect1G3]);
-      canvas.add(rect1);
-    }
-    else if(BagPos[BagCycle]==2){
-      canvas.remove(canvas.item(selectObject));
-      var rect3G = new fabric.Rect({ 
-          left: BagLeft1[BagCycle], 
-          top: BagTop1[BagCycle], 
-          width: rectWidth1, 
-          height: rectHeight1, 
-          fill: '#1273EB',
-          stroke:  '#292929',
-          originX: 'left', 
-          originY: 'top',
-          centeredRotation: true    
-      });
-      var rect3G1 = new fabric.Rect({ 
-          left: rect3G.left+rectWidth1-rectGussWid1, 
-          top: BagTop1[BagCycle], 
-          width: rectGussWid1, 
-          height: rectHeight1, 
-          fill: '#1273EB',
-          stroke:  '#292929',
-          originX: 'left', 
-          originY: 'top',
-          centeredRotation: true  
-      });
-      var rect3G2 = new fabric.Rect({ 
-          left: BagLeft1[BagCycle], 
-          top: BagTop1[BagCycle], 
-          width: rectGussWid1, 
-          height: rectHeight1, 
-          fill: '#1273EB',
-          stroke:  '#292929',
-          originX: 'left', 
-          originY: 'top',
-          centeredRotation: true   
-      });
-      var rect3G3 = new fabric.Rect({ 
-          left: BagLeft1[BagCycle], 
-          top: BagTop1[BagCycle], 
-          width: rectWidth1, 
-          height: rectGussWid1, 
-          fill: '#1273EB',
-          stroke:  '#292929',
-          originX: 'left', 
-          originY: 'top',
-          centeredRotation: true    
-      });
-      var rect3 = new fabric.Group([rect3G, rect3G1, rect3G2, rect3G3]);
-      canvas.add(rect3);
-      canvas.renderAll(); 
-    }
-    else if(BagPos[BagCycle]==3){
-      var rect3G = new fabric.Rect({ 
-        left: BagLeft1[BagCycle], 
-        top: BagTop1[BagCycle], 
-        width: rectWidth1, 
-        height: rectHeight1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true
-      });
-      var rect3G1 = new fabric.Rect({ 
-        left: rect3G.left+rectWidth1-rectGussWid1, 
-        top: BagTop1[BagCycle], 
-        width: rectGussWid1, 
-        height: rectHeight1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true  
-      });
-      var rect3G2 = new fabric.Rect({ 
-        left: BagLeft1[BagCycle], 
-        top: BagTop1[BagCycle], 
-        width: rectGussWid1, 
-        height: rectHeight1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true    
-      });
-      var rect3G3 = new fabric.Rect({ 
-        left: BagLeft1[BagCycle], 
-        top: BagTop1[BagCycle], 
-        width: rectWidth1, 
-        height: rectGussWid1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true    
-      });
-      var rect3 = new fabric.Group([rect3G, rect3G1, rect3G2, rect3G3]);
-      canvas.add(rect3);
-      canvas.renderAll();
-    }  
-    else{
-      var rect4G = new fabric.Rect({ 
-        left: BagLeft1[BagCycle], 
-        top: BagTop1[BagCycle], 
-        width: rectHeight1, 
-        height: rectWidth1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true    
-      });
-      var rect4G1 = new fabric.Rect({ 
-        left: BagLeft1[BagCycle], 
-        top: BagTop1[BagCycle], 
-        width: rectHeight1, 
-        height: rectGussWid1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true    
-      });
-      var rect4G2 = new fabric.Rect({ 
-        left: BagLeft1[BagCycle], 
-        top: rectWidth1+rect4G1.top-rectGussWid1, 
-        width: rectHeight1, 
-        height: rectGussWid1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true    
-      });
-      var rect4G3 = new fabric.Rect({ 
-        left: rect4G1.left+rectHeight1-rectGussWid1, 
-        top: BagTop1[BagCycle], 
-        width: rectGussWid1, 
-        height: rectWidth1, 
-        fill: '#1273EB',
-        stroke:  '#292929',
-        originX: 'left', 
-        originY: 'top',
-        centeredRotation: true    
-      });
-      var rect4 = new fabric.Group([rect4G, rect4G1, rect4G2, rect4G3]);
-      canvas.add(rect4);
-      canvas.renderAll();
-    }
-    BagCycle++;
-  }
-
-}

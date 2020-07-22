@@ -19,19 +19,24 @@ class BagPattern_Class(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     BagPattern_name = db.Column(db.String(50))
     GridSize = db.Column(db.Integer)
+    GridX = db.Column(db.Integer)
+    GridY = db.Column(db.Integer)
     RectWidth = db.Column(db.Integer)
     RectHeight = db.Column(db.Integer)
     RectGuss = db.Column(db.Integer)
+    BagCount = db.Column(db.Integer)
     BagPattern_arrTotal = db.Column(db.String(255))
     BagPosition_Array = db.Column(db.String(255))
     BagLeftArray = db.Column(db.String(255))
     BagTopArray = db.Column(db.String(255))
+    trackBagArray = db.Column(db.String(255))
     date_created = db.Column(db.DateTime, default = datetime.now )
 
 
 @app.route('/')
 def index():
     return render_template('index.html')
+    print("inside index")
 
 @app.route('/formProcess', methods=['POST'])
 def formProcess():
@@ -40,6 +45,9 @@ def formProcess():
     #Adding the rest of the settings
     Bag_Pattern_Name = request.form['bagPattern_name']
     Grid_Size = request.form['grid_size']
+    Grid_X = request.form['grid_X']
+    Grid_Y = request.form['grid_Y']
+    total_Bags = request.form['totalBags']
     Rect_Width = request.form['rect_width']
     Rect_Height = request.form['rect_height']
     Rect_Guss = request.form['rect_guss']
@@ -48,6 +56,7 @@ def formProcess():
     Bag_Position_Array = request.form['bag_position_arr']
     Bag_Left_Array = request.form['bag_left_arr']
     Bag_Top_Array = request.form['bag_top_arr']
+    track_Bag_Array = request.form['trackBags']
 
     #print(type(BoxLen2))
 
@@ -57,9 +66,11 @@ def formProcess():
         for elem in row:
             print(elem, end=' ')
 
-    print()
     print("Bag Pattern Name: "+Bag_Pattern_Name)
     print("Grid Size : "+ Grid_Size)
+    print("Grid X Line: "+Grid_X)
+    print("Grid Y Line: "+Grid_Y)
+    print('Total Bags: ' + total_Bags)
     print("Rect Width: "+Rect_Width)
     print("Rect Height: "+Rect_Height)
     print("Rect Guss: "+Rect_Guss)
@@ -69,26 +80,28 @@ def formProcess():
         #print()
         for elem in row:
             print(elem, end=' ')
+    print("\n")
     print("Bag Left Array : ")
     print(type(Bag_Left_Array))
     for row in Bag_Left_Array:
         #print()
         for elem in row:
             print(elem, end=' ')
+    print("\n")
     print("Bag Top Array : ")
     print(type(Bag_Top_Array))
     for row in Bag_Top_Array:
         #print()
         for elem in row:
             print(elem, end=' ')
-    #print()
+    print("\n")
     if Bag_Pattern_Name:
         
         #saves it on the database as a string
-        bagPattern = BagPattern_Class(BagPattern_name = Bag_Pattern_Name, GridSize = Grid_Size, 
-        RectWidth = Rect_Width, RectHeight = Rect_Height, RectGuss = Rect_Guss,
+        bagPattern = BagPattern_Class(BagPattern_name = Bag_Pattern_Name, GridSize = Grid_Size, GridX = Grid_X, GridY= Grid_Y,
+        BagCount = total_Bags, RectWidth = Rect_Width, RectHeight = Rect_Height, RectGuss = Rect_Guss,
         BagPattern_arrTotal = Bag_Pattern_Arr_Total, BagPosition_Array = Bag_Position_Array,
-        BagLeftArray = Bag_Left_Array, BagTopArray = Bag_Top_Array)
+        BagLeftArray = Bag_Left_Array, BagTopArray = Bag_Top_Array, trackBagArray = track_Bag_Array)
         db.session.add(bagPattern)
         db.session.commit()
         
@@ -107,4 +120,4 @@ def LoadProcess():
         return jsonify({'error': 'Missing Data'})
 
 #it output a string to javascript it needs to be convert it back to the correct type in javascript
-    return jsonify({'bag_pattern_name': result.BagPattern_name, 'grid_size': result.GridSize, 'rect_width': result.RectWidth, 'rect_height': result.RectHeight,'rect_guss': result.RectGuss, 'bag_position_arr': result.BagPosition_Array,'bag_left_arr': result.BagLeftArray,'bag_top_arr': result.BagTopArray, 'box_Array': result.BagPattern_arrTotal})
+    return jsonify({'bag_pattern_name': result.BagPattern_name, 'grid_size': result.GridSize, 'grid_X':result.GridX, 'grid_Y':result.GridY, 'totalBags':result.BagCount, 'rect_width': result.RectWidth, 'rect_height': result.RectHeight,'rect_guss': result.RectGuss, 'bag_position_arr': result.BagPosition_Array,'bag_left_arr': result.BagLeftArray,'bag_top_arr': result.BagTopArray, 'box_Array': result.BagPattern_arrTotal, 'trackBags':result.trackBagArray})
