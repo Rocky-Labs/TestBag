@@ -47,23 +47,23 @@ document.getElementById("confirm").onclick = function(e){
 };
 function setSize(){*/
   e.preventDefault();
-  gridXLines = parseInt(document.getElementById("BoxLength").value*2,10);
-  gridYLines = parseInt(document.getElementById("BoxWidth").value*2,10);
+  gridXLines = parseInt(document.getElementById("BoxLength").value,10)*2;
+  gridYLines = parseInt(document.getElementById("BoxWidth").value,10)*2;
   /*gridXLines = 25;
   gridYLines = 25;
   rectWidth = 150;
   rectHeight = 250;
   rectGussWid = 25;
   gridsize = 25;*/
-  if(gridXLines < 38*2 || gridYLines < 38*2)
+  if((gridXLines < 76) || (gridYLines < 76))
   {
     gridsize = 8;
   }
-  else if(gridXLines < 43*2 || gridYLines < 43*2)
+  else if((gridXLines < 86) || (gridYLines < 86))
   {
-    girdsize = 7;
+    gridsize = 7;
   }
-  else if(gridXLines < 50*2 || gridYLines < 50*2)
+  else if((gridXLines < 100) || (gridYLines < 100))
   {
     gridsize = 6;
   }
@@ -71,13 +71,14 @@ function setSize(){*/
   {
     gridsize = 5;
   }
-  //console.log("gridsize is: " + gridsize);
-  rectWidth = parseInt(document.getElementById("BagWidth").value*gridsize*2,10);
-  rectHeight = parseInt(document.getElementById("BagLength").value*gridsize*2,10);
-  rectGussWid = parseInt(document.getElementById("Gusset").value*gridsize*2,10);
-  //console.log("rectWidth is: "+rectWidth);
-  //console.log("rectheight is: "+rectHeight);
-  //console.log('rectGussWid is: '+rectGussWid);
+  rectWidth = parseInt(document.getElementById("BagWidth").value,10)*gridsize*2;
+  rectHeight = parseInt(document.getElementById("BagLength").value,10)*gridsize*2;
+  rectGussWid = parseInt(document.getElementById("Gusset").value,10)*gridsize*2;
+  /*console.log("gridXLines is: "+gridXLines);
+  console.log("gridsize is: "+gridsize);
+  console.log("rectWidth is: "+rectWidth);
+  console.log("rectheight is: "+rectHeight);
+  console.log('rectGussWid is: '+rectGussWid);*/
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
@@ -983,6 +984,7 @@ function Layer(){
         LayerArray[i][j] = 0;
       }
     }
+    
     BoxCount[LayerCount] = CanvasItems[LayerCount]-CanvasItemsFirst[LayerCount]+1;
     LayerSum[LayerCount] = tempArray;
     LayerCount++;
