@@ -47,6 +47,16 @@ document.getElementById("confirm").onclick = function(e){
 };
 function setSize(){*/
   e.preventDefault();
+  if((document.getElementById("BoxLength").value)<35 || (document.getElementById("BoxLength").value)>50 ||
+  (document.getElementById("BoxWidth").value)<35 || (document.getElementById("BoxWidth").value)>50){
+    alert("Box Dimensions not within range");
+  }
+  else if((document.getElementById("BagLength").value)<20 || (document.getElementById("BagLength").value)>50 ||
+  (document.getElementById("BagWidth").value)<10 || (document.getElementById("BagWidth").value)>20 ||
+  (document.getElementById("Gusset").value)<1 || (document.getElementById("Gusset").value)>8){
+    alert("Bag Dimensions not within range");
+  }
+  else{
   gridXLines = parseInt(document.getElementById("BoxLength").value,10)*2;
   gridYLines = parseInt(document.getElementById("BoxWidth").value,10)*2;
   /*gridXLines = 25;
@@ -83,7 +93,7 @@ function setSize(){*/
   currentObject = selectObject;
 //Canvas Size
   var unitScale = 10;
-  var canvasWidth =  90 * unitScale;
+  var canvasWidth =  110 * unitScale;
   var canvasHeight = 60 * unitScale;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);
@@ -229,6 +239,7 @@ for(var a1 = 0; a1<BoxArrayCol; a1++){
   }
 }
 rotate0();
+}
 }
 /**************************************************************************************/
 
