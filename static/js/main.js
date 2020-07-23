@@ -65,15 +65,15 @@ function setSize(){*/
   rectHeight = 250;
   rectGussWid = 25;
   gridsize = 25;*/
-  if((gridXLines < 76) || (gridYLines < 76))
+  if((gridXLines < 76) && (gridYLines < 76))
   {
     gridsize = 8;
   }
-  else if((gridXLines < 86) || (gridYLines < 86))
+  else if((gridXLines < 86) && (gridYLines < 86))
   {
     gridsize = 7;
   }
-  else if((gridXLines < 100) || (gridYLines < 100))
+  else if((gridXLines < 100) && (gridYLines < 100))
   {
     gridsize = 6;
   }
@@ -84,16 +84,16 @@ function setSize(){*/
   rectWidth = parseInt(document.getElementById("BagWidth").value,10)*gridsize*2;
   rectHeight = parseInt(document.getElementById("BagLength").value,10)*gridsize*2;
   rectGussWid = parseInt(document.getElementById("Gusset").value,10)*gridsize*2;
-  /*console.log("gridXLines is: "+gridXLines);
+  console.log("gridXLines is: "+gridXLines);
   console.log("gridsize is: "+gridsize);
   console.log("rectWidth is: "+rectWidth);
   console.log("rectheight is: "+rectHeight);
-  console.log('rectGussWid is: '+rectGussWid);*/
+  console.log('rectGussWid is: '+rectGussWid);
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
   var unitScale = 10;
-  var canvasWidth =  110 * unitScale;
+  var canvasWidth =  105 * unitScale;
   var canvasHeight = 60 * unitScale;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);

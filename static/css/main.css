@@ -575,18 +575,18 @@ label 				 {
   display: none;
   position: absolute;
   -webkit-appearance: none;
-  bottom: 12%;
-  right: 46%;
+  bottom: 7.5%;
+  right: 50%;
   width: 505px;
   height: 5px;
 }
 .moveUp {
   display: none;
   position: absolute;
-  top: 370px;
-  right: 72%;
+  bottom: 50%;
+  right: 75%;
   -webkit-appearance: none;
-  width: 495px;
+  width: 505px;
   height: 5px;
   vertical-align: top;
   -webkit-transform:rotate(90deg);
