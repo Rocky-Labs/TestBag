@@ -57,8 +57,8 @@ function setSize(){*/
     alert("Bag Dimensions not within range");
   }
   else{
-  gridXLines = parseInt(document.getElementById("BoxLength").value,10)*2;
-  gridYLines = parseInt(document.getElementById("BoxWidth").value,10)*2;
+  gridXLines = parseFloat(document.getElementById("BoxLength").value,10)*2;
+  gridYLines = parseFloat(document.getElementById("BoxWidth").value,10)*2;
   /*gridXLines = 25;
   gridYLines = 25;
   rectWidth = 150;
@@ -73,7 +73,7 @@ function setSize(){*/
   {
     gridsize = 7;
   }
-  else if((gridXLines < 88) && (gridYLines < 88))
+  else if((gridXLines < 87) && (gridYLines < 87))
   {
     gridsize = 6.5;
   }
@@ -89,8 +89,8 @@ function setSize(){*/
   {
     gridsize = 5;
   }
-  rectWidth = parseInt(document.getElementById("BagWidth").value,10)*gridsize*2;
-  rectHeight = parseInt(document.getElementById("BagLength").value,10)*gridsize*2;
+  rectWidth = parseFloat(document.getElementById("BagWidth").value,10)*gridsize*2;
+  rectHeight = parseFloat(document.getElementById("BagLength").value,10)*gridsize*2;
   rectGussWid = parseInt(document.getElementById("Gusset").value,10)*gridsize*2;
   console.log("gridXLines is: "+gridXLines);
   console.log("gridsize is: "+gridsize);
