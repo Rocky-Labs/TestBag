@@ -92,11 +92,6 @@ function setSize(){*/
   rectWidth = parseFloat(document.getElementById("BagWidth").value,10)*gridsize*2;
   rectHeight = parseFloat(document.getElementById("BagLength").value,10)*gridsize*2;
   rectGussWid = parseInt(document.getElementById("Gusset").value,10)*gridsize*2;
-  console.log("gridXLines is: "+gridXLines);
-  console.log("gridsize is: "+gridsize);
-  console.log("rectWidth is: "+rectWidth);
-  console.log("rectheight is: "+rectHeight);
-  console.log('rectGussWid is: '+rectGussWid);
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
@@ -792,8 +787,6 @@ function calcArray2(leftCoord, topCoord){
     i2++;
   }
   trackEachBag[currentObject-(gridXLines+gridYLines+2)] = temptrackBag;
-  console.log("BagLeft Array is: "+BagLeft);
-  console.log("BagTop Array is: "+BagTop);
 }
 
 
@@ -845,8 +838,6 @@ function delArray(delCoordl, delCoordt){
     } 
   }
   temptrackBag = trackEachBag[currentObject-(gridXLines+gridYLines+2)];
-  console.log("initj1 islssdljfffffffffflsdfjk: " + initj1);
-  console.log("initI1 is: "+initi1);
   for(var x1 = 0; x1 < PrevRectPos[0].length; x1++){
     j1 = initj1;
     for(var y1 = 0; y1 < PrevRectPos.length; y1++){
@@ -956,8 +947,6 @@ function PreviousBags1() {
   if(LoadBag == 1){
     submitGrid();
   }
-  console.log("track EACH BAG is: ");
-  console.log(trackEachBag);
 }
 
 /**************************************************************************************/
@@ -1032,6 +1021,10 @@ var moveCount = 0;
 var nonLayerCount = 0;
 document.getElementById("PreviousLayers").onchange = function() {PreviousLayers()};
 function PreviousLayers(){
+  console.log("Canvas Item First is:");
+  console.log(CanvasItemsFirst);
+  console.log("Canvas Item array is:");
+  console.log(CanvasItems);
   if(LayerComplete == 0){
     document.getElementById("PreviousLayers").value = 0;
     alert("Complete Current Layer before Selecting a Previous Layer");
@@ -1061,14 +1054,11 @@ function PreviousLayers(){
 
   if(document.getElementById("PreviousLayers").value <= LayerCount && LayerCount > 0){
   if(moveCount > 0){
-    console.log("Moving Object lenght is: "+movedObjects.length);
-    console.log("Moved Objects Array is: ");
-    console.log(movedObjects);
     for(var x = 0; x <movedObjects.length; x++)
     {
+      console.log("Object Returned are: "+movedObjects[x]);
       canvas.setActiveObject(canvas.item(movedObjects[x]));
       canvas.item(movedObjects[x]).set({top:(canvas.getActiveObject().top+725)});
-      console.log("Object moved off grid is: "+canvas.item(x));
       canvas.discardActiveObject();
     }
     movedObjects = [];
@@ -1086,36 +1076,37 @@ function PreviousLayers(){
     var nextLayerItem = CanvasItems[ActiveLayer];
     var FirstLayerItem = CanvasItemsFirst[ActiveLayer-1];
     var LastLayerItem = CanvasItems[ActiveLayer-1];
-    console.log("Active Layer is: "+ActiveLayer);
-    console.log("FirstGridItem is: "+FirstGridItem);
-    console.log("LastGridItem is: "+LastGridItem);
-    console.log("nextLayer item is: "+CanvasItems[ActiveLayer]);
-    console.log("First Layer Item is: "+CanvasItemsFirst[ActiveLayer-1]);
-    console.log("Last Layer Item is: "+ CanvasItems[ActiveLayer-1] );
-    console.log("Canvas items array is:");
-    console.log(CanvasItems);
     if(ActiveLayer == 1){
-      console.log("AciveLayer == 1");
+      /*console.log("Inside ActiveLayer == 1");
+      console.log("LastLayerItem + 1 is: "+LastLayerItem+1);
+      console.log("LastGridItem is: "+LastGridItem);*/
       for(var x = LastLayerItem+1; x <= LastGridItem; x++){
         canvas.setActiveObject(canvas.item(x));
         canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
-        console.log("Object movied back is: " + canvas.item(x));
         canvas.discardActiveObject();
         movedObjects[moveCount] = x;
         moveCount++;
       }
+      /*console.log("moveObjects ActiveLayer == 1 or First Layer");
+      console.log(movedObjects);
+      console.log("DONE");*/
       canvas.renderAll();
     }
     else if(nextLayerItem === undefined){
-      console.log("nextLayerItem === undefined");
+     /* console.log("INSIDE ELSE IF");
+      console.log("FirstGridItem is: "+FirstGridItem);
+      console.log("FirstLayerItem is: "+FirstLayerItem);*/
       for(var x = FirstGridItem; x < FirstLayerItem; x++){
         canvas.setActiveObject(canvas.item(x));
         canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
-        console.log("Object movied back is: " + canvas.item(x));
         canvas.discardActiveObject();
         movedObjects[moveCount] = x;
         moveCount++;
       }
+      /*console.log("moveObjects undefined or Last Layer");
+      console.log(movedObjects);
+      console.log("LastLayerItem + 1 is: "+LastLayerItem+1);
+      console.log("LastGridItem is: " + LastGridItem);*/
       for(var x = LastLayerItem+1; x <= LastGridItem; x++){
         canvas.setActiveObject(canvas.item(x));
         canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
@@ -1123,26 +1114,39 @@ function PreviousLayers(){
         movedObjects[moveCount] = x;
         moveCount++;
       }
+      /*console.log("movedObjects part 2 undefined is");
+      console.log(movedObjects);
+      console.log("DONE");*/
       canvas.renderAll();
     }
     else{
-      console.log("INSIDE ELSE OF MOVING");
+      /*console.log("INSIDE ELSE");
+      console.log("FirstGridItem is: " + FirstGridItem);
+      console.log("FirstLayer Item is: "+FirstLayerItem);*/
       for(var x = FirstGridItem; x < FirstLayerItem; x++){
         canvas.setActiveObject(canvas.item(x));
         canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
         canvas.discardActiveObject();
         movedObjects[moveCount] = x;
         moveCount++;
-        }
-        for(var x = LastLayerItem+1; x <= LastGridItem; x++){
-          canvas.setActiveObject(canvas.item(x));
-          canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
-          canvas.discardActiveObject();
-          movedObjects[moveCount] = x;
-          moveCount++;
-          }
-        canvas.renderAll(); 
+      }
+      /*console.log("movedObjects for else is: ");
+      console.log(movedObjects);
+      console.log("LastLayerItem + 1 is: "+LastLayerItem+1);
+      console.log("LastGridItem is: " + LastGridItem);*/
+      for(var x = LastLayerItem+1; x <= LastGridItem; x++){
+        canvas.setActiveObject(canvas.item(x));
+        canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
+        canvas.discardActiveObject();
+        movedObjects[moveCount] = x;
+        moveCount++;
+      }
+      /*console.log("movedObjecs for else Part 2 is: ");
+      console.log(movedObjects);
+      console.log("DONE");*/
+      canvas.renderAll(); 
     }
+    console.log("Objects moved are: " + movedObjects);
   }
 }
   submitGrid();
@@ -1160,9 +1164,6 @@ function PreviousLayers(){
   }
   }
 }
-console.log("initial movedObjects array is: ");
-console.log(movedObjects);
-console.log("initial movedObjects Length is: "+movedObjects.length);
 }
 /******************************  Delete Bag  *****************************************/
 var LayerLevel = 0;
@@ -1173,7 +1174,6 @@ function DeleteBag(){
   if(document.getElementById("PreviousLayers").value == 0){
   countBag--;}
   canvas.remove(canvas.item(currentObject));
-  console.log("delete executed on object num: "+currentObject);
   canvas.discardActiveObject();
   canvas.renderAll();
   var RemoveArray = [[],[]];
@@ -1203,10 +1203,17 @@ function DeleteBag(){
   for(var x = 1; x <= 32; x++){
     selectListrem.remove(1);
   }
+  console.log("trackEachBagCount is: "+trackEachBagCount);
+  console.log("BoxCount is: "+BoxCount);
   if(document.getElementById("PreviousLayers").value < 1)
   {
-    var temp = trackEachBagCount;
-    for(var x = 1; x <= trackEachBagCount; x++){
+    var LayerBagCount = 0;
+    for(var aa = 0; aa < BoxCount.length; aa++)
+    {
+      LayerBagCount = LayerBagCount+BoxCount[aa];
+    }
+    var temp = trackEachBagCount-LayerBagCount;
+    for(var x = 1; x <= (trackEachBagCount-LayerBagCount); x++){
       var optx = document.createElement("option");
       optx.setAttribute("value", temp);
       optx.text = x;
@@ -1218,7 +1225,26 @@ function DeleteBag(){
     if(LayerLevel != document.getElementById("PreviousLayers").value){
       BoxTrack = BoxCount[document.getElementById("PreviousLayers").value-1];
     }
-    CanvasItems[document.getElementById("PreviousLayers").value-1] = CanvasItems[document.getElementById("PreviousLayers").value-1] - 1;
+    for(var ab = 0; ab < movedObjects.length; ab++)
+    {
+      if(currentObject < movedObjects[ab]){
+        movedObjects[ab] = movedObjects[ab]-1;
+      }
+    }
+    for(var ab = 0; ab < CanvasItems.length; ab++)
+    {
+      if(currentObject < CanvasItems[ab])
+      {
+        CanvasItems[ab] = CanvasItems[ab] - 1;
+      }
+    }
+    for(var ab = 0; ab < CanvasItemsFirst.length; ab++)
+    {
+      if(currentObject < CanvasItemsFirst[ab])
+      {
+        CanvasItemsFirst[ab] = CanvasItemsFirst[ab] - 1;
+      }
+    }
     BoxTrack--;
     var temp = BoxTrack;
     for(var x = 1; x <= BoxTrack; x++){
@@ -1231,10 +1257,6 @@ function DeleteBag(){
     BoxCount[document.getElementById("PreviousLayers").value-1] =  BoxCount[document.getElementById("PreviousLayers").value-1]-1;
     LayerLevel = document.getElementById("PreviousLayers").value;
   }
-  console.log("TrackEachBag Array is: ");
-  console.log(trackEachBag);
-  console.log("Remove Array is: ");
-  console.log(RemoveArray);
   for(var i = 0; i<BoxArrayCol; i++){
     for(var j = 0; j < BoxArrayRow; j++){
       BoxArray[i][j] = BoxArray[i][j]-RemoveArray[i][j];
