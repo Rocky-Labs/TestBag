@@ -67,15 +67,23 @@ function setSize(){*/
   gridsize = 25;*/
   if((gridXLines < 76) && (gridYLines < 76))
   {
-    gridsize = 8;
+    gridsize = 7.5;
   }
-  else if((gridXLines < 86) && (gridYLines < 86))
+  else if((gridXLines < 80) && (gridYLines < 80))
   {
     gridsize = 7;
   }
-  else if((gridXLines < 100) && (gridYLines < 100))
+  else if((gridXLines < 88) && (gridYLines < 88))
+  {
+    gridsize = 6.5;
+  }
+  else if((gridXLines < 94) && (gridYLines < 94))
   {
     gridsize = 6;
+  }
+  else if((gridXLines < 101) && (gridYLines < 101))
+  {
+    gridsize = 5.5;
   }
   else
   {
