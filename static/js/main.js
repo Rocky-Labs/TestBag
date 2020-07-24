@@ -96,7 +96,7 @@ function setSize(){*/
   currentObject = selectObject;
 //Canvas Size
   var unitScale = 10;
-  var canvasWidth =  105 * unitScale;
+  var canvasWidth =  92 * unitScale;
   var canvasHeight = 60 * unitScale;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);
