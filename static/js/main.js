@@ -527,11 +527,14 @@ function moveLeft() {
     var test = parseInt(valueMoved);
     delCoordl = canvas.getActiveObject().left;
     delCoordt = canvas.getActiveObject().top;
+    console.log("delCoordl is: "+delCoordl);
+    console.log("delCoordt is: "+delCoordt);
     delArray(delCoordl,delCoordt);
     canvas.item(currentObject).set({left:( test)});
-
     leftCoord = canvas.getActiveObject().left;
     topCoord = canvas.getActiveObject().top;
+    console.log("leftCoord is: "+leftCoord);
+    console.log("topCoord is: "+topCoord);
     BagLeft[currentObject-(gridXLines+gridYLines+2)]=leftCoord;
     calcArray2(leftCoord,topCoord);
     canvas.renderAll();
@@ -551,13 +554,16 @@ function moveUp() {
   else{
     delCoordl = canvas.getActiveObject().left;
     delCoordt = canvas.getActiveObject().top;
-  //obtaining the value from html and converting it to integer
+    console.log("delCoordl is: "+delCoordl);
+    console.log("delCoordt is: "+delCoordt);
     var valueMoved = document.getElementById("moveUp").value;
     var RangeCoord = parseInt(valueMoved);
     delArray(delCoordl,delCoordt);
     canvas.item(currentObject).set({top:(RangeCoord)});
     leftCoord = canvas.getActiveObject().left;
     topCoord = canvas.getActiveObject().top;
+    console.log("leftCoord is: "+leftCoord);
+    console.log("topCoord is: "+topCoord);
     BagTop[currentObject-(gridXLines+gridYLines+2)]=topCoord;
     calcArray2(leftCoord,topCoord);
     canvas.renderAll();
@@ -654,6 +660,8 @@ function paste(){
       prevBagsCount++;
       leftCoord = copiedObject.left;
       topCoord = copiedObject.top;
+      console.log("leftCoord initial is: "+leftCoord);
+      console.log("topCoord initial is: "+topCoord);
       calcArray(leftCoord, topCoord);
       copiedObject.set("selectable",false);
       canvas.discardActiveObject();
@@ -667,6 +675,8 @@ function paste(){
       prevBagsCount++;
       leftCoord = copiedObject.left;
       topCoord = copiedObject.top;
+      console.log("leftCoord initial is: "+leftCoord);
+      console.log("topCoord initial is: "+topCoord);
       calcArray(leftCoord, topCoord);
       copiedObject.set("selectable",false);
       canvas.discardActiveObject();
@@ -740,13 +750,13 @@ function calcArray2(leftCoord, topCoord){
   var i2 = leftCoord;
   var j2 = topCoord;
   if(i2 > 0){
-    i2 = i2/gridsize;
+    i2 = Math.ceil(i2/gridsize);
   }
   else{
     i2 = 0;
   }
   if(j2 > 0){
-    j2 = j2/gridsize;
+    j2 = Math.ceil(j2/gridsize);
   }
   else{
     j2 = 0;
@@ -797,13 +807,13 @@ function delArray(delCoordl, delCoordt){
   var i1 = delCoordl;
   var j1 = delCoordt;
   if(i1 > 0){
-    i1 = i1/gridsize;
+    i1 = Math.ceil(i1/gridsize);
   }
   else{
     i1 = 0;
   }
   if(j1 > 0){
-    j1 = j1/gridsize;
+    j1 = Math.ceil(j1/gridsize);
   }
   else{
     j1 = 0;
@@ -1170,6 +1180,7 @@ var LayerLevel = 0;
 var BoxTrack = 0;
 document.getElementById("DeleteBag").onclick = function () {DeleteBag()};
 function DeleteBag(){
+  if(document.getElementById("PreviousBags").value > 0){
   selectObject--;
   if(document.getElementById("PreviousLayers").value == 0){
   countBag--;}
@@ -1264,6 +1275,10 @@ function DeleteBag(){
     }
   }
   submitGrid();
+}
+else{
+  alert("Select a bag to delete");
+}
 }
 
 
