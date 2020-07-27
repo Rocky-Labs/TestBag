@@ -2,9 +2,6 @@ canvas {
   position: absolute;
   bottom: 10%;
   left: 6%;
-  
-
-
 }
 
 
@@ -50,7 +47,7 @@ z-index: 999999;
 #ButtonArr {
   position: absolute;
   top:.1%;
-  right: 21%;
+  right: 3%;
 }
 #c{
   position: absolute;
@@ -164,6 +161,7 @@ body {
   margin-left: 788px;*/
 }
 h3{
+ 
   text-align: center;
   color: white;
   font-family: 'Ubuntu', sans-serif;
@@ -171,7 +169,16 @@ h3{
   
  
 }
+h4{
+ 
+  color: lightgray;
+  font-family: 'Ubuntu', sans-serif;
+  font-size: small;
+  
+ 
+}
 h1{
+  
   text-align: left;
   color: white;
   font-family: 'Ubuntu', sans-serif;
@@ -193,15 +200,15 @@ label {
 }
 
 .header {
-  display: inline-block;
-  margin-left: 30px;
+  display: inline;
+  margin-left: 5%;
   margin-top: 5px;
   margin-bottom: 5px;
 
 }
 
 #logo {
-  display: block;
+  display: inline;
   float: left;
   /*
   width: 100px;
@@ -253,7 +260,7 @@ label {
   font-size: 12px;*/
   text-align: right;
   top: 3.6%;
-  left: 50%;
+  right: 23%;
   width: 135px;
   height: 40px;
   border: none;
@@ -298,7 +305,7 @@ label {
   background-color: #292929;
   color: #2980b9;
 }
-.load{
+#load{
   /*width: 50px;
   height: 25px;*/
   
@@ -357,17 +364,7 @@ label {
   background-color: #292929;
   color: #2980b9;
 }
-#load {
-  background-image: url(/static/img/send.png);
- background-color: transparent; /* make the button transparent */
-  background-repeat: no-repeat; 
-  border: transparent;
- height: 36px;
- width: 36px;
- display: inline-block;
- position: absolute;
-  right: 500px;
- }
+
 
  /* form starting stylings*/
 
@@ -487,7 +484,7 @@ label 				 {
 .box {
   position: absolute;
   top: 6.5%;
-  left: 41%;
+  right: 30%;
   transform: translate(-50%, -50%);
 }
 
