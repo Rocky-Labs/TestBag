@@ -791,7 +791,7 @@ function calcArray2(leftCoord, topCoord){
     for(var y2 = 0; y2 < RectPosX.length; y2++){
       BoxArray[j2][i2] = BoxArray[j2][i2] + RectPosX[y2][x2];
       LayerArray[j2][i2] = LayerArray[j2][i2] + RectPosX[y2][x2];
-      temptrackBag[j2][i2] = temptrackBag[j2][i2]+RectPos[y2][x2];
+      temptrackBag[j2][i2] = temptrackBag[j2][i2]+RectPosX[y2][x2];
       j2++;
     }
     i2++;
@@ -818,6 +818,12 @@ function delArray(delCoordl, delCoordt){
   else{
     j1 = 0;
   }
+  console.log("prevRect is: ");
+  console.log(prevRect);
+  console.log("BagLeft array is: ");
+  console.log(BagLeft);
+  console.log("BagTop array is: ");
+  console.log(BagTop);
   var initi1 = i1;
   var initj1 = j1;
   var PrevRectPos = [[],[]];
@@ -853,7 +859,7 @@ function delArray(delCoordl, delCoordt){
     for(var y1 = 0; y1 < PrevRectPos.length; y1++){
       BoxArray[j1][i1] = BoxArray[j1][i1] - PrevRectPos[y1][x1];
       LayerArray[j1][i1] = LayerArray[j1][i1] - PrevRectPos[y1][x1];
-      temptrackBag[j1][i1] = temptrackBag[j1][i1]+RectPos[y1][x1];
+      temptrackBag[j1][i1] = temptrackBag[j1][i1]+PrevRectPos[y1][x1];
       j1++;
     }
     i1++;
@@ -948,11 +954,12 @@ function PreviousBags1() {
   else{
     document.getElementById("moveUp").max = (gridYLines*gridsize-rectWidth);
   }
+  if(LoadBag !=1){
   document.getElementById("moveLeft").value = canvas.getActiveObject().left;
   document.getElementById("moveUp").value = canvas.getActiveObject().top;
   document.getElementById("moveLeft").style.display ='inline-block';
   document.getElementById("moveUp").style.display ='inline-block';
-  
+  }
   }
   if(LoadBag == 1){
     submitGrid();
@@ -1185,6 +1192,10 @@ function DeleteBag(){
   if(document.getElementById("PreviousLayers").value == 0){
   countBag--;}
   canvas.remove(canvas.item(currentObject));
+  prevRect.splice((currentObject-(gridXLines+gridYLines+2)),1);
+  prevBagsCount--;
+  console.log("prevRect in delete is");
+  console.log(prevRect);
   canvas.discardActiveObject();
   canvas.renderAll();
   var RemoveArray = [[],[]];
