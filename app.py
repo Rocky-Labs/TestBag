@@ -4,6 +4,8 @@ import time
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
+from flask_wtf import FlaskForm
+from wtforms_sqlalchemy.fields import QuerySelectField
 import json
 
 
@@ -31,11 +33,13 @@ class BagPattern_Class(db.Model):
     BagTopArray = db.Column(db.String(255))
     trackBagArray = db.Column(db.String(255))
     date_created = db.Column(db.DateTime, default = datetime.now )
-
+class BagPattern_ClassForm(FlaskForm):
+    opts = QuerySelectField(query_factory=choice_query, allow_blank=True)
 
 @app.route('/')
 def index():
-    return render_template('index.html')
+    form = QuerySelectField()
+    return render_template('index.html',form=form)
     print("inside index")
 
 @app.route('/formProcess', methods=['POST'])
@@ -104,7 +108,6 @@ def formProcess():
         BagLeftArray = Bag_Left_Array, BagTopArray = Bag_Top_Array, trackBagArray = track_Bag_Array)
         db.session.add(bagPattern)
         db.session.commit()
-        
         return jsonify({'success':'Success'})
 
     return jsonify({'error': 'Missing Data'})
@@ -113,11 +116,12 @@ def formProcess():
 def LoadProcess():
     name_Temp = request.form['bagPattern_name']
     print(name_Temp)
-    #filters the database by the name of the pattern and outputs the first result
-    result = BagPattern_Class.query.filter_by(BagPattern_name = name_Temp).first_or_404(description='It did not find it in the database {}'.format(name_Temp))
- 
-    if name_Temp != result.BagPattern_name:
-        return jsonify({'error': 'Missing Data'})
 
+    #filters the database by the name of the pattern and outputs the first result
+    result = BagPattern_Class.query.filter_by(BagPattern_name = name_Temp).first()
+    print(result)
+ 
+    if result:
+        return jsonify({'bagPattern_name': result.BagPattern_name, 'grid_size': result.GridSize, 'grid_X':result.GridX, 'grid_Y':result.GridY, 'totalBags':result.BagCount, 'rect_width': result.RectWidth, 'rect_height': result.RectHeight,'rect_guss': result.RectGuss, 'bag_position_arr': result.BagPosition_Array,'bag_left_arr': result.BagLeftArray,'bag_top_arr': result.BagTopArray, 'box_Array': result.BagPattern_arrTotal, 'trackBags':result.trackBagArray})
+    return jsonify({'error': 'Missing Data'})
 #it output a string to javascript it needs to be convert it back to the correct type in javascript
-    return jsonify({'bag_pattern_name': result.BagPattern_name, 'grid_size': result.GridSize, 'grid_X':result.GridX, 'grid_Y':result.GridY, 'totalBags':result.BagCount, 'rect_width': result.RectWidth, 'rect_height': result.RectHeight,'rect_guss': result.RectGuss, 'bag_position_arr': result.BagPosition_Array,'bag_left_arr': result.BagLeftArray,'bag_top_arr': result.BagTopArray, 'box_Array': result.BagPattern_arrTotal, 'trackBags':result.trackBagArray})

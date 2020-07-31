@@ -559,6 +559,9 @@ label 				 {
   background-color: rgba(255, 255, 255, 0.1);
   pointer-events: none;
 }
+.LayerSelection.no-before::before{
+  display:none;
+}
 
 .LayerSelection:hover::before {
   color: rgba(255, 255, 255, 0.6);
@@ -615,9 +618,16 @@ label 				 {
 #errorAlert2{
   position: absolute;
   top: -50px;
-  left: -200px;
+  left: -20px;
   background-color: red;
   color: #00AF80;
   display: none;
   width: 400px;
+}
+#LoadTitle{
+  position: absolute;
+  left: 500px
+}
+.hidden{
+  visibility:hidden;
 }
