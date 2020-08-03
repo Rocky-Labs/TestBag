@@ -91,7 +91,7 @@ function setSize(){*/
   }
   rectWidth = parseFloat(document.getElementById("BagWidth").value,10)*gridsize*2;
   rectHeight = parseFloat(document.getElementById("BagLength").value,10)*gridsize*2;
-  rectGussWid = parseInt(document.getElementById("Gusset").value,10)*gridsize*2;
+  rectGussWid = parseFloat(document.getElementById("Gusset").value,10)*gridsize*2;
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
@@ -791,7 +791,7 @@ function calcArray2(leftCoord, topCoord){
     for(var y2 = 0; y2 < RectPosX.length; y2++){
       BoxArray[j2][i2] = BoxArray[j2][i2] + RectPosX[y2][x2];
       LayerArray[j2][i2] = LayerArray[j2][i2] + RectPosX[y2][x2];
-      temptrackBag[j2][i2] = temptrackBag[j2][i2]+RectPos[y2][x2];
+      temptrackBag[j2][i2] = temptrackBag[j2][i2]+RectPosX[y2][x2];
       j2++;
     }
     i2++;
@@ -818,6 +818,12 @@ function delArray(delCoordl, delCoordt){
   else{
     j1 = 0;
   }
+  console.log("prevRect is: ");
+  console.log(prevRect);
+  console.log("BagLeft array is: ");
+  console.log(BagLeft);
+  console.log("BagTop array is: ");
+  console.log(BagTop);
   var initi1 = i1;
   var initj1 = j1;
   var PrevRectPos = [[],[]];
@@ -853,7 +859,7 @@ function delArray(delCoordl, delCoordt){
     for(var y1 = 0; y1 < PrevRectPos.length; y1++){
       BoxArray[j1][i1] = BoxArray[j1][i1] - PrevRectPos[y1][x1];
       LayerArray[j1][i1] = LayerArray[j1][i1] - PrevRectPos[y1][x1];
-      temptrackBag[j1][i1] = temptrackBag[j1][i1]+RectPos[y1][x1];
+      temptrackBag[j1][i1] = temptrackBag[j1][i1]+PrevRectPos[y1][x1];
       j1++;
     }
     i1++;
@@ -948,13 +954,15 @@ function PreviousBags1() {
   else{
     document.getElementById("moveUp").max = (gridYLines*gridsize-rectWidth);
   }
+  if(LoadBag !=1){
   document.getElementById("moveLeft").value = canvas.getActiveObject().left;
   document.getElementById("moveUp").value = canvas.getActiveObject().top;
   document.getElementById("moveLeft").style.display ='inline-block';
   document.getElementById("moveUp").style.display ='inline-block';
-  
+  }
   }
   if(LoadBag == 1){
+    canvas.discardActiveObject();
     submitGrid();
   }
 }
@@ -1185,6 +1193,10 @@ function DeleteBag(){
   if(document.getElementById("PreviousLayers").value == 0){
   countBag--;}
   canvas.remove(canvas.item(currentObject));
+  prevRect.splice((currentObject-(gridXLines+gridYLines+2)),1);
+  prevBagsCount--;
+  console.log("prevRect in delete is");
+  console.log(prevRect);
   canvas.discardActiveObject();
   canvas.renderAll();
   var RemoveArray = [[],[]];
@@ -1308,10 +1320,12 @@ var LoadFunction = function(){
 })
 .done(function(data){
     if(data.error){
-        $('#errorAlert2').text(data.bag_pattern_name).show();
+      $('#errorAlert2').text(data.bag_pattern_name).show();
+      $('#successAlert2').text(data.bag_pattern_name).hide();
     }
     else
     {
+      $('#errorAlert2').text(data.bag_pattern_name).hide();
       $('#successAlert2').text(data.bag_pattern_name).show();
       /*console.log( "Bag pattern name: "+ data.bag_pattern_name);
       console.log("Grid Size: " + data.grid_size);
@@ -1333,6 +1347,17 @@ var LoadFunction = function(){
       BoxArray = JSON.parse(data.box_Array);
       trackEachBag1 = JSON.parse(data.trackBags);
       /**********************************************/
+      //Hide buttons
+      document.getElementById("Layer").style.visibility = 'hidden';
+      document.getElementById("DeleteBag").style.visibility = 'hidden';
+      document.getElementById("ButtonArr").style.visibility = 'hidden';
+      document.getElementById("PreviousLayers").style.visibility = 'hidden';
+      document.getElementById("BoxForm").style.visibility = 'hidden';
+      document.getElementById("save").style.visibility = 'hidden';
+      var css = '<style id="pseudo">.LayerSelection::before{display: none !important;}</style>';
+      document.head.insertAdjacentHTML( 'beforeEnd', css );
+      document.getElementById("LoadTitle").className = '';
+      //Hide Buttons Complete
       canvas.clear();
       canvas.setWidth(900);
       canvas.setHeight(600);
@@ -1344,6 +1369,9 @@ var LoadFunction = function(){
       }
       var tempBag = 1;
       var selectListx = document.getElementById("PreviousBags");
+      for(var xa =1; xa <=600; xa++){
+        selectListx.remove(1);
+      }
       for(var x = 1; x <= BagCount; x++)
       {
         var optx = document.createElement("option");
