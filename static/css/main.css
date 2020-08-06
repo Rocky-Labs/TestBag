@@ -3,9 +3,6 @@ canvas {
   bottom: 10%;
   left: 6%;
 }
-
-
-
 .spinner-wrapper {
   position: fixed;
   top: 0;
@@ -80,9 +77,6 @@ z-index: 999999;
  
   background-color: #212121;
 }
-
-
-
 .row {
   
  
@@ -95,7 +89,6 @@ z-index: 999999;
   row-gap: 10px;
 
 }
-
 .row > div {
   
   display: -ms-grid;
@@ -116,7 +109,6 @@ z-index: 999999;
           box-shadow: 0 4px 10px 4px rgba(40, 41, 41, 0.2);*/
 }
 
-
 .grid-item {
   padding: 1em;
   border: 1px solid #ddd;
@@ -132,8 +124,6 @@ body {
   
   background-color: #212121;
 }
-
-
 .rotate0{
   width: 45px;
   /*
@@ -575,18 +565,18 @@ label 				 {
   display: none;
   position: absolute;
   -webkit-appearance: none;
-  bottom: 7.5%;
-  right: 50%;
-  width: 505px;
+  bottom: 12%;
+  left: 3%;
+  width: 526px;
   height: 6px;
 }
 .moveUp {
   display: none;
   position: absolute;
-  bottom: 50%;
-  right: 75%;
+  bottom: 51%;
+  left: -241px;
   -webkit-appearance: none;
-  width: 505px;
+  width: 527px;
   height: 5px;
   vertical-align: top;
   -webkit-transform:rotate(90deg);
