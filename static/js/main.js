@@ -117,9 +117,6 @@ arrCol = rectWidth/gridsize;
 arrGuss = rectGussWid/gridsize;
 BoxArrayRow = gridXLines;
 BoxArrayCol = gridYLines;
-//console.log("array Row is: "+arrRow);
-//console.log("array Col is: "+arrCol);
-//console.log("array Gus is: "+arrGuss);
 //Create Bag Position 0 Array
 for(var x = 0; x<arrRow-2; x++){
   RectPos1.push([0]);
@@ -145,8 +142,7 @@ for(var x = 0; x < arrRow; x++){
     }
   }
 }
-//console.log("Rect Array is: ");
-//console.log(RectPos1);
+
 //Create Bag Position 90 Array
 for(var x = 0; x<arrCol-2; x++){
   RectPos2.push([0]);
@@ -527,14 +523,10 @@ function moveLeft() {
     var test = parseInt(valueMoved);
     delCoordl = canvas.getActiveObject().left;
     delCoordt = canvas.getActiveObject().top;
-    console.log("delCoordl is: "+delCoordl);
-    console.log("delCoordt is: "+delCoordt);
     delArray(delCoordl,delCoordt);
     canvas.item(currentObject).set({left:( test)});
     leftCoord = canvas.getActiveObject().left;
     topCoord = canvas.getActiveObject().top;
-    console.log("leftCoord is: "+leftCoord);
-    console.log("topCoord is: "+topCoord);
     BagLeft[currentObject-(gridXLines+gridYLines+2)]=leftCoord;
     calcArray2(leftCoord,topCoord);
     canvas.renderAll();
@@ -554,16 +546,12 @@ function moveUp() {
   else{
     delCoordl = canvas.getActiveObject().left;
     delCoordt = canvas.getActiveObject().top;
-    console.log("delCoordl is: "+delCoordl);
-    console.log("delCoordt is: "+delCoordt);
     var valueMoved = document.getElementById("moveUp").value;
     var RangeCoord = parseInt(valueMoved);
     delArray(delCoordl,delCoordt);
     canvas.item(currentObject).set({top:(RangeCoord)});
     leftCoord = canvas.getActiveObject().left;
     topCoord = canvas.getActiveObject().top;
-    console.log("leftCoord is: "+leftCoord);
-    console.log("topCoord is: "+topCoord);
     BagTop[currentObject-(gridXLines+gridYLines+2)]=topCoord;
     calcArray2(leftCoord,topCoord);
     canvas.renderAll();
@@ -581,11 +569,11 @@ function moveUp() {
 //CALL COPY FUNCTION WHEN MOUSE CLICKED
 document.onmousedown = mouseDown;
 function mouseDown(ev) {
-
   if(prevBags.includes(canvas.getActiveObject()) == false && LoadBag == 0)
   {
     //document.getElementById("PreviousBags").value = 0;
     copy();
+    console.log("EXECUTE COPY");
     document.getElementById("moveLeft").style.display ='none';
     document.getElementById("moveUp").style.display ='none';
   }
@@ -602,6 +590,7 @@ function mouseUp(ev) {
   {
     activeObject--;
     paste();
+    console.log("EXECUTE PASTE");
     if(correctPlacement == 1){
     selectObject++;
     //adds to bag counter
@@ -660,8 +649,6 @@ function paste(){
       prevBagsCount++;
       leftCoord = copiedObject.left;
       topCoord = copiedObject.top;
-      console.log("leftCoord initial is: "+leftCoord);
-      console.log("topCoord initial is: "+topCoord);
       calcArray(leftCoord, topCoord);
       copiedObject.set("selectable",false);
       canvas.discardActiveObject();
@@ -675,8 +662,6 @@ function paste(){
       prevBagsCount++;
       leftCoord = copiedObject.left;
       topCoord = copiedObject.top;
-      console.log("leftCoord initial is: "+leftCoord);
-      console.log("topCoord initial is: "+topCoord);
       calcArray(leftCoord, topCoord);
       copiedObject.set("selectable",false);
       canvas.discardActiveObject();
@@ -818,12 +803,6 @@ function delArray(delCoordl, delCoordt){
   else{
     j1 = 0;
   }
-  console.log("prevRect is: ");
-  console.log(prevRect);
-  console.log("BagLeft array is: ");
-  console.log(BagLeft);
-  console.log("BagTop array is: ");
-  console.log(BagTop);
   var initi1 = i1;
   var initj1 = j1;
   var PrevRectPos = [[],[]];
@@ -1039,10 +1018,6 @@ var moveCount = 0;
 var nonLayerCount = 0;
 document.getElementById("PreviousLayers").onchange = function() {PreviousLayers()};
 function PreviousLayers(){
-  console.log("Canvas Item First is:");
-  console.log(CanvasItemsFirst);
-  console.log("Canvas Item array is:");
-  console.log(CanvasItems);
   if(LayerComplete == 0){
     document.getElementById("PreviousLayers").value = 0;
     alert("Complete Current Layer before Selecting a Previous Layer");
@@ -1074,7 +1049,6 @@ function PreviousLayers(){
   if(moveCount > 0){
     for(var x = 0; x <movedObjects.length; x++)
     {
-      console.log("Object Returned are: "+movedObjects[x]);
       canvas.setActiveObject(canvas.item(movedObjects[x]));
       canvas.item(movedObjects[x]).set({top:(canvas.getActiveObject().top+725)});
       canvas.discardActiveObject();
@@ -1095,9 +1069,6 @@ function PreviousLayers(){
     var FirstLayerItem = CanvasItemsFirst[ActiveLayer-1];
     var LastLayerItem = CanvasItems[ActiveLayer-1];
     if(ActiveLayer == 1){
-      /*console.log("Inside ActiveLayer == 1");
-      console.log("LastLayerItem + 1 is: "+LastLayerItem+1);
-      console.log("LastGridItem is: "+LastGridItem);*/
       for(var x = LastLayerItem+1; x <= LastGridItem; x++){
         canvas.setActiveObject(canvas.item(x));
         canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
@@ -1105,15 +1076,9 @@ function PreviousLayers(){
         movedObjects[moveCount] = x;
         moveCount++;
       }
-      /*console.log("moveObjects ActiveLayer == 1 or First Layer");
-      console.log(movedObjects);
-      console.log("DONE");*/
       canvas.renderAll();
     }
     else if(nextLayerItem === undefined){
-     /* console.log("INSIDE ELSE IF");
-      console.log("FirstGridItem is: "+FirstGridItem);
-      console.log("FirstLayerItem is: "+FirstLayerItem);*/
       for(var x = FirstGridItem; x < FirstLayerItem; x++){
         canvas.setActiveObject(canvas.item(x));
         canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
@@ -1121,10 +1086,6 @@ function PreviousLayers(){
         movedObjects[moveCount] = x;
         moveCount++;
       }
-      /*console.log("moveObjects undefined or Last Layer");
-      console.log(movedObjects);
-      console.log("LastLayerItem + 1 is: "+LastLayerItem+1);
-      console.log("LastGridItem is: " + LastGridItem);*/
       for(var x = LastLayerItem+1; x <= LastGridItem; x++){
         canvas.setActiveObject(canvas.item(x));
         canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
@@ -1132,15 +1093,9 @@ function PreviousLayers(){
         movedObjects[moveCount] = x;
         moveCount++;
       }
-      /*console.log("movedObjects part 2 undefined is");
-      console.log(movedObjects);
-      console.log("DONE");*/
       canvas.renderAll();
     }
     else{
-      /*console.log("INSIDE ELSE");
-      console.log("FirstGridItem is: " + FirstGridItem);
-      console.log("FirstLayer Item is: "+FirstLayerItem);*/
       for(var x = FirstGridItem; x < FirstLayerItem; x++){
         canvas.setActiveObject(canvas.item(x));
         canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
@@ -1148,10 +1103,6 @@ function PreviousLayers(){
         movedObjects[moveCount] = x;
         moveCount++;
       }
-      /*console.log("movedObjects for else is: ");
-      console.log(movedObjects);
-      console.log("LastLayerItem + 1 is: "+LastLayerItem+1);
-      console.log("LastGridItem is: " + LastGridItem);*/
       for(var x = LastLayerItem+1; x <= LastGridItem; x++){
         canvas.setActiveObject(canvas.item(x));
         canvas.item(x).set({top:(canvas.getActiveObject().top-725)});
@@ -1159,12 +1110,8 @@ function PreviousLayers(){
         movedObjects[moveCount] = x;
         moveCount++;
       }
-      /*console.log("movedObjecs for else Part 2 is: ");
-      console.log(movedObjects);
-      console.log("DONE");*/
       canvas.renderAll(); 
     }
-    console.log("Objects moved are: " + movedObjects);
   }
 }
   submitGrid();
@@ -1189,14 +1136,13 @@ var BoxTrack = 0;
 document.getElementById("DeleteBag").onclick = function () {DeleteBag()};
 function DeleteBag(){
   if(document.getElementById("PreviousBags").value > 0){
+  console.log(canvas.getObjects().length);
   selectObject--;
   if(document.getElementById("PreviousLayers").value == 0){
   countBag--;}
   canvas.remove(canvas.item(currentObject));
   prevRect.splice((currentObject-(gridXLines+gridYLines+2)),1);
   prevBagsCount--;
-  console.log("prevRect in delete is");
-  console.log(prevRect);
   canvas.discardActiveObject();
   canvas.renderAll();
   var RemoveArray = [[],[]];
@@ -1209,7 +1155,7 @@ function DeleteBag(){
     }
   }
   var ForwardLayerBags = 0;
-  if(document.getElementById("PreviousLayers").value > 0){
+  if(document.getElementById("PreviousLayers").value > 0 && canvas.getActiveObject()){
   for(var x = document.getElementById("PreviousLayers").value; x < LayerComplete; x++){
     ForwardLayerBags = ForwardLayerBags + BoxCount[x];
   }
@@ -1242,6 +1188,8 @@ function DeleteBag(){
       optx.text = x;
       selectListrem.appendChild(optx);
       temp--;
+      console.log("x or the text is: " + x);
+      console.log("temp or value is: "+temp);
     }
   }
   else{
@@ -1276,6 +1224,8 @@ function DeleteBag(){
       optx.text = x;
       selectListrem.appendChild(optx);
       temp--;
+      console.log("x or the text is: " + x);
+      console.log("temp or value is: "+temp);
     }
     BoxCount[document.getElementById("PreviousLayers").value-1] =  BoxCount[document.getElementById("PreviousLayers").value-1]-1;
     LayerLevel = document.getElementById("PreviousLayers").value;
@@ -1289,6 +1239,7 @@ function DeleteBag(){
   submitGrid();
 }
 else{
+  console.log("PreviousBags value is: "+document.getElementById("PreviousBags").value);
   alert("Select a bag to delete");
 }
 }
@@ -1327,13 +1278,6 @@ var LoadFunction = function(){
     {
       $('#errorAlert2').text(data.bag_pattern_name).hide();
       $('#successAlert2').text(data.bag_pattern_name).show();
-      /*console.log( "Bag pattern name: "+ data.bag_pattern_name);
-      console.log("Grid Size: " + data.grid_size);
-      console.log("Rect Width: "+ data.rect_width);
-      var RectWidthNormaltype = JSON.parse(data.rect_width)
-      console.log("Rect Width as a : "+ typeof(RectWidthNormaltype));
-      console.log("Rect Height: "+ data.rect_height);
-      console.log("Bag Left Arr is: " + data.bag_left_arr);*/
       var rectWidth1 = data.rect_width;
       var rectHeight1 = data.rect_height;
       var rectGussWid1 = data.rect_guss;
