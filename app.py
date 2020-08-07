@@ -4,8 +4,8 @@ import time
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-from flask_wtf import FlaskForm
-from wtforms_sqlalchemy.fields import QuerySelectField
+#from flask_wtf import FlaskForm
+#from wtforms_sqlalchemy.fields import QuerySelectField
 import json
 
 
@@ -33,13 +33,13 @@ class BagPattern_Class(db.Model):
     BagTopArray = db.Column(db.String(255))
     trackBagArray = db.Column(db.String(255))
     date_created = db.Column(db.DateTime, default = datetime.now )
-class BagPattern_ClassForm(FlaskForm):
-    opts = QuerySelectField(query_factory=choice_query, allow_blank=True)
+#class BagPattern_ClassForm(FlaskForm):
+ #   opts = QuerySelectField(query_factory=choice_query, allow_blank=True)
 
 @app.route('/')
 def index():
-    form = QuerySelectField()
-    return render_template('index.html',form=form)
+    #form = QuerySelectField()
+    return render_template('index.html')
     print("inside index")
 
 @app.route('/formProcess', methods=['POST'])
