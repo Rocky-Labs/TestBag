@@ -910,6 +910,7 @@ function submitGrid()
       type: 'heatmap',
       xgap:0.75,
       ygap:0.75,
+      colorbar: {tickfont:{color:'white'}}
     }
   ];
   var layout = {
@@ -931,7 +932,8 @@ function submitGrid()
 
   };
   Plotly.newPlot('tester', data, layout);
-  Plotly.restyle('tester',{zmin:0, zmax:70});  
+  Plotly.restyle('tester',{zmin:0, zmax:70});
+  
 }
 /**************************************************************************************/
 
