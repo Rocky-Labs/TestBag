@@ -239,7 +239,6 @@ for(var a1 = 0; a1<BoxArrayCol; a1++){
     BoxArray[a1].push(0);
   }
 }
-submitGrid();
 
 for(var a3 = 0; a3<BoxArrayCol-2; a3++){
   LayerArray.push([0]);
@@ -876,6 +875,11 @@ function submitGrid()
     }
   }
   avg = arrSum/avgCount;
+  avg = avg.toFixed(3);
+  document.getElementById("minX").value = min;
+  document.getElementById("maxX").value = max;
+  document.getElementById("deltaX").value = delta;
+  document.getElementById("averageX").value = avg;
   console.log("arrSum is: "+arrSum);
   console.log("avgCount is: "+avgCount);
   console.log("average is: "+avg);
