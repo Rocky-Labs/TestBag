@@ -39,13 +39,23 @@ var BagLeft = [];
 var BagTop = [];
 /**************************************************************************************/
 
+
+//Load Dimensions
+document.getElementById('BoxWidth').value = sessionStorage.getItem('BoxWidth');
+document.getElementById('BoxLength').value = sessionStorage.getItem('BoxLength');
+document.getElementById('BagWidth').value = sessionStorage.getItem('BagWidth');
+document.getElementById('BagLength').value = sessionStorage.getItem('BagLength');
+document.getElementById('Gusset').value = sessionStorage.getItem('Gusset');
+
+
+/******************** SET DIMENSIONS ************************/
 document.getElementById("confirm").onclick = function(e){
-  /*
-  setSize();
-  document.getElementById("ButtonArr").style.display ='inline-block';
- 
-};
-function setSize(){*/
+  //Store Dimensions
+  sessionStorage.setItem('BoxWidth',document.getElementById("BoxWidth").value);
+  sessionStorage.setItem('BoxLength',document.getElementById("BoxLength").value);
+  sessionStorage.setItem('BagWidth',document.getElementById("BagWidth").value);
+  sessionStorage.setItem('BagLength',document.getElementById("BagLength").value);
+  sessionStorage.setItem('Gusset',document.getElementById("Gusset").value);
   e.preventDefault();
   if((document.getElementById("BoxLength").value)<35 || (document.getElementById("BoxLength").value)>50 ||
   (document.getElementById("BoxWidth").value)<35 || (document.getElementById("BoxWidth").value)>50){
@@ -229,6 +239,8 @@ for(var a1 = 0; a1<BoxArrayCol; a1++){
     BoxArray[a1].push(0);
   }
 }
+submitGrid();
+
 for(var a3 = 0; a3<BoxArrayCol-2; a3++){
   LayerArray.push([0]);
 }
@@ -573,7 +585,6 @@ function mouseDown(ev) {
   {
     //document.getElementById("PreviousBags").value = 0;
     copy();
-    console.log("EXECUTE COPY");
     document.getElementById("moveLeft").style.display ='none';
     document.getElementById("moveUp").style.display ='none';
   }
@@ -590,7 +601,6 @@ function mouseUp(ev) {
   {
     activeObject--;
     paste();
-    console.log("EXECUTE PASTE");
     if(correctPlacement == 1){
     selectObject++;
     //adds to bag counter
@@ -851,6 +861,27 @@ function delArray(delCoordl, delCoordt){
 
 function submitGrid()
 {
+  var maxRow = BoxArray.map(function(row){return Math.max.apply(Math,row);});
+  var max = Math.max.apply(null, maxRow);
+  var minRow = BoxArray.map(function(row){return Math.min.apply(Math,row);});
+  var min = Math.min.apply(null, minRow);
+  var delta = max - min;
+  var avgCount = 0;
+  var arrSum = 0;
+  var avg = 0;
+  for(var a = 0; a < BoxArray.length; a++){
+    for(var b = 0; b < BoxArray[0].length; b++){
+      arrSum = arrSum + BoxArray[a][b];
+      avgCount++;
+    }
+  }
+  avg = arrSum/avgCount;
+  console.log("arrSum is: "+arrSum);
+  console.log("avgCount is: "+avgCount);
+  console.log("average is: "+avg);
+  console.log("Array max is: " + max);
+  console.log("Array min is: " + min);
+  console.log("delta is: " + delta);
   if(document.getElementById("PreviousBags").value == 0){
     canvas.discardActiveObject();
     canvas.renderAll();  
@@ -874,7 +905,7 @@ function submitGrid()
       colorscale: 'Portland',
       type: 'heatmap',
       xgap:0.75,
-      ygap:0.75
+      ygap:0.75,
     }
   ];
   var layout = {
@@ -882,7 +913,7 @@ function submitGrid()
       autorange: 'reversed',
       showticklabels: false,
       zeroline: false,
-      ticklen: 0
+      ticklen: 0,
     },
     xaxis: {
       showgrid: true,
@@ -890,13 +921,13 @@ function submitGrid()
       zeroline: false,
       ticklen: 0
     },
-
-    
+      showscale: true,
       plot_bgcolor: '#212121',
       paper_bgcolor: '#212121'
 
   };
-  Plotly.newPlot('tester', data, layout);  
+  Plotly.newPlot('tester', data, layout);
+  Plotly.restyle('tester',{zmin:0, zmax:70});  
 }
 /**************************************************************************************/
 
