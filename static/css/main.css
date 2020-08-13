@@ -621,3 +621,63 @@ label 				 {
 .hidden{
   visibility:hidden;
 }
+#min{
+  position: absolute;
+  top: 13%;
+  left: 20%;
+  color: #5264AE;
+}
+#minX{
+  position: absolute;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+  top: 12.75%;
+  left: 26%;
+  width: 50px;
+}
+#max{
+  position: absolute;
+  top: 13%;
+  left: 35%;
+  color: #5264AE;
+}
+#maxX{
+  position: absolute;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+  top: 12.75%;
+  left: 41%;
+  width: 50px;
+}
+#delta{
+  position: absolute;
+  top: 13%;
+  left: 50%;
+  color: #5264AE;
+}
+#deltaX{
+  position: absolute;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+  top: 12.75%;
+  left: 57%;
+  width: 50px;
+}
+#average{
+  position: absolute;
+  top: 13%;
+  left: 66%;
+  color: #5264AE;
+}
+#averageX{
+  position: absolute;
+  background-color: transparent;
+  color: white;
+  text-align: center;
+  top: 12.75%;
+  left: 76%;
+  width: 60px;
+}
