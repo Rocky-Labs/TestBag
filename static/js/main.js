@@ -880,12 +880,6 @@ function submitGrid()
   document.getElementById("maxX").value = max;
   document.getElementById("deltaX").value = delta;
   document.getElementById("averageX").value = avg;
-  console.log("arrSum is: "+arrSum);
-  console.log("avgCount is: "+avgCount);
-  console.log("average is: "+avg);
-  console.log("Array max is: " + max);
-  console.log("Array min is: " + min);
-  console.log("delta is: " + delta);
   if(document.getElementById("PreviousBags").value == 0){
     canvas.discardActiveObject();
     canvas.renderAll();  
@@ -932,7 +926,7 @@ function submitGrid()
 
   };
   Plotly.newPlot('tester', data, layout);
-  Plotly.restyle('tester',{zmin:0, zmax:70});
+  //Plotly.restyle('tester',{zmin:0, zmax:70});
   
 }
 /**************************************************************************************/
@@ -1646,5 +1640,40 @@ var rangeSlider = function(){
 
 };
 rangeSlider();
+
+
+document.getElementById("CopyLayer").onclick = function () {CopyLayer()};
+function CopyLayer() {
+	canvas.getActiveObject().clone(function(cloned) {
+		_clipboard = cloned;
+	});
+}
+document.getElementById("PasteLayer").onclick = function () {PasteLayer()};
+function PasteLayer() {
+	// clone again, so you can do multiple copies.
+	_clipboard.clone(function(clonedObj) {
+		canvas.discardActiveObject();
+		clonedObj.set({
+			left: clonedObj.left + 10,
+			top: clonedObj.top + 10,
+			evented: true,
+		});
+		if (clonedObj.type === 'activeSelection') {
+			// active selection needs a reference to the canvas.
+			clonedObj.canvas = canvas;
+			clonedObj.forEachObject(function(obj) {
+				canvas.add(obj);
+			});
+			// this should solve the unselectability
+			clonedObj.setCoords();
+		} else {
+			canvas.add(clonedObj);
+		}
+		_clipboard.top += 10;
+		_clipboard.left += 10;
+		canvas.setActiveObject(clonedObj);
+		canvas.requestRenderAll();
+	});
+}
 
 
