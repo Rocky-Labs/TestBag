@@ -5,7 +5,6 @@ from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
 #from flask_wtf import FlaskForm
-
 #from wtforms_sqlalchemy.fields import QuerySelectField
 import json
 
@@ -25,7 +24,7 @@ class BagPattern_Class(db.Model):
     GridX = db.Column(db.Integer)
     GridY = db.Column(db.Integer)
     RectWidth = db.Column(db.Integer)
-    RectHeight = db.Column(db.Integer)
+    RectHeight = db.Column(db.Integer) 
     RectGuss = db.Column(db.Integer)
     BagCount = db.Column(db.Integer)
     BagPattern_arrTotal = db.Column(db.String(255))

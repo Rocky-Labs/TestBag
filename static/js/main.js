@@ -106,14 +106,14 @@ document.getElementById("confirm").onclick = function(e){
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
-  var unitScale = 10;
-  var canvasWidth =  92 * unitScale;
-  var canvasHeight = 60 * unitScale;
+  //var unitScale = 10;
+  var canvasWidth =  window.innerWidth * 0.60;
+  var canvasHeight = window.innerHeight * 0.63;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);
   
 
-// create grid
+// create grid Delat between height - low spot, standardize scale
   for (var i = 0; i <= gridXLines; i++) {
     canvas.add(new fabric.Line([ i * gridsize, 0, i * gridsize, (gridsize*gridYLines)], { type:'line', stroke: '#ccc', selectable: false }));
   }
@@ -599,6 +599,7 @@ function mouseDown(ev) {
     copy();
     document.getElementById("moveLeft").style.display ='none';
     document.getElementById("moveUp").style.display ='none';
+    
   }
   else{
   }
@@ -969,7 +970,23 @@ function submitGrid()
     }
   ];
   var layout = {
+
+    autosize: true,
+
+    scene: { 
+      zaxis: {
+        title: {
+          text: 'Total Layers',
+          font:{
+            size: 14,
+            color:'#FFFFFF'
+        }
+      },
+        color: '#FFFFFF'
+    }
+  },
     yaxis: {
+    
       autorange: 'reversed',
       showticklabels: false,
       zeroline: false,
@@ -1030,6 +1047,10 @@ function PreviousBags1() {
   document.getElementById("moveUp").value = canvas.getActiveObject().top;
   document.getElementById("moveLeft").style.display ='inline-block';
   document.getElementById("moveUp").style.display ='inline-block';
+  document.getElementById("moveUp").style.width  = '560px';
+  BoxLength_temp =( parseFloat(document.getElementById("BoxLength").value,10) +6) *10;
+  console.log(BoxLength_temp);
+  document.getElementById("moveLeft").style.width  = BoxLength_temp.toString() + 'px';
   }
   }
   if(LoadBag == 1){

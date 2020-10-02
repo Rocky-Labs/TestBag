@@ -1,7 +1,7 @@
 canvas {
-  position: absolute;
+  /*position: absolute;
   bottom: 10%;
-  left: 6%;
+  left: 6%;*/
 }
 .spinner-wrapper {
   position: fixed;
@@ -45,11 +45,11 @@ z-index: 999999;
   position: absolute;
   top:.1%;
   right: 3%;
-}
+}/*
 #c{
   position: absolute;
   top: 65%;
-}
+}*/
 .arrangement {
  background-color: transparent; /* make the button transparent */
  background-repeat: no-repeat; 
@@ -613,7 +613,7 @@ label 				 {
   display: none;
   position: absolute;
   -webkit-appearance: none;
-  bottom: 12%;
+  bottom: 8%;
   left: 3%;
   width: 526px;
   height: 6px;
