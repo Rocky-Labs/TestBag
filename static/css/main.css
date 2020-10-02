@@ -73,6 +73,19 @@ z-index: 999999;
 #flip270:hover {  background-image: url(/static/img/flipRight_Hover.png);}
 #flip270:focus {  background-image: url(/static/img/flipRight_focus.png);}
 
+#Lflip0 { background-image: url(/static/img/flipUp.png);}
+#Lflip0:hover {background-image: url(/static/img/flipUp_Hover.png);}
+#Lflip0:focus {background-image: url(/static/img/flipUp_focus.png);}
+#Lflip180 { background-image: url(/static/img/flip.png);}
+#Lflip180:hover { background-image: url(/static/img/flip_Hover.png);}
+#Lflip180:focus { background-image: url(/static/img/flip_focus.png);}
+#Lflip90 {  background-image: url(/static/img/flipHorizontal.png);}
+#Lflip90:hover {  background-image: url(/static/img/flipHorizontal_Hover.png);}
+#Lflip90:focus {  background-image: url(/static/img/flipHorizontal_focus.png);}
+#Lflip270 {  background-image: url(/static/img/flipRight.png);}
+#Lflip270:hover {  background-image: url(/static/img/flipRight_Hover.png);}
+#Lflip270:focus {  background-image: url(/static/img/flipRight_focus.png);}
+
 #tester {
  
   background-color: #212121;
@@ -218,7 +231,7 @@ label {
   /*width: 130px;
   font-size: 12px;*/
   text-align: right;
-  top: 3.6%;
+  top: 4.0%;
   left: 18.5%;
   width: 165px;
   height: 40px;
@@ -234,6 +247,41 @@ label {
 }
 #Layer:focus {
   background-image: url(/static/img/checklist_focus.png);
+}
+.CopPas{
+  position: absolute;
+  background-color: #333333; /* make the button transparent */
+  background-repeat: no-repeat;  /* make the background image appear only once */
+  background-position-y: left;
+  background-position: 10px;
+  border: #2980b9;
+  color: whitesmoke;
+  line-height: 2;
+  /*width: 130px;
+  font-size: 12px;*/
+  text-align: center;
+  border: none;
+  font-size: 16px;
+  padding-right: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+#copyBtn{
+  top: 4.0%;
+  left: 31.5%;
+  width: 80px;
+  height: 40px;
+}
+#pasteBtn{
+  top: 4.0%;
+  left: 38.25%;
+  width: 80px;
+  height: 40px;
+}
+#undoBtn{
+  top: 4.0%;
+  left: 45%;
+  width: 80px;
+  height: 40px;
 }
 
 #DeleteBag{

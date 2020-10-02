@@ -9,6 +9,7 @@ var gridXLines, gridYLines = 0;
 var rectWidth, rectHeight, rectGussWid = 0;
 var LayerArray = [[],[]];
 var BoxArray = [[],[]];
+var PasteArray = [[],[]];
 var RectPos = [[],[]];
 var RectPos1 = [[],[]];
 var RectPos2 = [[],[]];
@@ -67,8 +68,8 @@ document.getElementById("confirm").onclick = function(e){
     alert("Bag Dimensions not within range");
   }
   else{
-  gridXLines = parseFloat(document.getElementById("BoxLength").value,10)*2;
-  gridYLines = parseFloat(document.getElementById("BoxWidth").value,10)*2;
+  gridXLines = parseFloat(document.getElementById("BoxLength").value,10)*4;
+  gridYLines = parseFloat(document.getElementById("BoxWidth").value,10)*4;
   /*gridXLines = 25;
   gridYLines = 25;
   rectWidth = 150;
@@ -99,9 +100,9 @@ document.getElementById("confirm").onclick = function(e){
   {
     gridsize = 5;
   }
-  rectWidth = parseFloat(document.getElementById("BagWidth").value,10)*gridsize*2;
-  rectHeight = parseFloat(document.getElementById("BagLength").value,10)*gridsize*2;
-  rectGussWid = parseFloat(document.getElementById("Gusset").value,10)*gridsize*2;
+  rectWidth = parseFloat(document.getElementById("BagWidth").value,10)*gridsize*4;
+  rectHeight = parseFloat(document.getElementById("BagLength").value,10)*gridsize*4;
+  rectGussWid = parseFloat(document.getElementById("Gusset").value,10)*gridsize*4;
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
@@ -152,6 +153,8 @@ for(var x = 0; x < arrRow; x++){
     }
   }
 }
+console.log("RectPos1 is:");
+console.log(RectPos1);
 
 //Create Bag Position 90 Array
 for(var x = 0; x<arrCol-2; x++){
@@ -239,6 +242,16 @@ for(var a1 = 0; a1<BoxArrayCol; a1++){
     BoxArray[a1].push(0);
   }
 }
+
+for(var x = 0; x<BoxArrayCol-2; x++){
+  PasteArray.push([0]);
+}
+for(var y = 0; y<BoxArrayCol; y++){
+  for(var z = PasteArray[y].length; z<BoxArrayRow; z++){
+    PasteArray[y].push(0);
+  }
+}
+
 
 for(var a3 = 0; a3<BoxArrayCol-2; a3++){
   LayerArray.push([0]);
@@ -687,12 +700,58 @@ function paste(){
   }
 }
 
+
+
+/*document.getElementById("copyBtn").onclick = function() {copyBtn()};
+function copyBtn(){
+  if(document.getElementById("PreviousLayers").value < 1){
+    alert("Please Select a Layer before Copy")
+  }
+  else{
+    var LayerSelec = document.getElementById("PreviousLayers").value;
+    var CopiedArray = LayerSum[LayerSelec-1];
+    for(var a = 0; a < PasteArray.length; a++){
+      for(var b = 0; b < PasteArray[0].length; b++){
+        PasteArray[a][b] = PasteArray[a][b]+CopiedArray[a][b];
+      }
+    }
+    //console.log("Copied Array is:");
+    //console.log(CopiedArray);
+    //console.log("LayerSum Array is:");
+    //console.log(LayerSum);
+  }
+
+}
+document.getElementById("pasteBtn").onclick = function() {pasteBtn()};
+function pasteBtn(){
+  console.log("Paste Array is:");
+  console.log(PasteArray);
+  for(var a = 0; a < BoxArray.length; a++){
+    for(var b = 0; b < BoxArray[0].length; b++){
+      BoxArray[a][b] = BoxArray[a][b]+PasteArray[a][b];
+    }
+  }
+  document.getElementById("PreviousLayers").value = 0;
+  submitGrid();
+}
+document.getElementById("Lflip0").onclick = function() {Lrotate0()};
+function Lrotate0() {
+}
+document.getElementById("Lflip90").onclick = function() {Lrotate90()};
+function Lrotate90() {
+}
+document.getElementById("Lflip180").onclick = function() {Lrotate180()};
+function Lrotate180() {
+}
+document.getElementById("Lflip270").onclick = function() {Lrotate270()};
+function Lrotate270() {
+}*/
 /**************************************************************************************/
 
 
 
 /*************************  ADDS BAG ARRAY TO BOX WHEN PASTING  ************************/
-
+//This adds data into Layer Array and Box Array on bag drop
 function calcArray(leftCoord, topCoord){
 var i = leftCoord;
 var j = topCoord;
@@ -739,7 +798,7 @@ trackEachBagCount++;
 
 
 /**************************  ADDS MOVED BAG ARRAY TO BOX ARRAY  ************************/
-
+//This changes the Layer Array and Box Array when moving bags
 function calcArray2(leftCoord, topCoord){
   var i2 = leftCoord;
   var j2 = topCoord;
@@ -796,7 +855,7 @@ function calcArray2(leftCoord, topCoord){
 
 
 /**********************  SUBTRACTS PREV BAG POSTION ARRAY FROM BOX ARRAY  **************/
-
+//This subtracts the bag that has been moved or delted from Box and Layer Arrays
 function delArray(delCoordl, delCoordt){
   var i1 = delCoordl;
   var j1 = delCoordt;
@@ -885,10 +944,12 @@ function submitGrid()
     canvas.renderAll();  
   }
   var showData = BoxArray;
+//Lvalue is what is used to display and entire Layer
   var Lvalue = document.getElementById("PreviousLayers").value;
   if(Lvalue > 0){
     showData = LayerSum[Lvalue-1];
   }
+//LoadBag used to display a specific selected Bag on heatmap
   if(LoadBag == 1){
     if(document.getElementById("PreviousBags").value > 0){
       showData = trackEachBag1[document.getElementById("PreviousBags").value-1]
@@ -1020,7 +1081,7 @@ function Layer(){
         LayerArray[i][j] = 0;
       }
     }
-    
+  //LayerSum here is what is used to display the data
     BoxCount[LayerCount] = CanvasItems[LayerCount]-CanvasItemsFirst[LayerCount]+1;
     LayerSum[LayerCount] = tempArray;
     LayerCount++;
@@ -1031,7 +1092,9 @@ function Layer(){
     selectListz.appendChild(optz);
     }
   }
-
+//Canvasitems arrays tells you how many bags are inside a Layer
+//CanvsItesmFirst determines what was the first bag num for an array
+//so like 0 for first layer and 24 for next layer
   else{
     alert("Add Bags before creating a new Layer");
   }
@@ -1054,6 +1117,7 @@ function PreviousLayers(){
     alert("Complete Current Layer before Selecting a Previous Layer");
   }
   else{
+//THIS IF ELSE IS TO ADD AND SUBTRACT THE NUMBERS FROM SELECT BAG
   if(document.getElementById("PreviousLayers").value > 0){
     var selectList2 = document.getElementById("PreviousBags");
     for(var x = 1; x <= 32; x++){
@@ -1077,6 +1141,7 @@ function PreviousLayers(){
   }
 
   if(document.getElementById("PreviousLayers").value <= LayerCount && LayerCount > 0){
+//This actually moves the bags outside
   if(moveCount > 0){
     for(var x = 0; x <movedObjects.length; x++)
     {
@@ -1088,6 +1153,8 @@ function PreviousLayers(){
     moveCount = 0;
     canvas.renderAll();
   }
+
+//This changes the array so the LayerComplete array is displayed
   if(document.getElementById("PreviousLayers").value > 0){
   var ActiveLayer = document.getElementById("PreviousLayers").value;
   var testArray = [[],[]];
@@ -1099,6 +1166,7 @@ function PreviousLayers(){
     var nextLayerItem = CanvasItems[ActiveLayer];
     var FirstLayerItem = CanvasItemsFirst[ActiveLayer-1];
     var LastLayerItem = CanvasItems[ActiveLayer-1];
+  //This else if moves the correct objects back
     if(ActiveLayer == 1){
       for(var x = LastLayerItem+1; x <= LastGridItem; x++){
         canvas.setActiveObject(canvas.item(x));
@@ -1642,7 +1710,7 @@ var rangeSlider = function(){
 rangeSlider();
 
 
-document.getElementById("CopyLayer").onclick = function () {CopyLayer()};
+/*document.getElementById("CopyLayer").onclick = function () {CopyLayer()};
 function CopyLayer() {
 	canvas.getActiveObject().clone(function(cloned) {
 		_clipboard = cloned;
@@ -1676,4 +1744,4 @@ function PasteLayer() {
 	});
 }
 
-
+*/
