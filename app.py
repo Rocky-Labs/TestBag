@@ -4,13 +4,14 @@ import time
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-#from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm
+from wtforms import SelectField
 #from wtforms_sqlalchemy.fields import QuerySelectField
 import json
 
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'random key'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
@@ -20,6 +21,7 @@ db = SQLAlchemy(app)
 class BagPattern_Class(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     BagPattern_name = db.Column(db.String(50))
+    BagSelect = db.Column(db.String(50))
     GridSize = db.Column(db.Integer)
     GridX = db.Column(db.Integer)
     GridY = db.Column(db.Integer)
@@ -33,15 +35,20 @@ class BagPattern_Class(db.Model):
     BagTopArray = db.Column(db.String(255))
     trackBagArray = db.Column(db.String(255))
     date_created = db.Column(db.DateTime, default = datetime.now )
-#class BagPattern_ClassForm(FlaskForm):
-    #opts = QuerySelectField(query_factory=choice_query, allow_blank=True)
+
+class Form(FlaskForm):
+    NameOfBagPatterns = SelectField('bag_pattern__class', choices=[])
+
+
 
 @app.route('/')
 def index():
     #form = QuerySelectField()
     #return render_template('index.html',form=form)
-    return render_template('index.html')
-    print("inside index")
+    form = Form()
+    form.NameOfBagPatterns.choices = [(NameOfBagPatterns.id, NameOfBagPatterns.BagPattern_name)for NameOfBagPatterns in BagPattern_Class.query.all() ]
+    return render_template('index.html', form=form)
+    #print("inside index")
 
 @app.route('/formProcess', methods=['POST'])
 def formProcess():
@@ -49,6 +56,7 @@ def formProcess():
     #BoxLen = json.loads(request.form['box_Array'])
     #Adding the rest of the settings
     Bag_Pattern_Name = request.form['bagPattern_name']
+    Bag_Select = request.form['bag_select']
     Grid_Size = request.form['grid_size']
     Grid_X = request.form['grid_X']
     Grid_Y = request.form['grid_Y']
@@ -72,6 +80,7 @@ def formProcess():
             print(elem, end=' ')
 
     print("Bag Pattern Name: "+Bag_Pattern_Name)
+    print("Bag Select: "+ Bag_Select)
     print("Grid Size : "+ Grid_Size)
     print("Grid X Line: "+Grid_X)
     print("Grid Y Line: "+Grid_Y)
@@ -103,7 +112,7 @@ def formProcess():
     if Bag_Pattern_Name:
         
         #saves it on the database as a string
-        bagPattern = BagPattern_Class(BagPattern_name = Bag_Pattern_Name, GridSize = Grid_Size, GridX = Grid_X, GridY= Grid_Y,
+        bagPattern = BagPattern_Class(BagPattern_name = Bag_Pattern_Name, BagSelect=Bag_Select, GridSize = Grid_Size, GridX = Grid_X, GridY= Grid_Y,
         BagCount = total_Bags, RectWidth = Rect_Width, RectHeight = Rect_Height, RectGuss = Rect_Guss,
         BagPattern_arrTotal = Bag_Pattern_Arr_Total, BagPosition_Array = Bag_Position_Array,
         BagLeftArray = Bag_Left_Array, BagTopArray = Bag_Top_Array, trackBagArray = track_Bag_Array)
@@ -123,6 +132,13 @@ def LoadProcess():
     print(result)
  
     if result:
-        return jsonify({'bagPattern_name': result.BagPattern_name, 'grid_size': result.GridSize, 'grid_X':result.GridX, 'grid_Y':result.GridY, 'totalBags':result.BagCount, 'rect_width': result.RectWidth, 'rect_height': result.RectHeight,'rect_guss': result.RectGuss, 'bag_position_arr': result.BagPosition_Array,'bag_left_arr': result.BagLeftArray,'bag_top_arr': result.BagTopArray, 'box_Array': result.BagPattern_arrTotal, 'trackBags':result.trackBagArray})
+        return jsonify({'bagPattern_name': result.BagPattern_name,'bag_select':result.BagSelect, 'grid_size': result.GridSize, 'grid_X':result.GridX, 'grid_Y':result.GridY, 'totalBags':result.BagCount, 'rect_width': result.RectWidth, 'rect_height': result.RectHeight,'rect_guss': result.RectGuss, 'bag_position_arr': result.BagPosition_Array,'bag_left_arr': result.BagLeftArray,'bag_top_arr': result.BagTopArray, 'box_Array': result.BagPattern_arrTotal, 'trackBags':result.trackBagArray})
     return jsonify({'error': 'Missing Data'})
 #it output a string to javascript it needs to be convert it back to the correct type in javascript
+
+# ---    Shows a list of all the saved Patterns     ----
+@app.route('/ListProcess', methods=['POST'])
+def ListProcess():
+    form = Form()
+    form.NameOfBagPatterns.choices = [(NameOfBagPatterns.id, NameOfBagPatterns.BagPattern_name)for NameOfBagPatterns in BagPattern_Class.query.all() ]
+    return render_template('index.html', form=form)

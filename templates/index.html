@@ -46,7 +46,8 @@
     <div class="col">
         <h2 id = "LoadTitle" class = "hidden">Saved Pattern</h2>
         <div id ="BoxForm">
-            <form id="fm"></form>
+            <form id="fm" method="POST"></form>
+            {{form.csrf_token}}
                 <h2 class="subTitle">Dimensions [in]</h2>
                 <div class="group">
 
@@ -85,6 +86,12 @@
                     <span class="bar"></span>
                     <label>Gusset </label>
                 </div>
+                <div class= "BagSelection">
+                    <select id ="BagSelection" name="BagSelection">
+                        <option value="0">Pinch_Pattern</option>
+                        <option value="1">BagPattern2</option>
+                        </select>
+                </div>  
                     <input class ="btn btn-primary" id ="confirm" type="submit" value="Submit">
                 <!-- 
                 <h2>Box Dimensions</h2>
@@ -97,10 +104,21 @@
                 <input class ="btn btn-primary" type="submit" value="Submit">
                 -->
             </form>
+             
         </div>
-           
+
+        
+<!--
+        <div class= "BagSelection">
+            <select id ="BagSelect" name="BagSelect">
+                <option value="0">Default Bag</option>
+               
+                </select>
+        </div>   
+    -->
 
     </div>
+
     
 <div class="col">
     <button id= "load" class="load" src="../static/img/open.png" value="load">Open</button>
@@ -119,6 +137,7 @@
     </form>
     <!-- END - Save form -->
 
+<!-- SELECT THE BAG -->
      <!-- Load form -->
      <form id="loadForm">
         <div class = "group">
@@ -153,9 +172,6 @@
      
         <!-- Layers option-->
  <input id="Layer" class="Layer" type="button" name="Layer" value="Layer Complete"/>
- <input id="copyBtn" class="CopPas" type="button" name="Copy" value="Copy"/>
- <input id="pasteBtn" class="CopPas" type="button" name="Paste" value="Paste"/>
- <input id="undoBtn" class="CopPas" type="button" name="undoBtn" value="Undo"/>
 
 <div class= "LayerSelection">
     <select id ="PreviousLayers" name="PreviousLayers">
@@ -184,11 +200,6 @@
         <button class= "arrangement" id="flip180" src="../static/img/flip.png" title="Flip 180°" ></button>
         <button class= "arrangement" id="flip270" src="../static/img/flipHorizontal.png" title="Flip 270°"></button>
         <button class= "arrangement" id="flip90" src="../static/img/flipHorizontal.png" title="Flip 90°"></button>
-        <!--<h3>Layer Rotation</h3>
-        <button class= "arrangement" id="Lflip0" src="../static/img/flipUp.png" title="Flip 0°" ></button>
-        <button class= "arrangement" id="Lflip180" src="../static/img/flip.png" title="Flip 180°" ></button>
-        <button class= "arrangement" id="Lflip270" src="../static/img/flipHorizontal.png" title="Flip 270°"></button>
-        <button class= "arrangement" id="Lflip90" src="../static/img/flipHorizontal.png" title="Flip 90°"></button>-->
         
 
        </div>
