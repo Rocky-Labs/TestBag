@@ -4,13 +4,14 @@ import time
 from datetime import datetime
 from flask import Flask, render_template, request, jsonify
 from flask_sqlalchemy import SQLAlchemy
-#from flask_wtf import FlaskForm
+from flask_wtf import FlaskForm
+from wtforms import SelectField
 #from wtforms_sqlalchemy.fields import QuerySelectField
 import json
 
 
 app = Flask(__name__)
-
+app.config['SECRET_KEY'] = 'random key'
 
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:///db.sqlite3'
@@ -33,15 +34,20 @@ class BagPattern_Class(db.Model):
     BagTopArray = db.Column(db.String(255))
     trackBagArray = db.Column(db.String(255))
     date_created = db.Column(db.DateTime, default = datetime.now )
-#class BagPattern_ClassForm(FlaskForm):
-    #opts = QuerySelectField(query_factory=choice_query, allow_blank=True)
 
-@app.route('/')
+class Form(FlaskForm):
+    NameOfBagPatterns = SelectField('bag_pattern__class', choices=[])
+
+
+
+@app.route('/',methods=['POST'])
 def index():
     #form = QuerySelectField()
     #return render_template('index.html',form=form)
-    return render_template('index.html')
-    print("inside index")
+    form = Form()
+    form.NameOfBagPatterns.choices = [(NameOfBagPatterns.id, NameOfBagPatterns.BagPattern_name)for NameOfBagPatterns in BagPattern_Class.query.all() ]
+    return render_template('index.html', form=form)
+    #print("inside index")
 
 @app.route('/formProcess', methods=['POST'])
 def formProcess():
@@ -115,14 +121,29 @@ def formProcess():
 #Load button function that searches by name and ouputs to javascript
 @app.route('/LoadProcess', methods=['POST'])
 def LoadProcess():
-    name_Temp = request.form['bagPattern_name']
-    print(name_Temp)
+    form = Form()
+    form.NameOfBagPatterns.choices = [(NameOfBagPatterns.id, NameOfBagPatterns.BagPattern_name)for NameOfBagPatterns in BagPattern_Class.query.all() ]
+    
+    if request.method == 'POST':
+       city = BagPattern_Class.query.filter_by(BagPattern_name =form.NameOfBagPatterns.data).first()
+       
+       return '<h1>Country : City: {}</h1>'.format( city.BagPattern_name)
+    return render_template('index.html', form=form)
+  #  name_Temp = request.form['bagPattern_name']
+ #   print(name_Temp)
 
     #filters the database by the name of the pattern and outputs the first result
-    result = BagPattern_Class.query.filter_by(BagPattern_name = name_Temp).first()
-    print(result)
+    #result = BagPattern_Class.query.filter_by(BagPattern_name = name_Temp).first()
+    #print(result)
  
-    if result:
-        return jsonify({'bagPattern_name': result.BagPattern_name, 'grid_size': result.GridSize, 'grid_X':result.GridX, 'grid_Y':result.GridY, 'totalBags':result.BagCount, 'rect_width': result.RectWidth, 'rect_height': result.RectHeight,'rect_guss': result.RectGuss, 'bag_position_arr': result.BagPosition_Array,'bag_left_arr': result.BagLeftArray,'bag_top_arr': result.BagTopArray, 'box_Array': result.BagPattern_arrTotal, 'trackBags':result.trackBagArray})
-    return jsonify({'error': 'Missing Data'})
+   # if result:
+  #      return jsonify({'bagPattern_name': result.BagPattern_name, 'grid_size': result.GridSize, 'grid_X':result.GridX, 'grid_Y':result.GridY, 'totalBags':result.BagCount, 'rect_width': result.RectWidth, 'rect_height': result.RectHeight,'rect_guss': result.RectGuss, 'bag_position_arr': result.BagPosition_Array,'bag_left_arr': result.BagLeftArray,'bag_top_arr': result.BagTopArray, 'box_Array': result.BagPattern_arrTotal, 'trackBags':result.trackBagArray})
+ #   return jsonify({'error': 'Missing Data'})
 #it output a string to javascript it needs to be convert it back to the correct type in javascript
+
+# ---    Shows a list of all the saved Patterns     ----
+@app.route('/ListProcess', methods=['POST'])
+def ListProcess():
+    form = Form()
+    form.NameOfBagPatterns.choices = [(NameOfBagPatterns.id, NameOfBagPatterns.BagPattern_name)for NameOfBagPatterns in BagPattern_Class.query.all() ]
+    return render_template('index.html', form=form)

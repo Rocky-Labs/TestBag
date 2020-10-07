@@ -107,7 +107,7 @@ document.getElementById("confirm").onclick = function(e){
 //Canvas Size
   //var unitScale = 10;
   var canvasWidth =  window.innerWidth * 0.60;
-  var canvasHeight = window.innerHeight * 0.63;
+  var canvasHeight = window.innerHeight * 0.70;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);
   
@@ -119,7 +119,6 @@ document.getElementById("confirm").onclick = function(e){
   for(var j = 0; j <= gridYLines; j++){
     canvas.add(new fabric.Line([ 0, j * gridsize, (gridsize*gridXLines), j * gridsize], { type: 'line', stroke: '#ccc', selectable: false }));
   }
-
 
 /***************************   BOX AND BAG ARRAYS   ***********************************/
 arrRow = rectHeight/gridsize;
@@ -949,7 +948,7 @@ function submitGrid()
 
   };
   Plotly.newPlot('tester', data, layout);
-  Plotly.restyle('tester',{zmin:0, zmax:70});
+  
   
 }
 /**************************************************************************************/
@@ -992,10 +991,19 @@ function PreviousBags1() {
   document.getElementById("moveUp").value = canvas.getActiveObject().top;
   document.getElementById("moveLeft").style.display ='inline-block';
   document.getElementById("moveUp").style.display ='inline-block';
-  document.getElementById("moveUp").style.width  = '560px';
-  BoxLength_temp =( parseFloat(document.getElementById("BoxLength").value,10) +6) *10;
+
+  console.log(gridsize );
+  console.log(gridsize * gridYLines);
+  console.log(gridsize * gridXLines);
+  // Trying to update the range bar dynamically
+  BoxWidth_temp = gridsize * gridYLines;
+  document.getElementById("moveUp").style.width  = BoxWidth_temp.toString() + 'px';
+  BoxLength_temp = gridsize * gridXLines;
+ /* ( parseFloat(document.getElementById("BoxLength").value,10)) *10;*/
   console.log(BoxLength_temp);
   document.getElementById("moveLeft").style.width  = BoxLength_temp.toString() + 'px';
+ 
+  // Trying to update the range bar dynamically -- END
   }
   }
   if(LoadBag == 1){
@@ -1313,13 +1321,16 @@ $('#load').click(function() {
 });
 
 var LoadFunction = function(){
+  
   var testbutton = $('#loadConfirm');
- 
+  
   testbutton.click(function(e) {
 
     e.preventDefault();
     var arr = BoxArray;
-    var nameTemp = document.getElementById("nameSearch").value;
+    var nameTemp = document.getElementById("namebag").name;
+    console.log("name: " + nameTemp);
+   // var nameTemp = document.getElementById("nameSearch").value;
    $.ajax({
     data: {
       bagPattern_name: nameTemp
