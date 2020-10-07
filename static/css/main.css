@@ -377,6 +377,9 @@ input[type=number] {
    
    
  }
+ .BagSelection{
+   margin-top: 60px;
+ }
  .test {
    font-size: 18px;
   padding: 5px 5px 5px 5px;
