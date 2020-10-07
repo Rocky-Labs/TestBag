@@ -1,7 +1,6 @@
 /**************************   CANVAS CREATION   **************************************/
 // Canvas Variable Initialization
 var canvas = new fabric.Canvas('c', { selection: true });
-
 //Grid Creation
 var gridsize =0;
 var gridXLines, gridYLines = 0;
@@ -1263,7 +1262,7 @@ function paste(){
 
 
 
-/*document.getElementById("copyBtn").onclick = function() {copyBtn()};
+document.getElementById("copyBtn").onclick = function() {copyBtn()};
 function copyBtn(){
   if(document.getElementById("PreviousLayers").value < 1){
     alert("Please Select a Layer before Copy")
@@ -1306,7 +1305,7 @@ function Lrotate180() {
 }
 document.getElementById("Lflip270").onclick = function() {Lrotate270()};
 function Lrotate270() {
-}*/
+}
 /**************************************************************************************/
 
 

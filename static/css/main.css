@@ -73,6 +73,19 @@ z-index: 999999;
 #flip270:hover {  background-image: url(/static/img/flipRight_Hover.png);}
 #flip270:focus {  background-image: url(/static/img/flipRight_focus.png);}
 
+/*#Lflip0 { background-image: url(/static/img/flipUp.png);}
+#Lflip0:hover {background-image: url(/static/img/flipUp_Hover.png);}
+#Lflip0:focus {background-image: url(/static/img/flipUp_focus.png);}
+#Lflip180 { background-image: url(/static/img/flip.png);}
+#Lflip180:hover { background-image: url(/static/img/flip_Hover.png);}
+#Lflip180:focus { background-image: url(/static/img/flip_focus.png);}
+#Lflip90 {  background-image: url(/static/img/flipHorizontal.png);}
+#Lflip90:hover {  background-image: url(/static/img/flipHorizontal_Hover.png);}
+#Lflip90:focus {  background-image: url(/static/img/flipHorizontal_focus.png);}
+#Lflip270 {  background-image: url(/static/img/flipRight.png);}
+#Lflip270:hover {  background-image: url(/static/img/flipRight_Hover.png);}
+#Lflip270:focus {  background-image: url(/static/img/flipRight_focus.png);}*/
+
 #tester {
  
   background-color: #212121;
@@ -218,7 +231,7 @@ label {
   /*width: 130px;
   font-size: 12px;*/
   text-align: right;
-  top: 3.6%;
+  top: 4.0%;
   left: 18.5%;
   width: 165px;
   height: 40px;
@@ -235,6 +248,89 @@ label {
 #Layer:focus {
   background-image: url(/static/img/checklist_focus.png);
 }
+.CopPas{
+  position: absolute;
+  background-color: #333333;
+  background-repeat: no-repeat;
+  background-position-y: left;
+  background-position: 10px;
+  border: #2980b9;
+  color: whitesmoke;
+  line-height: 2;
+  text-align: center;
+  border: none;
+  font-size: 16px;
+  padding-right: 15px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+}
+#copyBtn{
+  top: 4.0%;
+  left: 31.5%;
+  width: 80px;
+  height: 40px;
+}
+#pasteBtn{
+  top: 4.0%;
+  left: 38.25%;
+  width: 80px;
+  height: 40px;
+}
+#undoBtn{
+  top: 4.0%;
+  left: 45%;
+  width: 80px;
+  height: 40px;
+}
+/*Bag Selection Beginning*/
+
+.BagSelection {
+  position: absolute;
+  top: 73.5%;
+  right: -5%;
+  transform: translate(-50%, -50%);
+}
+
+.BagSelection select {
+  background-color: #333333;
+  color: white;
+  padding: 8px;
+  width: 150px;
+  border: none;
+  font-size: 16px;
+  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
+  -webkit-appearance: button;
+  appearance: button;
+  outline: none;
+}
+
+.BagSelection::before {
+  content: url(/static/img/down-arrow.png);
+  position: absolute;
+  top: 0;
+  right: 0;
+  width: 20%;
+  height: 100%;
+  text-align: center;
+  font-size: 28px;
+  line-height: 45px;
+  color: rgba(255, 255, 255, 0.5);
+  background-color: rgba(255, 255, 255, 0.1);
+  pointer-events: none;
+}
+.BagSelection.no-before::before{
+  display:none;
+}
+
+.BagSelection:hover::before {
+  color: rgba(255, 255, 255, 0.6);
+  background-color: rgba(255, 255, 255, 0.2);
+}
+
+.BagSelection select option {
+  padding: 30px;
+}
+
+/*Bag Selection End*/
 
 #DeleteBag{
   position: absolute;
@@ -376,9 +472,6 @@ input[type=number] {
    margin-bottom: 5px;
    
    
- }
- .BagSelection{
-   margin-top: 60px;
  }
  .test {
    font-size: 18px;
@@ -564,72 +657,20 @@ label 				 {
 .LayerSelection select option {
   padding: 30px;
 }
-
-/*Bag Selection Beginning*/
-
-.BagSelection {
-  position: absolute;
-  top: 25%;
-  right: -5%;
-  transform: translate(-50%, -50%);
-}
-
-.BagSelection select {
-  background-color: #333333;
-  color: white;
-  padding: 8px;
-  width: 150px;
-  border: none;
-  font-size: 16px;
-  box-shadow: 0 5px 25px rgba(0, 0, 0, 0.2);
-  -webkit-appearance: button;
-  appearance: button;
-  outline: none;
-}
-
-.BagSelection::before {
-  content: url(/static/img/down-arrow.png);
-  position: absolute;
-  top: 0;
-  right: 0;
-  width: 20%;
-  height: 100%;
-  text-align: center;
-  font-size: 28px;
-  line-height: 45px;
-  color: rgba(255, 255, 255, 0.5);
-  background-color: rgba(255, 255, 255, 0.1);
-  pointer-events: none;
-}
-.BagSelection.no-before::before{
-  display:none;
-}
-
-.BagSelection:hover::before {
-  color: rgba(255, 255, 255, 0.6);
-  background-color: rgba(255, 255, 255, 0.2);
-}
-
-.BagSelection select option {
-  padding: 30px;
-}
-
-/*Bag Selection End*/
-
 #moveLeft {
   display: none;
   position: absolute;
   -webkit-appearance: none;
   bottom: 8%;
-  left: 4%;
+  left: 3%;
   width: 526px;
   height: 6px;
 }
 .moveUp {
   display: none;
   position: absolute;
-  bottom: 49%;
-  left: -18.5%;
+  bottom: 51%;
+  left: -241px;
   -webkit-appearance: none;
   width: 527px;
   height: 5px;
