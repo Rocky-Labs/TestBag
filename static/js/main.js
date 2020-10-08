@@ -1,6 +1,51 @@
 /**************************   CANVAS CREATION   **************************************/
+/*
+var leftRuler, topRuler;
+
+function redrawRulers() {
+  topRuler.clear();
+  leftRuler.clear();
+  topRuler.setBackgroundColor('#aaa');
+  leftRuler.setBackgroundColor('#aaa');
+
+  zoomLevel = canvas.getZoom();
+console.log(zoomLevel);
+  for (i = 0; i < 520; i += (10 * zoomLevel)) {
+    var topLine = new fabric.Line([i, 25, i, 50], {
+      stroke: 'black',
+      strokeWidth: 1
+    });
+    topRuler.add(topLine);
+    var leftLine = new fabric.Line([25, i, 50, i], {
+      stroke: 'black',
+      strokeWidth: 1
+    });
+    leftRuler.add(leftLine);
+  }
+  
+ 
+  for (i = 0; i < 600;  i += (100 * zoomLevel)) {
+  	var text = new fabric.Text((Math.round(i / zoomLevel)).toString(), {
+    	left: i,
+      top: 10,
+      fontSize: 8
+    });
+    topRuler.add(text);
+  }
+}
+$(document).ready(function() {
+  
+  topRuler = new fabric.Canvas('top-ruler');
+  leftRuler = new fabric.Canvas('left-ruler');
+  redrawRulers();
+  
+ 
+})*/
+
 // Canvas Variable Initialization
 var canvas = new fabric.Canvas('c', { selection: true });
+var topRuler = new fabric.Canvas('top-ruler');
+var leftRuler = new fabric.Canvas('left-ruler');
 
 //Grid Creation
 var gridsize =0;
@@ -118,15 +163,39 @@ document.getElementById("confirm").onclick = function(e){
   var canvasHeight = window.innerHeight * 0.63;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);
-  
+  topRuler.setBackgroundColor('#aaa');
+  leftRuler.setBackgroundColor('#aaa');
 
 // create grid Delat between height - low spot, standardize scale
   for (var i = 0; i <= gridXLines; i++) {
+    //Checks whether the i is even or odd and based on that it creates longer line for ruler
+    if(i % 2 == 0)
+    {
+      topRuler.add(new fabric.Line([i* gridsize, 25, i* gridsize, 50], { type:'line', stroke: 'black', selectable: false}));
+      
+    }else {
+      topRuler.add(new fabric.Line([i* gridsize, 25, i* gridsize, 30], { type:'line', stroke: 'black', selectable: false}));
+    }
     canvas.add(new fabric.Line([ i * gridsize, 0, i * gridsize, (gridsize*gridYLines)], { type:'line', stroke: '#ccc', selectable: false }));
+    /*topRuler.add(new fabric.Line([i* gridsize, 25, i* gridsize, 40], { type:'line', stroke: 'black', selectable: false}));*/
   }
   for(var j = 0; j <= gridYLines; j++){
     canvas.add(new fabric.Line([ 0, j * gridsize, (gridsize*gridXLines), j * gridsize], { type: 'line', stroke: '#ccc', selectable: false }));
+  //  leftRuler.add(new fabric.Line([25, i, 50, i], { type:'line', stroke: '#ccc', selectable: false }));
   }
+// Numbers
+for (var i = 0; i<= gridXLines;  i+=4 ) {
+  if(i % 2 == 0)
+  {
+    var text = new fabric.Text((i/2).toString(), {
+      left:  (i * gridsize)-2,
+      top: 10,
+      fontSize: 10
+    });
+    topRuler.add(text);
+  }
+  
+}
 
 
 /***************************   BOX AND BAG ARRAYS   ***********************************/
@@ -167,7 +236,7 @@ for(var x = 0; x < arrRow; x++){
       RectPos1A[x][y] = 3;
     }
     else if((x==1)&&((y>3 && y < 4+arrGuss)||(y>=arrCol+4-arrGuss && y <arrCol+4))){
-      RectPos1A[x][y] = 4;
+      RectPos1A[x][y] = 7;
     }
     else if((x==1)&&((y>=4+arrGuss)&&(y<arrCol+4-arrGuss))){
       RectPos1A[x][y] = 5;
@@ -214,7 +283,7 @@ for(var x = 0; x < arrRow; x++){
       RectPos3A[x][y] = 3;
     }
     else if((x==arrRow-2)&&((y>3 && y < 4+arrGuss)||(y>=arrCol+4-arrGuss && y <arrCol+4))){
-      RectPos3A[x][y] = 4;
+      RectPos3A[x][y] = 7;
     }
     else if((x==arrRow-2)&&((y>=4+arrGuss)&&(y<arrCol+4-arrGuss))){
       RectPos3A[x][y] = 5;
@@ -257,7 +326,7 @@ for(var x = 0; x < arrCol+8; x++){
       RectPos2A[x][y] = 3;
     }
     else if((y == 1)&&((x>=4 && x <arrGuss+4)||(x <arrCol+4 && x>=arrCol+4-arrGuss))){
-      RectPos2A[x][y] = 4;
+      RectPos2A[x][y] = 7;
     }
     else if((y == 1)&&(x>=4+arrGuss && x <arrCol+4-arrGuss)){
       RectPos2A[x][y]=5;
@@ -302,7 +371,7 @@ for(var x = 0; x < arrCol+8; x++){
       RectPos4A[x][y] = 3;
     }
     else if((y==arrRow-2)&&((x>=4 && x <arrGuss+4)||(x <arrCol+4 && x>=arrCol+4-arrGuss))){
-      RectPos4A[x][y] = 4;
+      RectPos4A[x][y] = 7;
     }
     else if((y==arrRow-2)&&(x>=4+arrGuss && x <arrCol+4-arrGuss)){
       RectPos4A[x][y]=5;
@@ -1263,7 +1332,7 @@ function paste(){
 
 
 
-document.getElementById("copyBtn").onclick = function() {copyBtn()};
+/*document.getElementById("copyBtn").onclick = function() {copyBtn()};
 function copyBtn(){
   if(document.getElementById("PreviousLayers").value < 1){
     alert("Please Select a Layer before Copy")
@@ -1306,7 +1375,7 @@ function Lrotate180() {
 }
 document.getElementById("Lflip270").onclick = function() {Lrotate270()};
 function Lrotate270() {
-}
+}*/
 /**************************************************************************************/
 
 
@@ -1983,20 +2052,21 @@ else{
 /*   Beginning of load function */
 $('#load').click(function() {
     
-  document.getElementById("loadForm").style.display ='inline';
+  document.getElementById("lform").style.display ='inline';
   document.getElementById("load").style.display ='none';
   document.getElementById("saveForm").style.display ='none';
   document.getElementById("save").style.display ='inline';
 });
 
 var LoadFunction = function(){
-  var testbutton = $('#loadConfirm');
+  var testbutton = $('#lConfirm');
  
   testbutton.click(function(e) {
 
     e.preventDefault();
     var arr = BoxArray;
-    var nameTemp = document.getElementById("nameSearch").value;
+    var nameTemp = document.getElementById("NameOfBagPatterns").value;
+    console.log("nameTemp: "+ nameTemp);
    $.ajax({
     data: {
       bagPattern_name: nameTemp
@@ -2550,7 +2620,7 @@ $('#save').click(function() {
   document.getElementById("saveForm").style.display ='inline';
   document.getElementById("save").style.display ='none';
   document.getElementById("load").style.display ='inline';
-  document.getElementById("loadForm").style.display ='none';
+  document.getElementById("lform").style.display ='none';
 });
 
 /*   Beginning of save function */

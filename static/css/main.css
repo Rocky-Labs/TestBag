@@ -1,8 +1,4 @@
-canvas {
-  /*position: absolute;
-  bottom: 10%;
-  left: 6%;*/
-}
+
 .spinner-wrapper {
   position: fixed;
   top: 0;
@@ -45,7 +41,8 @@ z-index: 999999;
   position: absolute;
   top:.1%;
   right: 3%;
-}/*
+}
+/*
 #c{
   position: absolute;
   top: 65%;
@@ -470,22 +467,26 @@ input[type=number] {
    display: inline-block;
    margin-top: 23px;
    margin-bottom: 5px;
+   width: 130px;
    
    
  }
- .test {
+ #nameInput {
+  width: 130px;
+ }
+ 
+ .test, .form-control{
    font-size: 18px;
   padding: 5px 5px 5px 5px;
   margin-right: 5px;
-  margin-bottom: 10px;
+  /*margin-bottom: 10px;*/
   
   display: inline;
-   
    background-color:  #212121;
    border: none;
    border-bottom: 1px solid #757575;
    color: white;
-   width:160px; 
+   /*width:100px; */
 
  }
  .test:focus { outline:none;}
@@ -686,7 +687,7 @@ label 				 {
   top: 30px;
   left: 5px;
 }
-#loadForm {
+#lform {
   display: none;
   position: absolute;
   top: 30px;

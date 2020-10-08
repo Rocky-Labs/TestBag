@@ -16,6 +16,8 @@
     <script src ="../static/js/lib/fabric.min.js"></script>
     <script src="../static/js/form.js"></script> 
     
+    
+    
 </head>
 
 <body>
@@ -85,13 +87,17 @@
                     <span class="bar"></span>
                     <label>Gusset </label>
                 </div>
+                
+                <div class= "group">
+                    
+                    <select class = "test" id ="BagSelection" name="BagSelection">
+                        
+                        <option value="0">Pinch Bag</option>
+                        <option value="1">Sewing Bag</option>
+                        </select>
+            </div>  
                     <input class ="btn btn-primary" id ="confirm" type="submit" value="Submit">
-                    <div class= "BagSelection">
-                        <select id ="BagSelection" name="BagSelection">
-                            <option value="0">Pinch_Pattern</option>
-                            <option value="1">BagPattern2</option>
-                            </select>
-                </div>  
+                  
                 <!-- 
                 <h2>Box Dimensions</h2>
                 <label for="BoxLen">Box Length:</label>
@@ -124,7 +130,7 @@
     <input class ="btn btn-primary" id ="SaveConfirm" type="submit" value="Submit">
     </form>
     <!-- END - Save form -->
-     <!-- Load form -->
+     <!-- Load form -
      <form id="loadForm">
         <div class = "group">
         <input class = "test" id="nameSearch" type="text" required>
@@ -132,9 +138,20 @@
         <span class="bar"></span>
         <label>Name: </label>
         </div>
-    <!-- <input class ="btn btn-primary" id ="loadConfirm" type="submit" value="Submit">-->
+     <input class ="btn btn-primary" id ="loadConfirm" type="submit" value="Submit">
     </form>
-     <!-- END - Load form -->
+      END - Load form -->
+
+<!-- ********** NEW load form           ******* -->
+     <form id="lform" method="POST">
+        <div class = "group">
+        {{form.csrf_token}}
+         <label for="BagNamePattern"></label>
+        {{form.NameOfBagPatterns(class="form-control")}}
+        </div>
+     <input class ="btn btn-primary" id ="lConfirm" type="submit" value="Submit">
+    </form>
+<!-- ********** NEW load form           ******* -->
 
    <div id= "successAlert2"><h1>success</h1></div>-
     <div id= "errorAlert2"><h1>Pattern does not exist!!</h1></div>
@@ -202,10 +219,14 @@
        <!-- <input id="180" class="rotate180" type="submit" name="button3" value="180°"/>-->
       <!--  <input id="270" class="rotate270" type="submit" name="button4" value="-90°"/> -->
     </div>
-  
+    
         <input id="moveUp" class="moveUp" type="range" name="200" step = "10" value="0" min="0" max="180"/>
         <!-- TEST-->
+        <canvas id="top-ruler" width="520" height="50"></canvas>
         <canvas id="c"></canvas>
+        <!--<canvas id="left-ruler" width="50" height="400"></canvas>-->
+        
+        
       
         <!--Range to move right to left -->
         <input id="moveLeft" class="moveLeft" type="range" name="200" step = "10" value="0" min="0" max="300"/>

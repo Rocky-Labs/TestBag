@@ -1,0 +1,35 @@
+{
+  "name": "rulez.js",
+  "version": "0.3.1",
+  "authors": [
+    "Shyyko Serhiy <shyyko.serhiy@gmail.com>"
+  ],
+  "description": "Javascript library for showing svg customizable rulers",
+  "main": [
+    "dist/js/rulez.min.js",
+    "dist/css/rulez-black.min.css"
+  ],
+  "keywords": [
+    "Ruler"
+  ],
+  "license": "MIT",
+  "ignore": [
+    "**/.*",
+    "node_modules",
+    "bower_components",
+    "test",
+    "tests",
+    "demo"
+  ],
+  "homepage": "https://github.com/ShyykoSerhiy/rulez.js",
+  "_release": "0.3.1",
+  "_resolution": {
+    "type": "version",
+    "tag": "v0.3.1",
+    "commit": "ec6ae2018e91b418a9af0a252ba329da463930f1"
+  },
+  "_source": "https://github.com/ShyykoSerhiy/rulez.js.git",
+  "_target": "^0.3.1",
+  "_originalSource": "rulez.js",
+  "_direct": true
+}

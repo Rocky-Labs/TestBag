@@ -128,7 +128,7 @@ def LoadProcess():
     print(name_Temp)
 
     #filters the database by the name of the pattern and outputs the first result
-    result = BagPattern_Class.query.filter_by(BagPattern_name = name_Temp).first()
+    result = BagPattern_Class.query.filter_by(id = name_Temp).first()
     print(result)
  
     if result:
