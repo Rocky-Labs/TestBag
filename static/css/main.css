@@ -37,6 +37,7 @@ z-index: 999999;
     -webkit-transform: perspective(120px) rotateX(-180deg) rotateY(-179.9deg);
   }
 }
+
 #ButtonArr {
   position: absolute;
   top:.1%;
@@ -136,29 +137,29 @@ body {
 }
 .rotate0{
   width: 45px;
-  /*
+  
   position: absolute;
   margin-left: 650px;
-  */
+  
 }
 .rotate90{
   width: 45px;
-  /*
+  
   position: absolute;
   margin-left: 696px;
-  */
+  
 }
 .rotate180{
   width: 45px;
-  /*
+  
   position: absolute;
-  margin-left: 742px;*/
+  margin-left: 742px;
 }
 .rotate270{
   width: 45px;
-  /*
+  
   position: relative;
-  margin-left: 788px;*/
+  margin-left: 788px;
 }
 h3{
  
@@ -777,4 +778,7 @@ label 				 {
   top: 12.75%;
   left: 76%;
   width: 60px;
+}
+#left-ruler {
+  display: inline;
 }

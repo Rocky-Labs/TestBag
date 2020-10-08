@@ -221,10 +221,45 @@
     </div>
     
         <input id="moveUp" class="moveUp" type="range" name="200" step = "10" value="0" min="0" max="180"/>
-        <!-- TEST-->
-        <canvas id="top-ruler" width="520" height="50"></canvas>
-        <canvas id="c"></canvas>
-        <!--<canvas id="left-ruler" width="50" height="400"></canvas>-->
+        <!-- I have added table, tr and td tags to position the-->
+        <div id="canvasWithRulers">
+            <table>
+                <tr>
+                  <td></td>
+                    <td>
+                        <canvas id="top-ruler" width="520" height="50"></canvas>
+                    </td>
+                </tr>
+            <tr>
+                <td>
+                    <canvas id="left-ruler" width="50" ></canvas>
+                </td>
+        <td>
+            <canvas id="c"></canvas>
+        </td>
+</tr>
+</table>
+        
+        </div>
+        
+        <!--
+            <table>
+<tr>
+  <td></td>
+  <td>
+    <canvas id="top-ruler" width="600" height="50"/>
+  </td>
+</tr>
+<tr>
+  <td>
+     <canvas id="left-ruler" width="50" height="400"/>
+  </td>
+  <td>
+    <canvas id="main-canvas" width="600" height="400"/>
+  </td>
+</tr>
+</table>
+            <canvas id="left-ruler" width="50" height="400"></canvas>-->
         
         
       

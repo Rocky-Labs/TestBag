@@ -1,46 +1,6 @@
-/**************************   CANVAS CREATION   **************************************/
-/*
-var leftRuler, topRuler;
 
-function redrawRulers() {
-  topRuler.clear();
-  leftRuler.clear();
-  topRuler.setBackgroundColor('#aaa');
-  leftRuler.setBackgroundColor('#aaa');
 
-  zoomLevel = canvas.getZoom();
-console.log(zoomLevel);
-  for (i = 0; i < 520; i += (10 * zoomLevel)) {
-    var topLine = new fabric.Line([i, 25, i, 50], {
-      stroke: 'black',
-      strokeWidth: 1
-    });
-    topRuler.add(topLine);
-    var leftLine = new fabric.Line([25, i, 50, i], {
-      stroke: 'black',
-      strokeWidth: 1
-    });
-    leftRuler.add(leftLine);
-  }
-  
- 
-  for (i = 0; i < 600;  i += (100 * zoomLevel)) {
-  	var text = new fabric.Text((Math.round(i / zoomLevel)).toString(), {
-    	left: i,
-      top: 10,
-      fontSize: 8
-    });
-    topRuler.add(text);
-  }
-}
-$(document).ready(function() {
-  
-  topRuler = new fabric.Canvas('top-ruler');
-  leftRuler = new fabric.Canvas('left-ruler');
-  redrawRulers();
-  
- 
-})*/
+/*const { Color } = require("fabric/fabric-impl");*/
 
 // Canvas Variable Initialization
 var canvas = new fabric.Canvas('c', { selection: true });
@@ -163,39 +123,70 @@ document.getElementById("confirm").onclick = function(e){
   var canvasHeight = window.innerHeight * 0.63;
   canvas.setWidth(canvasWidth);
   canvas.setHeight(canvasHeight);
-  topRuler.setBackgroundColor('#aaa');
-  leftRuler.setBackgroundColor('#aaa');
+  topRuler.setWidth(gridsize*gridYLines);
+  leftRuler.setHeight(canvasHeight);
+  topRuler.setBackgroundColor('#1f1f1f');
+  leftRuler.setBackgroundColor('#1f1f1f');
 
 // create grid Delat between height - low spot, standardize scale
   for (var i = 0; i <= gridXLines; i++) {
     //Checks whether the i is even or odd and based on that it creates longer line for ruler
     if(i % 2 == 0)
     {
-      topRuler.add(new fabric.Line([i* gridsize, 25, i* gridsize, 50], { type:'line', stroke: 'black', selectable: false}));
-      
+      topRuler.add(new fabric.Line([i* gridsize, 25, i* gridsize, 50], { type:'line', stroke: '#5E656E', selectable: false}));
+      canvas.add(new fabric.Line([ i * gridsize, 0, i * gridsize, (gridsize*gridYLines)], { type:'line', stroke: '#ccc', selectable: false }));
+
     }else {
-      topRuler.add(new fabric.Line([i* gridsize, 25, i* gridsize, 30], { type:'line', stroke: 'black', selectable: false}));
+      topRuler.add(new fabric.Line([i* gridsize, 25, i* gridsize, 30], { type:'line', stroke: '#868E98', selectable: false}));
+      canvas.add(new fabric.Line([ i * gridsize, 0, i * gridsize, (gridsize*gridYLines)], { type:'line', stroke: '#707070' ,selectable: false }));
+
     }
-    canvas.add(new fabric.Line([ i * gridsize, 0, i * gridsize, (gridsize*gridYLines)], { type:'line', stroke: '#ccc', selectable: false }));
     /*topRuler.add(new fabric.Line([i* gridsize, 25, i* gridsize, 40], { type:'line', stroke: 'black', selectable: false}));*/
   }
   for(var j = 0; j <= gridYLines; j++){
-    canvas.add(new fabric.Line([ 0, j * gridsize, (gridsize*gridXLines), j * gridsize], { type: 'line', stroke: '#ccc', selectable: false }));
+    //Checks whether the i is even or odd and based on that it creates longer line for ruler
+    if(j % 2 == 0)
+    {
+      leftRuler.add(new fabric.Line([25,j*gridsize,50 , j*gridsize], { type:'line', stroke: '#5E656E', selectable: false}));
+      canvas.add(new fabric.Line([ 0, j * gridsize, (gridsize*gridXLines), j * gridsize], { type: 'line', stroke: '#ccc', selectable: false }));
+    }else {
+      leftRuler.add(new fabric.Line([25,j*gridsize,30 , j*gridsize], { type:'line', stroke: '#868E98', selectable: false}));
+      canvas.add(new fabric.Line([ 0, j * gridsize, (gridsize*gridXLines), j * gridsize], { type: 'line', stroke: '#707070',selectable: false }));
+    }
+    
   //  leftRuler.add(new fabric.Line([25, i, 50, i], { type:'line', stroke: '#ccc', selectable: false }));
   }
-// Numbers
+// Adds the number for the Top ruler
 for (var i = 0; i<= gridXLines;  i+=4 ) {
   if(i % 2 == 0)
   {
     var text = new fabric.Text((i/2).toString(), {
       left:  (i * gridsize)-2,
       top: 10,
-      fontSize: 10
+      fontSize: 10,
+      fill: '#B2B6BD'
     });
     topRuler.add(text);
   }
   
 }
+// Adds the number for the left ruler
+for (var i = 0; i<= gridYLines;  i+=4 ) {
+  //It checks if its even, when is not it does not write anything
+  if(i % 2 == 0)
+  {
+    var ltext = new fabric.Text((i/2).toString(), {
+      left:  10,
+      top: (i * gridsize)-4,
+      fontSize: 10,
+      fill: '#B2B6BD'
+    });
+    leftRuler.add(ltext);
+  }
+  
+}
+
+
 
 
 /***************************   BOX AND BAG ARRAYS   ***********************************/
@@ -623,7 +614,10 @@ function rotate0() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect1G1 = new fabric.Rect({ 
@@ -635,7 +629,10 @@ function rotate0() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect1G2 = new fabric.Rect({ 
@@ -647,7 +644,10 @@ function rotate0() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+   cornerColor: 'green',
+   cornerSize: 6
     
   });
   var rect1G3 = new fabric.Rect({ 
@@ -737,7 +737,10 @@ function rotate180() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect3G1 = new fabric.Rect({ 
@@ -773,7 +776,10 @@ function rotate180() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect3 = new fabric.Group([rect3G, rect3G1, rect3G2, rect3G3]);
@@ -794,7 +800,10 @@ function rotate270() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect4G1 = new fabric.Rect({ 
@@ -806,7 +815,10 @@ function rotate270() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect4G2 = new fabric.Rect({ 
@@ -856,7 +868,10 @@ function rotate0A() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect1G1 = new fabric.Rect({ 
@@ -925,7 +940,10 @@ function rotate90A() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect2G1 = new fabric.Rect({ 
@@ -937,7 +955,10 @@ function rotate90A() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect2G2 = new fabric.Rect({ 
@@ -949,7 +970,13 @@ function rotate90A() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect2G3 = new fabric.Rect({ 
@@ -961,7 +988,10 @@ function rotate90A() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect2G4 = new fabric.Rect({ 
@@ -973,7 +1003,10 @@ function rotate90A() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect2 = new fabric.Group([rect2G, rect2G1, rect2G2, rect2G3,rect2G4]);
