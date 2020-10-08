@@ -659,10 +659,17 @@ function rotate0() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
-  var rect1 = new fabric.Group([rect1G, rect1G1, rect1G2, rect1G3]);
+  //Example of higlight bags in red to notice which bag is which
+  var rect1 = new fabric.Group([rect1G, rect1G1, rect1G2, rect1G3],{
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6});
   canvas.add(rect1);
   canvas.renderAll();
   rotPos = 1;
@@ -680,7 +687,10 @@ function rotate90() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect2G1 = new fabric.Rect({ 
@@ -692,7 +702,10 @@ function rotate90() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect2G2 = new fabric.Rect({ 
@@ -704,7 +717,10 @@ function rotate90() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect2G3 = new fabric.Rect({ 
@@ -716,7 +732,10 @@ function rotate90() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect2 = new fabric.Group([rect2G, rect2G1, rect2G2, rect2G3]);
@@ -752,7 +771,10 @@ function rotate180() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect3G2 = new fabric.Rect({ 
@@ -764,7 +786,10 @@ function rotate180() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect3G3 = new fabric.Rect({ 
@@ -830,7 +855,10 @@ function rotate270() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect4G3 = new fabric.Rect({ 
@@ -842,7 +870,10 @@ function rotate270() {
     stroke:  '#292929',
     originX: 'left', 
     originY: 'top',
-    centeredRotation: true
+    centeredRotation: true,
+    borderColor: 'red',
+    cornerColor: 'green',
+    cornerSize: 6
     
   });
   var rect4 = new fabric.Group([rect4G, rect4G1, rect4G2, rect4G3]);
@@ -2176,7 +2207,10 @@ var LoadFunction = function(){
               stroke:  '#292929',
               originX: 'left', 
               originY: 'top',
-              centeredRotation: true
+              centeredRotation: true,
+              borderColor: 'red',
+              cornerColor: 'green',
+              cornerSize: 6
             });
             var rect1G1 = new fabric.Rect({ 
               left: rect1G.left+rectWidth1-rectGussWid1, 
@@ -2187,7 +2221,10 @@ var LoadFunction = function(){
               stroke:  '#292929',
               originX: 'left', 
               originY: 'top',
-              centeredRotation: true
+              centeredRotation: true,
+              borderColor: 'red',
+              cornerColor: 'green',
+              cornerSize: 6
             });
             var rect1G2 = new fabric.Rect({ 
               left: BagLeft1[BagCycle], 
@@ -2198,7 +2235,10 @@ var LoadFunction = function(){
               stroke:  '#292929',
               originX: 'left', 
               originY: 'top',
-              centeredRotation: true
+              centeredRotation: true,
+              borderColor: 'red',
+              cornerColor: 'green',
+              cornerSize: 6
             });
             var rect1G3 = new fabric.Rect({ 
               left: BagLeft1[BagCycle], 
@@ -2209,7 +2249,10 @@ var LoadFunction = function(){
               stroke:  '#292929',
               originX: 'left', 
               originY: 'top',
-              centeredRotation: true
+              centeredRotation: true,
+              borderColor: 'red',
+              cornerColor: 'green',
+              cornerSize: 6
             });
             var rect1 = new fabric.Group([rect1G, rect1G1, rect1G2, rect1G3]);
             canvas.add(rect1);
@@ -2224,7 +2267,10 @@ var LoadFunction = function(){
               stroke:  '#292929',
               originX: 'left', 
               originY: 'top',
-              centeredRotation: true
+              centeredRotation: true,
+              borderColor: 'red',
+              cornerColor: 'green',
+              cornerSize: 6
               
             });
             var rect2G1 = new fabric.Rect({ 
