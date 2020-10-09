@@ -34,8 +34,32 @@ class BagPattern_Class(db.Model):
     BagLeftArray = db.Column(db.String(255))
     BagTopArray = db.Column(db.String(255))
     trackBagArray = db.Column(db.String(255))
+    BagDimmension_name = db.Column(db.String(50))
+    BoxDimmension_name = db.Column(db.String(50))
+    BagType = db.Column(db.String(50))
     date_created = db.Column(db.DateTime, default = datetime.now )
 
+class BagDimmension_Class(db.Model):
+    id= db.Column(db.Integer, primary_key=True)
+    BagName = db.Column(db.String(50))
+    BagLength = db.Column(db.Float)
+    BagWidth = db.Column(db.Float)
+    BagGusset = db.Column(db.Float)
+
+class BoxDimmension_Class(db.Model):
+    id= db.Column(db.Integer, primary_key=True)
+    BoxName = db.Column(db.String(50))
+    BoxLength = db.Column(db.Float)
+    BoxWidth = db.Column(db.Float)
+  
+
+
+class BagForm(FlaskForm):
+    NameOfBagForm = SelectField('bag_dimmension__class', choices=[])
+    
+class BoxForm(FlaskForm):
+    NameOfBoxForm = SelectField('box_dimmension__class', choices=[])
+    
 class Form(FlaskForm):
     NameOfBagPatterns = SelectField('bag_pattern__class', choices=[])
 
@@ -46,8 +70,12 @@ def index():
     #form = QuerySelectField()
     #return render_template('index.html',form=form)
     form = Form()
+    bagform = BagForm()
+    boxform = BoxForm()
+    bagform.NameOfBagForm.choices = [(NameOfBagForm.id, NameOfBagForm.BagName)for NameOfBagForm in BagDimmension_Class.query.all() ]
+    boxform.NameOfBoxForm.choices = [(NameOfBoxForm.id, NameOfBoxForm.BoxName)for NameOfBoxForm in BoxDimmension_Class.query.all() ]
     form.NameOfBagPatterns.choices = [(NameOfBagPatterns.id, NameOfBagPatterns.BagPattern_name)for NameOfBagPatterns in BagPattern_Class.query.all() ]
-    return render_template('index.html', form=form)
+    return render_template('index.html', form=form, bagform=bagform ,boxform=boxform )
     #print("inside index")
 
 @app.route('/formProcess', methods=['POST'])

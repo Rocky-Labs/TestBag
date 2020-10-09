@@ -183,7 +183,7 @@ for (var i = 0; i<= gridYLines;  i+=4 ) {
     });
     leftRuler.add(ltext);
   }
-  
+  document.getElementById("BoxForm").style.display ='none';
 }
 
 
