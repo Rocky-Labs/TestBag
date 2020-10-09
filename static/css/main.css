@@ -201,11 +201,14 @@ label {
 }
 
 .header {
-  display: inline;
-  margin-left: 5%;
-  margin-top: 5px;
-  margin-bottom: 5px;
-
+  display: initial;
+ 
+}
+.webname{
+  display: initial;
+}
+#betaTitle{
+  display: inherit;
 }
 
 #logo {
@@ -779,6 +782,8 @@ label 				 {
   left: 76%;
   width: 60px;
 }
-#left-ruler {
-  display: inline;
-}
+/*
+#canvasWithRulers{
+  position: relative;
+  top: -15%;
+}*/
