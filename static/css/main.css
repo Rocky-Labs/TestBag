@@ -200,24 +200,12 @@ label {
   font-family: 'Roboto', sans-serif;
 }
 
-.header {
-  display: initial;
- 
-}
-.webname{
-  display: initial;
-}
-#betaTitle{
-  display: inherit;
-}
+
 
 #logo {
   display: inline;
   float: left;
-  /*
-  width: 100px;
-  height: 100px;
-  background: #555;*/
+  
 }
 #Layer {
   position: absolute;
@@ -365,7 +353,7 @@ label {
   /*width: 50px;
   height: 25px;*/
   
-  position: absolute;
+  /*position: absolute;*/
   background-image: url(/static/img/restart.png);
   background-color: #333333; /* make the button transparent */
   background-repeat: no-repeat;  /* make the background image appear only once */
@@ -396,7 +384,7 @@ label {
   /*width: 50px;
   height: 25px;*/
   
-  position: absolute;
+  /*position: absolute;*/
   background-image: url(/static/img/open.png);
   background-color: #333333; /* make the button transparent */
   background-repeat: no-repeat;  /* make the background image appear only once */
@@ -425,7 +413,7 @@ label {
 }
 
 #save {
-  position: absolute;
+  /*position: absolute;*/
  background-image: url(/static/img/save_white.png);
  background-color: #333333; /* make the button transparent */
  background-repeat: no-repeat;  /* make the background image appear only once */
@@ -466,24 +454,37 @@ input::-webkit-inner-spin-button {
 input[type=number] {
   -moz-appearance: textfield;
 }
+
  .group {
    position: relative;
    display: inline-block;
+   /*
    margin-top: 23px;
-   margin-bottom: 5px;
-   width: 130px;
+   margin-bottom: 5px;*/
+   width: 100px;
    
    
  }
+
+ #BoxForm{
+   display: none;
+ }
+
  #nameInput {
   width: 130px;
+ }
+ #SetDimmensions {
+   margin: 10px 10px 10px 10px;
+ }
+ #sor {
+  margin: 10px 10px 10px 10px;
  }
  
  .test, .form-control{
    font-size: 18px;
-  padding: 5px 5px 5px 5px;
+  /*padding: 5px 5px 5px 5px;
   margin-right: 5px;
-  /*margin-bottom: 10px;*/
+  margin-bottom: 10px;*/
   
   display: inline;
    background-color:  #212121;
@@ -685,15 +686,17 @@ label 				 {
   -ms-transform:rotate(90deg);  
   transform:rotate(90deg);  
 }
+
 #saveForm {
   display: none;
+  /*
   position: absolute;
   top: 30px;
-  left: 5px;
+  left: 5px;*/
 }
 #lform {
   display: none;
-  position: absolute;
+  /*position: absolute;*/
   top: 30px;
   left: 190px;
 }

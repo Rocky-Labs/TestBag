@@ -37,21 +37,22 @@
     </div>-->
     
 <!-- Grid DIV -->
-<div class="header">
-    <img id = "logo" src="../static/img/pattern.png" alt="logo" />
-    
-  </div>
-  <div class ="webName">
-    <h1 id="matrixTitle">Matrix</h1>
-    <h4 id="betaTitle">0.76 Beta</h4>
 
-  </div>
+<div class="headerLogo">
+        <img id = "logo" src="../static/img/pattern.png" alt="logo" />
+
+        <h1 id="matrixTitle">Matrix</h1>
+        <h4 id="betaTitle">0.76 Beta</h4>
+</div>
+    
+   
 
 
 
 <div class ="row">
+    
     <div class="col">
-       <!--<h2 id = "LoadTitle" class = "hidden">Saved Pattern</h2>-->
+       <!-- <h2 id = "LoadTitle" class = "hidden">Saved Pattern</h2> -->
        <div id ="SetDimmensions" class="stDimmensions">
         <form id="Dimform" method="POST">
             <div class = "group">
@@ -77,6 +78,7 @@
         </form>
        </div> 
        
+     <!-- Beginning column of the Box and Bag -->
        <div id ="BoxForm">
             <form id="fm"></form>
                 <h2 class="subTitle">Dimensions [in]</h2>
@@ -128,15 +130,77 @@
             </div>  
                     <input class ="btn btn-primary" id ="confirm" type="submit" value="Submit">
                   
-               ````
+               
                 
             </form>
         </div>
-     
+     <!-- End column of the Box and Bag -->
+
+     <!-- Beginning Save box and bags-->
+     <div id ="BoxForm">
+        <form id="fm"></form>
+            <h2 class="subTitle">Dimensions [in]</h2>
+            <div class="group">
+
+                <input class="test" id = "BoxWidth" type="number" step="0.5" min="35" max="50" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Box Length </label>
+
+            
+            </div>
+            <div class="group">
+
+                <input class="test" id ="BoxLength" type="number" step="0.5" min="35" max="50" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Box Width </label>
+            </div>
+     </div>
+     <div class="BagForm">
+            <div class="group">
+
+                <input class="test" id = "BagLength" type="number" step="0.5" min="20" max="50" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Bag Length </label>
+            </div>
+            <div class="group">
+
+                <input class="test" id = "BagWidth" type="number" step="0.5" min="10" max="20" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Bag Width </label>
+            </div>
+            <div class="group">
+
+                <input class="test" id = "Gusset" type="number" step="0.5" min="0.5" max="8" required>
+                <span class="highlight"></span>
+                <span class="bar"></span>
+                <label>Gusset </label>
+            </div>
+            
+            <div class= "group">
+                
+                <select class = "test" id ="BagSelection" name="BagSelection">
+                    
+                    <option value="0">Pinch Bag</option>
+                    <option value="1">Sewing Bag</option>
+                    </select>
+        </div>  
+                <input class ="btn btn-primary" id ="confirm" type="submit" value="Submit">
+              
+           
+            
+        </form>
+    </div>
+<!-- End Save box and bags-->
 
     </div>
     
+    <!-- The Begining Save , Open and Load Section -->
 <div class="col">
+<div class = "sor">
     <button id= "load" class="load" src="../static/img/open.png" value="load">Open</button>
     <button id="save" src="../static/img/save.png" value="Save">Save</button>
     <button id="restart" value="Save" onclick="window.location.reload()" >Restart</button>
@@ -174,11 +238,12 @@
      <input class ="btn btn-primary" id ="lConfirm" type="submit" value="Submit">
     </form>
 <!-- ********** NEW load form           ******* -->
-
-   <div id= "successAlert2"><h1>success</h1></div>-
+    </div>
+   <div id= "successAlert2"><h1>success</h1></div>
     <div id= "errorAlert2"><h1>Pattern does not exist!!</h1></div>
+    
 </div>
-
+  <!-- The end of  Save , Open and Load Section -->
         
     <div id="successAlert" class="alert alert-success" role="alert" style="display:none;"></div>
     <div id="errorAlert" class="alert alert-danger" role="alert" style="display:none;"></div>
