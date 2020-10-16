@@ -111,7 +111,7 @@ z-index: 999999;
   background-color: #212121;
   -webkit-box-pack: center;
       -ms-flex-pack: center;
-          justify-content: center;
+          justify-content: left;
   -webkit-box-align: center;
       -ms-flex-align: center;
           align-items: center;
@@ -458,8 +458,8 @@ input[type=number] {
  .group {
    position: relative;
    display: inline-block;
-   /*
-   margin-top: 23px;
+   margin-left: 15px;
+   /*margin-top: 23px;
    margin-bottom: 5px;*/
    width: 100px;
    
@@ -469,15 +469,52 @@ input[type=number] {
  #BoxForm{
    display: none;
  }
+ #lConfirm {
+   margin-left: 25px;
+}
 
  #nameInput {
   width: 130px;
  }
  #SetDimmensions {
+   position: relative;
+
    margin: 10px 10px 10px 10px;
+   display: inline;
+ }
+ #SetCustomDimmension{
+   display: none;
+ }
+ #customDimmensionForm{
+   margin: 15px 15px 15px 15px;
+ }
+ #BForm{
+   display: none;
+ }
+ #OpenBag {
+   position: absolute;
+  display: inline-block;
+  right: 10px;
+  
+  
+ }
+ #OpenBox {
+  position: absolute;
+  display: inline-block;
+  right: 200px;
+ }
+ #AddBag{
+  
+  display: none;
+ }
+ #saveBag {
+   display: inline-block;
  }
  #sor {
   margin: 10px 10px 10px 10px;
+ }
+ #bagSave {
+   margin-left: 25px;
  }
  
  .test, .form-control{

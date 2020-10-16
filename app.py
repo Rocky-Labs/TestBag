@@ -78,6 +78,39 @@ def index():
     return render_template('index.html', form=form, bagform=bagform ,boxform=boxform )
     #print("inside index")
 
+@app.route('/formbagdimmension', methods=['POST'])
+def formbagdimmension():
+    Bag_Name = request.form['bagName']
+    Bag_Length = request.form['bagLength']
+    Bag_Width = request.form['bagWidth']
+    Bag_Gusset = request.form['bagGusset']
+    
+    if Bag_Name:
+     
+        #saves it on the database as a string
+        bagSaved = BagDimmension_Class(BagName = Bag_Name, BagLength=Bag_Length, BagWidth=Bag_Width, BagGusset =Bag_Gusset)
+        db.session.add(bagSaved)
+        db.session.commit()
+        return jsonify({'success':'Success'})
+    
+    return jsonify({'error': 'Missing Data'})
+
+@app.route('/formboxdimmension', methods=['POST'])
+def formboxdimmension():
+    Box_Name = request.form['boxName']
+    Box_Length = request.form['boxLength']
+    Box_Width = request.form['boxWidth']
+    
+    if Box_Name:
+     
+        #saves it on the database as a string
+        boxSaved = BoxDimmension_Class(BoxName = Box_Name, BoxLength=Box_Length, BoxWidth=Box_Width)
+        db.session.add(boxSaved)
+        db.session.commit()
+        return jsonify({'success':'Success'})
+    
+    return jsonify({'error': 'Missing Data'})
+
 @app.route('/formProcess', methods=['POST'])
 def formProcess():
     #converts it into a list

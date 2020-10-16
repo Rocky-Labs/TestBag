@@ -52,22 +52,29 @@ var BagTop = [];
 
 
 //Load Dimensions
-document.getElementById('BoxWidth').value = sessionStorage.getItem('BoxWidth');
-document.getElementById('BoxLength').value = sessionStorage.getItem('BoxLength');
-document.getElementById('BagWidth').value = sessionStorage.getItem('BagWidth');
-document.getElementById('BagLength').value = sessionStorage.getItem('BagLength');
-document.getElementById('Gusset').value = sessionStorage.getItem('Gusset');
-document.getElementById('BagSelection').value = sessionStorage.getItem('BagSelection');
+document.getElementById('BoxWidth2').value = sessionStorage.getItem('BoxWidth2');
+document.getElementById('BoxLength2').value = sessionStorage.getItem('BoxLength2');
+document.getElementById('BagWidth2').value = sessionStorage.getItem('BagWidth2');
+document.getElementById('BagLength2').value = sessionStorage.getItem('BagLength2');
+document.getElementById('Gusset2').value = sessionStorage.getItem('Gusset2');
+document.getElementById('BagSelection2').value = sessionStorage.getItem('BagSelection2');
 
+$('#Opencustom').click(function(){
+  document.getElementById("SetCustomDimmension").style.display ='inline';
+  document.getElementById("OpenBag").style.display ='none';
+  document.getElementById("OpenBox").style.display ='none';
+  document.getElementById("Opencustom").style.display ='none';
+  document.getElementById("SetDimmensions").style.display ='none';
+});
 /******************** SET DIMENSIONS ************************/
 document.getElementById("confirm").onclick = function(e){
   //Store Dimensions
-  sessionStorage.setItem('BoxWidth',document.getElementById("BoxWidth").value);
-  sessionStorage.setItem('BoxLength',document.getElementById("BoxLength").value);
-  sessionStorage.setItem('BagWidth',document.getElementById("BagWidth").value);
-  sessionStorage.setItem('BagLength',document.getElementById("BagLength").value);
-  sessionStorage.setItem('Gusset',document.getElementById("Gusset").value);
-  sessionStorage.setItem('BagSelection',document.getElementById('BagSelection').value);
+  sessionStorage.setItem('BoxWidth2',document.getElementById("BoxWidth2").value);
+  sessionStorage.setItem('BoxLength2',document.getElementById("BoxLength2").value);
+  sessionStorage.setItem('BagWidth2',document.getElementById("BagWidth2").value);
+  sessionStorage.setItem('BagLength2',document.getElementById("BagLength2").value);
+  sessionStorage.setItem('Gusset2',document.getElementById("Gusset2").value);
+  sessionStorage.setItem('BagSelection2',document.getElementById('BagSelection2').value);
   e.preventDefault();
   /*if((document.getElementById("BoxLength").value)<35 || (document.getElementById("BoxLength").value)>50 ||
   (document.getElementById("BoxWidth").value)<35 || (document.getElementById("BoxWidth").value)>50){
@@ -79,9 +86,9 @@ document.getElementById("confirm").onclick = function(e){
     alert("Bag Dimensions not within range");
   }
   else{*/
-  bagselect = document.getElementById("BagSelection").value;
-  gridXLines = parseFloat(document.getElementById("BoxLength").value,10)*2;
-  gridYLines = parseFloat(document.getElementById("BoxWidth").value,10)*2;
+  bagselect = document.getElementById("BagSelection2").value;
+  gridXLines = parseFloat(document.getElementById("BoxLength2").value,10)*2;
+  gridYLines = parseFloat(document.getElementById("BoxWidth2").value,10)*2;
   /*gridXLines = 25;
   gridYLines = 25;
   rectWidth = 150;
@@ -112,9 +119,9 @@ document.getElementById("confirm").onclick = function(e){
   {
     gridsize = 5;
   }
-  rectWidth = parseFloat(document.getElementById("BagWidth").value,10)*gridsize*2;
-  rectHeight = parseFloat(document.getElementById("BagLength").value,10)*gridsize*2;
-  rectGussWid = parseFloat(document.getElementById("Gusset").value,10)*gridsize*2;
+  rectWidth = parseFloat(document.getElementById("BagWidth2").value,10)*gridsize*2;
+  rectHeight = parseFloat(document.getElementById("BagLength2").value,10)*gridsize*2;
+  rectGussWid = parseFloat(document.getElementById("Gusset2").value,10)*gridsize*2;
   selectObject = gridXLines + gridYLines + 2;
   currentObject = selectObject;
 //Canvas Size
@@ -510,7 +517,8 @@ for(var a1 = 0; a1<BoxArrayCol; a1++){
     LayerArray[a1].push(0);
   }
 }
-if(document.getElementById("BagSelection").value == 0){
+// First bag that appears on the screen
+if(document.getElementById("BagSelection2").value == 0){
   rotate0();
 }
 else{
@@ -526,7 +534,8 @@ else{
 
 function RectArray()
 {
-  if(document.getElementById("BagSelection").value == 0){
+  // defining the arrays for the 4 different positions
+  if(document.getElementById("BagSelection2").value == 0){
     if(rotPos == 1){
       RectPos = RectPos1;
     }
@@ -571,7 +580,7 @@ canvas.on('object:moving', function(options) {
 
 /******************************  ROTATE BOXES  ****************************************/
 document.getElementById("flip0").onclick = function() {
-  if(document.getElementById("BagSelection").value == 0){
+  if(document.getElementById("BagSelection2").value == 0){
     rotate0();
   }
   else{
@@ -579,7 +588,7 @@ document.getElementById("flip0").onclick = function() {
   }
 };
 document.getElementById("flip90").onclick = function() {
-  if(document.getElementById("BagSelection").value == 0){
+  if(document.getElementById("BagSelection2").value == 0){
     rotate90();
   }
   else{
@@ -587,7 +596,7 @@ document.getElementById("flip90").onclick = function() {
   }
 };
 document.getElementById("flip180").onclick = function() {
-  if(document.getElementById("BagSelection").value == 0){
+  if(document.getElementById("BagSelection2").value == 0){
     rotate180();
   }
   else{
@@ -595,7 +604,7 @@ document.getElementById("flip180").onclick = function() {
   }
 };
 document.getElementById("flip270").onclick = function() {
-  if(document.getElementById("BagSelection").value == 0){
+  if(document.getElementById("BagSelection2").value == 0){
     rotate270();
   }
   else{
@@ -1321,7 +1330,7 @@ function paste(){
     }
     else{
       LayerComplete = 0;
-      if(document.getElementById("BagSelection").value == 0){
+      if(document.getElementById("BagSelection2").value == 0){
         if((rotPos == 1 || rotPos == 3) && copiedObject.left >= 0 && copiedObject.top >= 0 && copiedObject.left <= (gridXLines*gridsize-rectWidth) 
         && copiedObject.top <= (gridYLines*gridsize-rectHeight)){
           correctPlacement = 1;
@@ -1520,7 +1529,7 @@ function calcArray2(leftCoord, topCoord){
       temptrackBag[a1].push(0);
     } 
   }
-  if(document.getElementById("BagSelection").value == 0){
+  if(document.getElementById("BagSelection2").value == 0){
     if(prevRect[currentObject-(gridXLines+gridYLines+2)]==1){
       RectPosX = RectPos1;
     }
@@ -1585,7 +1594,7 @@ function delArray(delCoordl, delCoordt){
   var initi1 = i1;
   var initj1 = j1;
   var PrevRectPos = [[],[]];
-  if(document.getElementById("BagSelection").value == 0){
+  if(document.getElementById("BagSelection2").value == 0){
     if(prevRect[currentObject-(gridXLines+gridYLines+2)]==1){
       PrevRectPos = RectPos1;
   
@@ -1796,7 +1805,7 @@ function PreviousBags1() {
   document.getElementById("moveLeft").style.display ='inline-block';
   document.getElementById("moveUp").style.display ='inline-block';
   document.getElementById("moveUp").style.width  = '560px';
-  BoxLength_temp =( parseFloat(document.getElementById("BoxLength").value,10) +6) *10;
+  BoxLength_temp =( parseFloat(document.getElementById("BoxLength2").value,10) +6) *10;
   console.log(BoxLength_temp);
   document.getElementById("moveLeft").style.width  = BoxLength_temp.toString() + 'px';
   }
@@ -2112,6 +2121,143 @@ else{
 }
 }
 
+$('#OpenBag').click(function(){
+  document.getElementById("BForm").style.display ='inline';
+  document.getElementById("OpenBag").style.display ='none';
+  document.getElementById("OpenBox").style.display ='none';
+  document.getElementById("Opencustom").style.display ='none';
+  document.getElementById("SetDimmensions").style.display ='none';
+});
+
+var BagSaveDimm = function(){
+  var bsDimm = $('#BagSaveDim');
+
+  bsDimm.click(function(e) {
+    e.preventDefault();
+
+    var bagnm = document.getElementById("BagName").value;
+    console.log("bag name : "+bagnm)
+    var baglgth = document.getElementById("BagLength").value;
+    var bagwdth = document.getElementById("BagWidth").value;
+    var baggusset = document.getElementById("Gusset").value;
+
+    $.ajax({
+      data: {
+        bagName: bagnm,
+        bagLength: baglgth,
+        bagWidth: bagwdth,
+        bagGusset: baggusset
+      },
+      type: 'POST',
+      url: '/formbagdimmension'
+    }).done(function(data){
+      if(data.error){
+        $('#errorAlert2').text(data.bagName).show();
+        $('#successAlert2').text(data.bagName).hide();
+      }
+      else
+      {
+        $('#errorAlert2').text(data.bagName).hide();
+        $('#successAlert2').text(data.bagName).show();
+        document.getElementById("BForm").style.display ='none';
+        document.getElementById("OpenBag").style.display ='inline';
+        document.getElementById("OpenBox").style.display ='inline';
+        document.getElementById("Opencustom").style.display ='inline';
+        document.getElementById("SetDimmensions").style.display ='inline';
+      }
+    })
+      });
+    
+    
+    
+    };
+BagSaveDimm ();
+
+$('#OpenBox').click(function(){
+  document.getElementById("BoxForm").style.display ='inline';
+  document.getElementById("OpenBag").style.display ='none';
+  document.getElementById("OpenBox").style.display ='none';
+  document.getElementById("Opencustom").style.display ='none';
+  document.getElementById("SetDimmensions").style.display ='none';
+});
+
+var BoxSaveDimm = function(){
+  var boxDimm = $('#BoxSaveDim');
+
+  boxDimm.click(function(e) {
+    e.preventDefault();
+
+    var boxnm = document.getElementById("BoxName").value;
+    var boxlgth = document.getElementById("BoxLength").value;
+    var boxwdth = document.getElementById("BoxWidth").value;
+    
+
+    $.ajax({
+      data: {
+        boxName: boxnm,
+        boxLength: boxlgth,
+        boxWidth: boxwdth
+      },
+      type: 'POST',
+      url: '/formboxdimmension'
+    }).done(function(data){
+      if(data.error){
+        $('#errorAlert2').text(data.boxName).show();
+        $('#successAlert2').text(data.boxName).hide();
+      }
+      else
+      {
+        $('#errorAlert2').text(data.boxName).hide();
+        $('#successAlert2').text(data.boxName).show();
+        document.getElementById("BForm").style.display ='none';
+        document.getElementById("OpenBag").style.display ='inline';
+        document.getElementById("OpenBox").style.display ='inline';
+        document.getElementById("Opencustom").style.display ='inline';
+        document.getElementById("SetDimmensions").style.display ='inline';
+      }
+    })
+      });
+    
+    
+    
+    };
+BoxSaveDimm ();
+
+// ---- CONTINUE TOMORROW: Saved values form - it will display the Grid and bags based on the save values
+var LoadSavedValues = function(){
+
+  var saveSubmitButton = $('#bagSave');
+
+  saveSubmitButton.click(function(e) {
+    e.preventDefault();
+
+    var SaveBagName = document.getElementById("NameOfBagForm").value;
+    var SaveBoxName = document.getElementById("NameOfBoxForm").value;
+
+    $.ajax({
+      data: {
+      bagName: SaveBagName,
+      boxName: SaveBoxName
+      },
+      type: 'POST',
+      url: '/SavedProcess'
+    })
+    .done(function(data){
+      if(data.error){
+        $('#errorAlert2').text(data.bagName).show();
+        $('#successAlert2').text(data.bagName).hide();
+      }
+      else
+      {
+        $('#errorAlert2').text(data.bagName).hide();
+        $('#successAlert2').text(data.bagName).show();
+      }
+    })
+  });
+};
+LoadSavedValues();
+// ---- CONTINUE TOMORROW: Saved values form - it will display the Grid and bags based on the save values
+
 
 /*   Beginning of load function */
 $('#load').click(function() {
@@ -2130,7 +2276,7 @@ var LoadFunction = function(){
     e.preventDefault();
     var arr = BoxArray;
     var nameTemp = document.getElementById("NameOfBagPatterns").value;
-    console.log("nameTemp: "+ nameTemp);
+    //console.log("nameTemp: "+ nameTemp);
    $.ajax({
     data: {
       bagPattern_name: nameTemp
