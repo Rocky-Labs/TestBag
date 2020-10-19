@@ -43,11 +43,11 @@ z-index: 999999;
   top:.1%;
   right: 3%;
 }
-/*
-#c{
-  position: absolute;
-  top: 65%;
-}*/
+
+table {
+ margin-left: 2%;
+ margin-right: auto;
+}
 .arrangement {
  background-color: transparent; /* make the button transparent */
  background-repeat: no-repeat; 
@@ -125,6 +125,9 @@ z-index: 999999;
   border: 1px solid #ddd;
   text-align: center;
 }
+table{
+  justify-content: right;
+}
 
 body {
   background-color: #141414;
@@ -133,7 +136,8 @@ body {
 
 #c {
   
-  background-color: #212121;
+  background-color  : #212121;
+  
 }
 .rotate0{
   width: 45px;
@@ -204,7 +208,7 @@ label {
 
 #logo {
   display: inline;
-  float: left;
+  
   
 }
 #Layer {
@@ -702,22 +706,23 @@ label 				 {
   padding: 30px;
 }
 #moveLeft {
-  display: none;
+ display: none;
   position: absolute;
   -webkit-appearance: none;
-  bottom: 8%;
-  left: 3%;
+  bottom: 5%;
+  left: 9%;
   width: 526px;
   height: 6px;
 }
-.moveUp {
+#moveUp {
   display: none;
   position: absolute;
-  bottom: 51%;
+  bottom: 40%;
   left: -241px;
   -webkit-appearance: none;
   width: 527px;
   height: 5px;
+  z-index: 1000;
   vertical-align: top;
   -webkit-transform:rotate(90deg);
   -moz-transform:rotate(90deg);

@@ -64,7 +64,9 @@ $('#Opencustom').click(function(){
   document.getElementById("OpenBag").style.display ='none';
   document.getElementById("OpenBox").style.display ='none';
   document.getElementById("Opencustom").style.display ='none';
-  document.getElementById("SetDimmensions").style.display ='none';
+  document.getElementById("bagS1").style.display ='none';
+  document.getElementById("bagS0").style.display = 'none';
+  document.getElementById("bagSave").style.display = 'none';
  
 });
 /******************** SET DIMENSIONS - BEGINNING  ************************/
@@ -154,6 +156,10 @@ var LoadSavedValues = function(){
         console.log("before the set dimmension funtion");
         setDimmension_Function();
         console.log("after the set dimmension funtion");
+        document.getElementById("SetDimmensions").style.display ='none';
+        document.getElementById("OpenBag").style.display ='none';
+        document.getElementById("OpenBox").style.display ='none';
+        document.getElementById("Opencustom").style.display ='none';
       }
     })
   });
@@ -218,6 +224,8 @@ document.getElementById("confirm").onclick = function(e){
   leftRuler.setHeight(canvasHeight);
   topRuler.setBackgroundColor('#1f1f1f');
   leftRuler.setBackgroundColor('#1f1f1f');
+  document.getElementById("SetCustomDimmension").style.display ='none';
+  document.getElementById("bagS2").style.display ='none';
 
   setDimmension_Function();
 
