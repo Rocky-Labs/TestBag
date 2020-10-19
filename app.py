@@ -78,6 +78,19 @@ def index():
     return render_template('index.html', form=form, bagform=bagform ,boxform=boxform )
     #print("inside index")
 
+@app.route('/SavedProcess', methods=['POST'])
+def SavedProcess():
+    SavedBag_Name = request.form['bagName']
+    SavedBox_Name = request.form['boxName']
+
+    Bag_result = BagDimmension_Class.query.filter_by(id = SavedBag_Name).first()
+    Box_result = BoxDimmension_Class.query.filter_by(id = SavedBox_Name).first()
+    print(Box_result.id)
+    print(Box_result.BoxLength)
+    if Bag_result:
+        return jsonify({'boxName': Box_result.id,'save_box_length': Box_result.BoxLength, 'save_box_width' : Box_result.BoxWidth, 'bagName': Bag_result.id, 'save_bag_length': Bag_result.BagLength, 'save_bag_width': Bag_result.BagWidth, 'save_gusset':Bag_result.BagGusset})
+    return jsonify({'error': 'Missing Data'})
+
 @app.route('/formbagdimmension', methods=['POST'])
 def formbagdimmension():
     Bag_Name = request.form['bagName']

@@ -65,8 +65,101 @@ $('#Opencustom').click(function(){
   document.getElementById("OpenBox").style.display ='none';
   document.getElementById("Opencustom").style.display ='none';
   document.getElementById("SetDimmensions").style.display ='none';
+ 
 });
-/******************** SET DIMENSIONS ************************/
+/******************** SET DIMENSIONS - BEGINNING  ************************/
+var LoadSavedValues = function(){
+
+  var saveSubmitButton = $('#bagSave');
+
+  saveSubmitButton.click(function(e) {
+    e.preventDefault();
+
+    var SaveBagName = document.getElementById("NameOfBagForm").value;
+    var SaveBoxName = document.getElementById("NameOfBoxForm").value;
+    bagselect = document.getElementById("BagSelection2").value;
+    var SaveBoxLength = 0.0;
+    var SaveBoxWidth = 0.0;
+    var SaveBagLength = 0.0;
+    var SaveBagWidth =0.0;
+    var SaveGusset =0.0;
+
+    console.log("before ajax bag name "+SaveBagName)
+    $.ajax({
+      data: {
+      bagName: SaveBagName,
+      boxName: SaveBoxName,
+      save_box_length: SaveBoxLength,
+      save_box_width:  SaveBoxWidth,
+      save_bag_length:  SaveBagLength,
+      save_bag_width:  SaveBagWidth,
+      save_gusset:  SaveGusset
+      },
+      type: 'POST',
+      url: '/SavedProcess'
+    })
+    .done(function(data){
+      if(data.error){
+        $('#errorAlert2').text(data.bagName).show();
+        $('#successAlert2').text(data.bagName).hide();
+      }
+      else
+      {
+        $('#errorAlert2').text(data.bagName).hide();
+        $('#successAlert2').text(data.bagName).show();
+
+        console.log("Box length "+data.bagName);
+        gridXLines = parseFloat(data.save_box_length,10)*2;
+        gridYLines = parseFloat(data.save_box_width,10)*2;
+    
+        if((gridXLines < 76) && (gridYLines < 76))
+        {
+          gridsize = 7.5;
+        }
+        else if((gridXLines < 80) && (gridYLines < 80))
+        {
+          gridsize = 7;
+        }
+        else if((gridXLines < 87) && (gridYLines < 87))
+        {
+          gridsize = 6.5;
+        }
+        else if((gridXLines < 94) && (gridYLines < 94))
+        {
+          gridsize = 6;
+        }
+        else if((gridXLines < 101) && (gridYLines < 101))
+        {
+          gridsize = 5.5;
+        }
+        else
+        {
+          gridsize = 5;
+        }
+        rectWidth = parseFloat(data.save_bag_width,10)*gridsize*2;
+        rectHeight = parseFloat(data.save_bag_length,10)*gridsize*2;
+        rectGussWid = parseFloat(data.save_gusset,10)*gridsize*2;
+        selectObject = gridXLines + gridYLines + 2;
+        currentObject = selectObject;
+      //Canvas Size
+        //var unitScale = 10;
+        var canvasWidth =  window.innerWidth * 0.60;
+        var canvasHeight = window.innerHeight * 0.63;
+        canvas.setWidth(canvasWidth);
+        canvas.setHeight(canvasHeight);
+        topRuler.setWidth(gridsize*gridYLines);
+        leftRuler.setHeight(canvasHeight);
+        topRuler.setBackgroundColor('#1f1f1f');
+        leftRuler.setBackgroundColor('#1f1f1f');
+        console.log("before the set dimmension funtion");
+        setDimmension_Function();
+        console.log("after the set dimmension funtion");
+      }
+    })
+  });
+};
+
+LoadSavedValues();
 document.getElementById("confirm").onclick = function(e){
   //Store Dimensions
   sessionStorage.setItem('BoxWidth2',document.getElementById("BoxWidth2").value);
@@ -76,16 +169,7 @@ document.getElementById("confirm").onclick = function(e){
   sessionStorage.setItem('Gusset2',document.getElementById("Gusset2").value);
   sessionStorage.setItem('BagSelection2',document.getElementById('BagSelection2').value);
   e.preventDefault();
-  /*if((document.getElementById("BoxLength").value)<35 || (document.getElementById("BoxLength").value)>50 ||
-  (document.getElementById("BoxWidth").value)<35 || (document.getElementById("BoxWidth").value)>50){
-    alert("Box Dimensions not within range");
-  }
-  else if((document.getElementById("BagLength").value)<20 || (document.getElementById("BagLength").value)>50 ||
-  (document.getElementById("BagWidth").value)<10 || (document.getElementById("BagWidth").value)>20 ||
-  (document.getElementById("Gusset").value)<1 || (document.getElementById("Gusset").value)>8){
-    alert("Bag Dimensions not within range");
-  }
-  else{*/
+
   bagselect = document.getElementById("BagSelection2").value;
   gridXLines = parseFloat(document.getElementById("BoxLength2").value,10)*2;
   gridYLines = parseFloat(document.getElementById("BoxWidth2").value,10)*2;
@@ -135,7 +219,82 @@ document.getElementById("confirm").onclick = function(e){
   topRuler.setBackgroundColor('#1f1f1f');
   leftRuler.setBackgroundColor('#1f1f1f');
 
+  setDimmension_Function();
+
+}
+
+var setDimmension_Function = function(){
+  //Store Dimensions
+  //sessionStorage.setItem('BoxWidth2',document.getElementById("BoxWidth2").value);
+  //sessionStorage.setItem('BoxLength2',document.getElementById("BoxLength2").value);
+  //sessionStorage.setItem('BagWidth2',document.getElementById("BagWidth2").value);
+  //sessionStorage.setItem('BagLength2',document.getElementById("BagLength2").value);
+  //sessionStorage.setItem('Gusset2',document.getElementById("Gusset2").value);
+  //sessionStorage.setItem('BagSelection2',document.getElementById('BagSelection2').value);
+// e.preventDefault();
+  /*if((document.getElementById("BoxLength").value)<35 || (document.getElementById("BoxLength").value)>50 ||
+  (document.getElementById("BoxWidth").value)<35 || (document.getElementById("BoxWidth").value)>50){
+    alert("Box Dimensions not within range");
+  }
+  else if((document.getElementById("BagLength").value)<20 || (document.getElementById("BagLength").value)>50 ||
+  (document.getElementById("BagWidth").value)<10 || (document.getElementById("BagWidth").value)>20 ||
+  (document.getElementById("Gusset").value)<1 || (document.getElementById("Gusset").value)>8){
+    alert("Bag Dimensions not within range");
+  }
+  else{*/
+  /*bagselect = document.getElementById("BagSelection2").value;
+  gridXLines = parseFloat(document.getElementById("BoxLength2").value,10)*2;
+  gridYLines = parseFloat(document.getElementById("BoxWidth2").value,10)*2;*/
+  /*gridXLines = 25;
+  gridYLines = 25;
+  rectWidth = 150;
+  rectHeight = 250;
+  rectGussWid = 25;
+  gridsize = 25;*/
+  /*if((gridXLines < 76) && (gridYLines < 76))
+  {
+    gridsize = 7.5;
+  }
+  else if((gridXLines < 80) && (gridYLines < 80))
+  {
+    gridsize = 7;
+  }
+  else if((gridXLines < 87) && (gridYLines < 87))
+  {
+    gridsize = 6.5;
+  }
+  else if((gridXLines < 94) && (gridYLines < 94))
+  {
+    gridsize = 6;
+  }
+  else if((gridXLines < 101) && (gridYLines < 101))
+  {
+    gridsize = 5.5;
+  }
+  else
+  {
+    gridsize = 5;
+  }
+  rectWidth = parseFloat(document.getElementById("BagWidth2").value,10)*gridsize*2;
+  rectHeight = parseFloat(document.getElementById("BagLength2").value,10)*gridsize*2;
+  rectGussWid = parseFloat(document.getElementById("Gusset2").value,10)*gridsize*2;
+  selectObject = gridXLines + gridYLines + 2;
+  currentObject = selectObject;*/
+//Canvas Size
+  //var unitScale = 10;
+  /*var canvasWidth =  window.innerWidth * 0.60;
+  var canvasHeight = window.innerHeight * 0.63;
+  canvas.setWidth(canvasWidth);
+  canvas.setHeight(canvasHeight);
+  topRuler.setWidth(gridsize*gridYLines);
+  leftRuler.setHeight(canvasHeight);
+  topRuler.setBackgroundColor('#1f1f1f');
+  leftRuler.setBackgroundColor('#1f1f1f');*/
+console.log("Inside the function");
 // create grid Delat between height - low spot, standardize scale
+
+console.log(gridXLines + "  "+ gridYLines +  "  " + gridsize);
+
   for (var i = 0; i <= gridXLines; i++) {
     //Checks whether the i is even or odd and based on that it creates longer line for ruler
     if(i % 2 == 0)
@@ -154,6 +313,7 @@ document.getElementById("confirm").onclick = function(e){
     //Checks whether the i is even or odd and based on that it creates longer line for ruler
     if(j % 2 == 0)
     {
+      console.log("checking...")
       leftRuler.add(new fabric.Line([25,j*gridsize,50 , j*gridsize], { type:'line', stroke: '#5E656E', selectable: false}));
       canvas.add(new fabric.Line([ 0, j * gridsize, (gridsize*gridXLines), j * gridsize], { type: 'line', stroke: '#ccc', selectable: false }));
     }else {
@@ -163,6 +323,7 @@ document.getElementById("confirm").onclick = function(e){
     
   //  leftRuler.add(new fabric.Line([25, i, 50, i], { type:'line', stroke: '#ccc', selectable: false }));
   }
+  canvas.renderAll();
 // Adds the number for the Top ruler
 for (var i = 0; i<= gridXLines;  i+=4 ) {
   if(i % 2 == 0)
@@ -525,6 +686,7 @@ else{
   rotate0A();
 }
 }
+/******************** SET DIMENSIONS - END  ************************/
 //NEEED TO GET RIDE OF THIS WHEN DONE, IT GOES WITH THE ELSE
 //}
 /**************************************************************************************/
@@ -1770,7 +1932,7 @@ function PreviousBags1() {
   canvas.renderAll();
   document.getElementById("moveLeft").step = gridsize;
   document.getElementById("moveUp").step = gridsize;
-  if(document.getElementById("BagSelection").value == 0){
+  if(document.getElementById("BagSelection2").value == 0){
     if(BagPos[currentObject-(gridXLines+gridYLines+2)] == 1 || BagPos[currentObject-(gridXLines+gridYLines+2)] == 3){
       document.getElementById("moveLeft").max = gridXLines*gridsize-rectWidth;
     }
@@ -2224,38 +2386,7 @@ var BoxSaveDimm = function(){
 BoxSaveDimm ();
 
 // ---- CONTINUE TOMORROW: Saved values form - it will display the Grid and bags based on the save values
-var LoadSavedValues = function(){
-
-  var saveSubmitButton = $('#bagSave');
-
-  saveSubmitButton.click(function(e) {
-    e.preventDefault();
-
-    var SaveBagName = document.getElementById("NameOfBagForm").value;
-    var SaveBoxName = document.getElementById("NameOfBoxForm").value;
-
-    $.ajax({
-      data: {
-      bagName: SaveBagName,
-      boxName: SaveBoxName
-      },
-      type: 'POST',
-      url: '/SavedProcess'
-    })
-    .done(function(data){
-      if(data.error){
-        $('#errorAlert2').text(data.bagName).show();
-        $('#successAlert2').text(data.bagName).hide();
-      }
-      else
-      {
-        $('#errorAlert2').text(data.bagName).hide();
-        $('#successAlert2').text(data.bagName).show();
-      }
-    })
-  });
-};
-LoadSavedValues();
+//LoadSavedValues();
 // ---- CONTINUE TOMORROW: Saved values form - it will display the Grid and bags based on the save values
 
 
